@@ -1,9 +1,13 @@
 package com.skilldistillery.media.entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -17,7 +21,7 @@ class UserTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		emf = Persistence.createEntityManagerFactory("TodoJPA");
+		emf = Persistence.createEntityManagerFactory("ReelSyncJPA");
 	}
 
 	@AfterAll
@@ -36,12 +40,13 @@ class UserTest {
 		em.close();
 	}
 	
-//	@Test
-//	void test_User_entity_mapping() {
-//		assertNotNull(user);
-//		assertEquals("shaun", user.getUsername());
-//		assertEquals("shaun@winchester.co.uk", user.getEmail());	
-//		}
+	@Test
+	void test_User_basic_mappings() {
+		assertNotNull(user);
+		assertEquals("test", user.getUsername());
+		assertEquals("standard", user.getRole());
+		assertEquals(Boolean.TRUE, user.getEnabled());
+	}
 
 
 }
