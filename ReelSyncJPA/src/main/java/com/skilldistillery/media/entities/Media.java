@@ -46,6 +46,9 @@ public class Media {
 	@OneToMany(mappedBy = "media")
 	private List<MediaComment> mediaComments;
 	
+	@OneToMany(mappedBy = "media")
+	private List<MediaRating> mediaRatings;
+	
 	public Media() {
 		super();
 	}
@@ -108,6 +111,12 @@ public class Media {
 	}
 	public void setMediaComments(List<MediaComment> mediaComments) {
 		this.mediaComments = mediaComments;
+	}
+	public List<MediaRating> getMediaRatings() {
+		return mediaRatings;
+	}
+	public void setMediaRatings(List<MediaRating> mediaRatings) {
+		this.mediaRatings = mediaRatings;
 	}
 	@Override
 	public int hashCode() {

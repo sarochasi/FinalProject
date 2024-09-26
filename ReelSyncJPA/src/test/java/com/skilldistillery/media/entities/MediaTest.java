@@ -65,6 +65,12 @@ class MediaTest {
 		assertTrue(media.getMediaComments().size() > 0);
 	}
 	
+	@Test
+	void test_Media_MediaRating_OneToMany_mapping() {
+		assertNotNull(media.getMediaRatings());
+		assertTrue(media.getMediaRatings().size() > 0);
+	}
+	
 	
 
 }
