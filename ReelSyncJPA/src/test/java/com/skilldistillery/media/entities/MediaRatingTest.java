@@ -54,5 +54,11 @@ class MediaRatingTest {
 		assertNotNull(mediaRating.getMedia());
 		assertEquals("Test", mediaRating.getMedia().getName());
 	}
+	
+	@Test
+	void test_MediaRating_User_ManyToOne_mapping() {
+		assertNotNull(mediaRating.getUser());
+		assertEquals("test", mediaRating.getUser().getUsername());
+	}
 
 }
