@@ -509,7 +509,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `media_comment` (`id`, `user_id`, `media_id`, `content`, `created_at`, `in_reply_to_id`) VALUES (1, 1, 1, 'Not again!', NULL, NULL);
+INSERT INTO `media_comment` (`id`, `user_id`, `media_id`, `content`, `created_at`, `in_reply_to_id`) VALUES (1, 1, 1, 'Not again!', NULL, 1);
 
 COMMIT;
 
