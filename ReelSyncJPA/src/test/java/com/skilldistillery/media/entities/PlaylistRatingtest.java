@@ -2,7 +2,6 @@ package com.skilldistillery.media.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -14,11 +13,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class PlaylistTest {
+class PlaylistRatingtest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Playlist playlist;
+	private PlaylistRating playlistRating;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -33,7 +32,7 @@ class PlaylistTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		playlist = em.find(Playlist.class, 1);
+		playlistRating = em.find(PlaylistRating.class, new PlaylistRatingId(1,1));
 	}
 
 	@AfterEach
@@ -42,17 +41,17 @@ class PlaylistTest {
 	}
 	
 	@Test
-	void test_Playlist_basic_mappings() {
-		assertNotNull(playlist);
-		assertEquals("My Playlist", playlist.getName());
-		assertEquals("Road trip jams", playlist.getDescription());
+	void test_PlaylistRating_basic_mappings() {
+		assertNotNull(playlistRating);
+		assertEquals(5, playlistRating.getRating());
+		assertEquals("10/10 would reccomend", playlistRating.getRatingRemark());
 	}
 	
 	@Test
-	void test_Playlist_PlaylistComment_OneToMany_mapping() {
-		assertNotNull(playlist.getPlaylistComments());
-		assertTrue(playlist.getPlaylistComments().size() > 0);
+	void test_PlaylistRating_User_ManyToOne_relationship() {
+		assertNotNull(playlistRating);
+		assertEquals("test", playlistRating.getUser().getUsername());
+		assertEquals("standard", playlistRating.getUser().getRole());
 	}
-
 
 }

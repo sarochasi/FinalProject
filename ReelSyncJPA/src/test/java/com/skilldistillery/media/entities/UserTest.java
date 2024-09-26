@@ -60,6 +60,12 @@ class UserTest {
 		assertNotNull(user.getMediaComments());
 		assertTrue(user.getMediaComments().size() > 0);
 	}
+	
+	@Test
+	void test_User_Playlist_ManyToMany_mapping() {
+		assertNotNull(user.getFavoritePlaylists());
+		assertTrue(user.getFavoritePlaylists().size() > 0);
+	}
 
 
 }

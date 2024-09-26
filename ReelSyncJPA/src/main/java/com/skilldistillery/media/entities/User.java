@@ -34,12 +34,20 @@ public class User {
 	private LocalDateTime updatedAt;
 	
 	@ManyToMany
-	@JoinTable(name="favorite_media",joinColumns = @JoinColumn(name="media_id")
-	, inverseJoinColumns = @JoinColumn(name="user_id"))
+	@JoinTable(name="favorite_media",joinColumns = @JoinColumn(name="user_id")
+	, inverseJoinColumns = @JoinColumn(name="media_id"))
 	private List<Media> favoriteMedia;
 	
 	@OneToMany(mappedBy = "user")
 	private List<MediaComment> mediaComments;
+	
+	@ManyToMany
+	@JoinTable(name="favorite_playlist",joinColumns = @JoinColumn(name="user_id")
+	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
+	private List<Playlist> favoritePlaylists;
+	
+	@OneToMany(mappedBy="user")
+	private List<PlaylistRating> playlistRatings;
 	
 	public User() { }
 
@@ -116,8 +124,6 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 
-	
-
 	public List<Media> getFavoriteMedia() {
 		return favoriteMedia;
 	}
@@ -132,6 +138,22 @@ public class User {
 
 	public void setMediaComments(List<MediaComment> mediaComments) {
 		this.mediaComments = mediaComments;
+	}
+	
+	public List<Playlist> getFavoritePlaylists() {
+		return favoritePlaylists;
+	}
+
+	public void setFavoritePlaylists(List<Playlist> favoritePlaylists) {
+		this.favoritePlaylists = favoritePlaylists;
+	}
+	
+	public List<PlaylistRating> getPlaylistRatings() {
+		return playlistRatings;
+	}
+
+	public void setPlaylistRatings(List<PlaylistRating> playlistRatings) {
+		this.playlistRatings = playlistRatings;
 	}
 
 	@Override

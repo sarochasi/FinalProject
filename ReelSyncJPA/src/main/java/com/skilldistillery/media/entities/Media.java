@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -45,6 +46,16 @@ public class Media {
 	
 	@OneToMany(mappedBy = "media")
 	private List<MediaComment> mediaComments;
+	
+	@ManyToMany
+	@JoinTable(name="tag_has_media",joinColumns = @JoinColumn(name="media_id")
+	, inverseJoinColumns = @JoinColumn(name="tag_id"))
+	private List<Tag> tags;
+	
+	@ManyToMany
+	@JoinTable(name="media_has_playlist",joinColumns = @JoinColumn(name="media_id")
+	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
+	private List<Playlist> playlists;
 	
 	public Media() {
 		super();
@@ -108,6 +119,18 @@ public class Media {
 	}
 	public void setMediaComments(List<MediaComment> mediaComments) {
 		this.mediaComments = mediaComments;
+	}
+	public List<Tag> getTags() {
+		return tags;
+	}
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
 	}
 	@Override
 	public int hashCode() {
