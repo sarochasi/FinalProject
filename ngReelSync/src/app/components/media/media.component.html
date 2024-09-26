@@ -1,0 +1,34 @@
+<p>media works!</p>
+
+<div class="card shadow">
+  <div class="card-header">
+    <h5 class="mb-0">Your Media List</h5>
+  </div>
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Source_url</th>
+          <th>Name</th>
+          <th>Created at</th>
+          <th>Updated at</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let media of mediaList" >
+          <td>{{ media.sourceUrl }}</td>
+          <td>{{ media.name }}</td>
+          <td>{{ media.createdAt }}</td>
+          <td>{{ media.updatedAt }}</td>
+          <td>{{ media.description }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="displayMedia(media)">Details</button>
+            <!-- <button class="btn btn-sm btn-danger" (click)="deleteJob(job.id)">Delete</button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
