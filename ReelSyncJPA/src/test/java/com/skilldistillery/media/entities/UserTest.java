@@ -2,6 +2,7 @@ package com.skilldistillery.media.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -46,6 +47,18 @@ class UserTest {
 		assertEquals("test", user.getUsername());
 		assertEquals("standard", user.getRole());
 		assertEquals(Boolean.TRUE, user.getEnabled());
+	}
+	
+	@Test
+	void test_Media_User_ManyToMany_mapping() {
+		assertNotNull(user.getFavoriteMedia());
+		assertTrue(user.getFavoriteMedia().size() > 0);
+	}
+	
+	@Test
+	void test_User_MediaComment_OneToMany_mapping() {
+		assertNotNull(user.getMediaComments());
+		assertTrue(user.getMediaComments().size() > 0);
 	}
 
 

@@ -1,6 +1,7 @@
 package com.skilldistillery.media.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -8,7 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Media {
@@ -31,6 +35,16 @@ public class Media {
 	private String description;
 	
 	private Boolean enabled;
+	
+	@ManyToOne
+	@JoinColumn( name = "user_id")
+	private User user;
+	
+	@ManyToMany(mappedBy = "favoriteMedia")
+	private List<User> users;
+	
+	@OneToMany(mappedBy = "media")
+	private List<MediaComment> mediaComments;
 	
 	public Media() {
 		super();
@@ -76,6 +90,24 @@ public class Media {
 	}
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	public List<MediaComment> getMediaComments() {
+		return mediaComments;
+	}
+	public void setMediaComments(List<MediaComment> mediaComments) {
+		this.mediaComments = mediaComments;
 	}
 	@Override
 	public int hashCode() {

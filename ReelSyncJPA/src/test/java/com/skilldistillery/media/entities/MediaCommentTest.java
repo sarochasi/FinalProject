@@ -46,4 +46,27 @@ class MediaCommentTest {
 		
 	}
 
+	@Test
+	void test_Comment_Media_ManyToOne_mapping() {
+		assertNotNull(mediaComment.getMedia());
+		assertEquals("Test", mediaComment.getMedia().getName());
+	}
+	
+	@Test
+	void test_Comment_User_ManyToOne_mapping() {
+		assertNotNull(mediaComment.getUser());
+		assertEquals("test", mediaComment.getUser().getUsername());
+	}
+	
+	@Test
+	void test_MediaComment_MediaComment_ManyToOne_mapping() {
+		assertNotNull(mediaComment.getUser());
+		assertEquals("Not again!", mediaComment.getReply().getContent());
+	}
+	
+	@Test
+	void test_MediaComment_MediaComment_OneToMany_mapping() {
+		assertNotNull(mediaComment.getReplies());
+		assertTrue(mediaComment.getReplies().size() > 0);
+	}
 }

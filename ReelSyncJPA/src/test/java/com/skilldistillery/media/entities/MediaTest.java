@@ -47,5 +47,24 @@ class MediaTest {
 		assertEquals(Boolean.TRUE, media.getEnabled());
 	}
 
+	@Test
+	void test_Media_User_ManyToOne_mapping() {
+		assertNotNull(media.getUser());
+		assertEquals("test", media.getUser().getUsername());
+	}
+	
+	@Test
+	void test_Media_User_ManyToMany_mapping() {
+		assertNotNull(media.getUsers());
+		assertTrue(media.getUsers().size() > 0);
+	}
+	
+	@Test
+	void test_Media_MediaComment_OneToMany_mapping() {
+		assertNotNull(media.getMediaComments());
+		assertTrue(media.getMediaComments().size() > 0);
+	}
+	
+	
 
 }

@@ -1,7 +1,7 @@
 package com.skilldistillery.media.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,6 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -28,6 +32,14 @@ public class User {
 	private LocalDateTime createdAt;
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+	
+	@ManyToMany
+	@JoinTable(name="favorite_media",joinColumns = @JoinColumn(name="media_id")
+	, inverseJoinColumns = @JoinColumn(name="user_id"))
+	private List<Media> favoriteMedia;
+	
+	@OneToMany(mappedBy = "user")
+	private List<MediaComment> mediaComments;
 	
 	public User() { }
 
@@ -102,6 +114,24 @@ public class User {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	
+
+	public List<Media> getFavoriteMedia() {
+		return favoriteMedia;
+	}
+
+	public void setFavoriteMedia(List<Media> favoriteMedia) {
+		this.favoriteMedia = favoriteMedia;
+	}
+
+	public List<MediaComment> getMediaComments() {
+		return mediaComments;
+	}
+
+	public void setMediaComments(List<MediaComment> mediaComments) {
+		this.mediaComments = mediaComments;
 	}
 
 	@Override
