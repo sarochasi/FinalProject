@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,9 +36,11 @@ public class PlaylistComment {
 	@JoinColumn(name="playlist_id")
 	private Playlist playlist;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "reply")
 	private List<PlaylistComment> replies;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "in_reply_to_id")
 	private PlaylistComment reply;

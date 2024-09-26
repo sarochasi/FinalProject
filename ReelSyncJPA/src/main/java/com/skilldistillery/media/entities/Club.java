@@ -7,6 +7,8 @@ import java.util.Objects;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +39,7 @@ public class Club {
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="club_has_playlist",joinColumns = @JoinColumn(name="club_id")
 	, inverseJoinColumns = @JoinColumn(name="playlist_id"))

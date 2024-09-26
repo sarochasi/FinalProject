@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,25 +39,30 @@ public class Media {
 	
 	private Boolean enabled;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn( name = "user_id")
 	private User user;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "favoriteMedia")
 	private List<User> users;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "media")
 	private List<MediaComment> mediaComments;
 	
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "media")
 	private List<MediaRating> mediaRatings;
 
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="tag_has_media",joinColumns = @JoinColumn(name="media_id")
 	, inverseJoinColumns = @JoinColumn(name="tag_id"))
 	private List<Tag> tags;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="media_has_playlist",joinColumns = @JoinColumn(name="media_id")
 	, inverseJoinColumns = @JoinColumn(name="playlist_id"))

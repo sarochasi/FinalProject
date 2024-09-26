@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,22 +35,31 @@ public class User {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="favorite_media",joinColumns = @JoinColumn(name="user_id")
 	, inverseJoinColumns = @JoinColumn(name="media_id"))
 	private List<Media> favoriteMedia;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<MediaComment> mediaComments;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="favorite_playlist",joinColumns = @JoinColumn(name="user_id")
 	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
 	private List<Playlist> favoritePlaylists;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="user")
+	private List<Playlist> playlists;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<PlaylistRating> playlistRatings;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<MediaRating> mediaRatings;
 	

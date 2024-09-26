@@ -3,6 +3,8 @@ package com.skilldistillery.media.entities;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,9 +22,11 @@ public class Tag {
 	
 	private String name;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="tags")
 	private List<Media> media;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="tag_has_playlist",joinColumns = @JoinColumn(name="tag_id")
 	, inverseJoinColumns = @JoinColumn(name="playlist_id"))

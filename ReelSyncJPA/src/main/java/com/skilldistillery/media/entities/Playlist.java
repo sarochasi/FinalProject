@@ -7,12 +7,16 @@ import java.util.Objects;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -46,14 +50,20 @@ public class Playlist {
 	@ManyToMany(mappedBy="playlists")
 	private List<Tag> tags;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="playlist")
 	private List<PlaylistComment> playlistComments;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="favoritePlaylists")
 	private List<User> playlistUsers;
 	
 	@ManyToMany(mappedBy="clubPlaylists")
 	private List<Club> clubs;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	public Playlist() { }
 
@@ -145,11 +155,11 @@ public class Playlist {
 		this.playlistComments = playlistComments;
 	}
 
-	public List<User> getUsers() {
+	public List<User> getPlaylistUsers() {
 		return playlistUsers;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setPlaylistUsers(List<User> users) {
 		this.playlistUsers = users;
 	}
 	
@@ -159,6 +169,14 @@ public class Playlist {
 
 	public void setClubs(List<Club> clubs) {
 		this.clubs = clubs;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
