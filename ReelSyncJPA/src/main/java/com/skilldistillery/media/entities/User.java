@@ -1,7 +1,10 @@
 package com.skilldistillery.media.entities;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +21,13 @@ public class User {
 	private String password;
 	private Boolean enabled;
 	private String role;
+	@Column(name = "image_url")
+	private String imageUrl;
+	private String biography;
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 	
 	public User() { }
 
@@ -60,6 +70,39 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public String getBiography() {
+		return biography;
+	}
+
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 	@Override
 	public int hashCode() {
@@ -81,6 +124,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", role=" + role + "]";
+				+ ", role=" + role + ", imageUrl=" + imageUrl + ", biography=" + biography + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + "]";
 	}
 }
