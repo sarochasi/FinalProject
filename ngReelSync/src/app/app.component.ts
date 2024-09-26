@@ -4,6 +4,7 @@ import { AuthService } from './services/auth.service';
 import { RegisterComponent } from "./components/register/register.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LogoutComponent } from './components/logout/logout.component';
+import { NavigationComponent } from "./components/navigation/navigation.component";
 
 @Component({
   selector: 'app-root',
