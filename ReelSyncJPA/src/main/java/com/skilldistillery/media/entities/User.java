@@ -49,6 +49,11 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<PlaylistRating> playlistRatings;
 	
+	@OneToMany(mappedBy="user")
+	private List<MediaRating> mediaRatings;
+	
+	
+	
 	public User() { }
 
 	public int getId() {
@@ -154,6 +159,14 @@ public class User {
 
 	public void setPlaylistRatings(List<PlaylistRating> playlistRatings) {
 		this.playlistRatings = playlistRatings;
+	}
+
+	public List<MediaRating> getMediaRatings() {
+		return mediaRatings;
+	}
+
+	public void setMediaRatings(List<MediaRating> mediaRatings) {
+		this.mediaRatings = mediaRatings;
 	}
 
 	@Override

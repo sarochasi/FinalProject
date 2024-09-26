@@ -66,6 +66,11 @@ class MediaTest {
 	}
 	
 	@Test
+	void test_Media_MediaRating_OneToMany_mapping() {
+		assertNotNull(media.getMediaRatings());
+		assertTrue(media.getMediaRatings().size() > 0);
+	}
+	
 	void test_Media_Tag_ManyToMany_mapping() {
 		assertNotNull(media.getTags());
 		assertTrue(media.getTags().size() > 0);
