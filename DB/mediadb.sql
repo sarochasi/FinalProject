@@ -453,3 +453,163 @@ INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `image_url`
 
 COMMIT;
 
+
+-- -----------------------------------------------------
+-- Data for table `media`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (1, 1, 'https://youtu.be/dQw4w9WgXcQ?si=7mzkgoF6R_RZdf9S', 'Test', NULL, NULL, 'test', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `playlist`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (1, 'My Playlist', 1, 'Road trip jams', NULL, NULL, 'https://previews.123rf.com/images/macsim/macsim1202/macsim120200073/12369837-portrait-of-a-male-teenager-listening-to-music.jpg', 1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `tag`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `tag` (`id`, `name`) VALUES (1, 'Chill');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `tag_has_playlist`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `tag_has_playlist` (`tag_id`, `playlist_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `tag_has_media`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `tag_has_media` (`tag_id`, `media_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `media_comment`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `media_comment` (`id`, `user_id`, `media_id`, `content`, `created_at`, `in_reply_to_id`) VALUES (1, 1, 1, 'Not again!', NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `club`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `club` (`id`, `name`, `description`, `image_url`, `created_at`, `updated_at`, `created_by_user_id`) VALUES (1, 'TSwizz Fanclub', '#Swifties4Lyfe', 'https://upload.wikimedia.org/wikipedia/commons/8/88/Danny_DeVito_cropped_and_edited_for_brightness.jpg', NULL, NULL, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `club_has_user`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `club_has_user` (`club_id`, `user_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `club_has_playlist`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `club_has_playlist` (`club_id`, `playlist_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `media_has_playlist`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `favorite_media`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `favorite_media` (`user_id`, `media_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `favorite_playlist`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `favorite_playlist` (`user_id`, `playlist_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `playlist_comment`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `playlist_comment` (`id`, `user_id`, `content`, `created_at`, `in_reply_to_id`, `playlist_id`) VALUES (1, 1, 'Rock on man!', NULL, 1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `friend`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `friend` (`user_id`, `friend_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `playlist_rating`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `playlist_rating` (`user_id`, `playlist_id`, `rating`, `created_at`, `updated_at`, `rating_remark`) VALUES (1, 1, 5, NULL, NULL, '10/10 would reccomend');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `media_rating`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `mediadb`;
+INSERT INTO `media_rating` (`media_id`, `user_id`, `rating`, `created_at`, `updated_at`, `rating_remark`) VALUES (1, 1, 5, NULL, NULL, 'Very cool');
+
+COMMIT;
+
