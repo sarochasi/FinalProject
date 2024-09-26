@@ -6,6 +6,8 @@
 
 	<class>com.skilldistillery.media.entities.User</class>
 	<class>com.skilldistillery.media.entities.Media</class>
+	<class>com.skilldistillery.media.entities.MediaComment</class>
+	<class>com.skilldistillery.media.entities.MediaRating</class>
 
 	
     <properties>

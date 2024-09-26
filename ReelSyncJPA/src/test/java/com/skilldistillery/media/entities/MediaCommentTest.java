@@ -12,11 +12,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class MediaTest {
+class MediaCommentTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Media media;
+	private MediaComment mediaComment;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,7 +31,7 @@ class MediaTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		media = em.find(Media.class, 1);
+		mediaComment = em.find(MediaComment.class, 1);
 	}
 
 	@AfterEach
@@ -41,11 +41,9 @@ class MediaTest {
 	
 	@Test
 	void test_Media_basic_mappings() {
-		assertNotNull(media);
-		assertEquals("Test", media.getName());
-		assertEquals("test", media.getDescription());
-		assertEquals(Boolean.TRUE, media.getEnabled());
+		assertNotNull(mediaComment);
+		assertEquals("Not again!", mediaComment.getContent());
+		
 	}
-
 
 }
