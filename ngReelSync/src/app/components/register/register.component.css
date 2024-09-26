@@ -1,0 +1,58 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+form {
+  background-color: #d3d3d3;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+form input[type="text"],
+form input[type="password"] {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+form input[type="submit"] {
+  background-color: #c4916f;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+form input[type="submit"]:hover {
+  background-color: #a8765b;
+}
+form a {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+form a:hover {
+  text-decoration: underline;
+}
+form p {
+  margin: 15px 0 0;
+  font-size: 14px;
+}
