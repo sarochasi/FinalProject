@@ -1,6 +1,7 @@
 package com.skilldistillery.media.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Playlist {
@@ -22,6 +25,9 @@ public class Playlist {
 	private String name;
 	
 	private String description;
+	
+	@ManyToMany(mappedBy = "playlists")
+	private List<Media> media;
 	
 	@CreationTimestamp
 	@Column(name="created_at")
@@ -36,6 +42,18 @@ public class Playlist {
 	
 	private Boolean enabled;
 	private Boolean published;
+	
+	@ManyToMany(mappedBy="playlists")
+	private List<Tag> tags;
+	
+	@OneToMany(mappedBy="playlist")
+	private List<PlaylistComment> playlistComments;
+	
+	@ManyToMany(mappedBy="favoritePlaylists")
+	private List<User> playlistUsers;
+	
+	@ManyToMany(mappedBy="clubPlaylists")
+	private List<Club> clubs;
 	
 	public Playlist() { }
 
@@ -101,6 +119,46 @@ public class Playlist {
 
 	public void setPublished(Boolean published) {
 		this.published = published;
+	}
+
+	public List<Media> getMedia() {
+		return media;
+	}
+
+	public void setMedia(List<Media> media) {
+		this.media = media;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public List<PlaylistComment> getPlaylistComments() {
+		return playlistComments;
+	}
+
+	public void setPlaylistComments(List<PlaylistComment> playlistComments) {
+		this.playlistComments = playlistComments;
+	}
+
+	public List<User> getUsers() {
+		return playlistUsers;
+	}
+
+	public void setUsers(List<User> users) {
+		this.playlistUsers = users;
+	}
+	
+	public List<Club> getClubs() {
+		return clubs;
+	}
+
+	public void setClubs(List<Club> clubs) {
+		this.clubs = clubs;
 	}
 
 	@Override

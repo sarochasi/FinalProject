@@ -71,6 +71,17 @@ class MediaTest {
 		assertTrue(media.getMediaRatings().size() > 0);
 	}
 	
+	void test_Media_Tag_ManyToMany_mapping() {
+		assertNotNull(media.getTags());
+		assertTrue(media.getTags().size() > 0);
+	}
+	
+	@Test
+	void test_Media_Playlist_ManyToMany_mapping() {
+		assertNotNull(media.getPlaylists());
+		assertTrue(media.getPlaylists().size() > 0);
+	}
+	
 	
 
 }

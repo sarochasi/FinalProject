@@ -2,6 +2,7 @@ package com.skilldistillery.media.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -45,6 +46,12 @@ class ClubTest {
 		assertNotNull(club);
 		assertEquals("TSwizz Fanclub", club.getName());
 		assertEquals("#Swifties4Lyfe", club.getDescription());
+	}
+	
+	@Test
+	void test_Club_Playlist_ManyToMany_mapping() {
+		assertNotNull(club.getClubPlaylists());
+		assertTrue(club.getClubPlaylists().size() > 0);
 	}
 
 

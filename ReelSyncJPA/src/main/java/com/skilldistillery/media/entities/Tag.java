@@ -1,11 +1,15 @@
 package com.skilldistillery.media.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Tag {
@@ -15,6 +19,14 @@ public class Tag {
 	private int id;
 	
 	private String name;
+	
+	@ManyToMany(mappedBy="tags")
+	private List<Media> media;
+	
+	@ManyToMany
+	@JoinTable(name="tag_has_playlist",joinColumns = @JoinColumn(name="tag_id")
+	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
+	private List<Playlist> playlists;
 	
 	public Tag() { }
 	
@@ -32,6 +44,22 @@ public class Tag {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Media> getMedia() {
+		return media;
+	}
+
+	public void setMedia(List<Media> media) {
+		this.media = media;
+	}
+
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
 	}
 
 	@Override

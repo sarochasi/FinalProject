@@ -1,6 +1,7 @@
 package com.skilldistillery.media.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Club {
@@ -32,6 +36,11 @@ public class Club {
 	@UpdateTimestamp
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
+	
+	@ManyToMany
+	@JoinTable(name="club_has_playlist",joinColumns = @JoinColumn(name="club_id")
+	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
+	private List<Playlist> clubPlaylists;
 	
 	public Club() { }
 
@@ -81,6 +90,14 @@ public class Club {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public List<Playlist> getClubPlaylists() {
+		return clubPlaylists;
+	}
+
+	public void setClubPlaylists(List<Playlist> clubPlaylists) {
+		this.clubPlaylists = clubPlaylists;
 	}
 
 	@Override

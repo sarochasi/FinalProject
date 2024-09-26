@@ -1,6 +1,7 @@
 package com.skilldistillery.media.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +29,17 @@ public class PlaylistComment {
 	@CreationTimestamp
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
+	
+	@ManyToOne
+	@JoinColumn(name="playlist_id")
+	private Playlist playlist;
+	
+	@OneToMany(mappedBy = "reply")
+	private List<PlaylistComment> replies;
+	
+	@ManyToOne
+	@JoinColumn(name = "in_reply_to_id")
+	private PlaylistComment reply;
 	
 	public PlaylistComment() { }
 
@@ -43,6 +58,14 @@ public class PlaylistComment {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public Playlist getPlaylist() {
+		return playlist;
+	}
+
+	public void setPlaylist(Playlist playlist) {
+		this.playlist = playlist;
+	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -50,6 +73,22 @@ public class PlaylistComment {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public List<PlaylistComment> getReplies() {
+		return replies;
+	}
+
+	public void setReplies(List<PlaylistComment> replies) {
+		this.replies = replies;
+	}
+
+	public PlaylistComment getReply() {
+		return reply;
+	}
+
+	public void setReply(PlaylistComment reply) {
+		this.reply = reply;
 	}
 
 	@Override

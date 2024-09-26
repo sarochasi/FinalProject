@@ -2,6 +2,7 @@ package com.skilldistillery.media.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -45,6 +46,11 @@ class PlaylistCommentTest {
 		assertNotNull(playlistComment);
 		assertEquals("Rock on man!", playlistComment.getContent());
 	}
-
+	
+	@Test
+	void test_PlaylistComment_self_join_mappings() {
+		assertNotNull(playlistComment.getReplies());
+		assertTrue(playlistComment.getReplies().size() > 0);
+	}
 
 }

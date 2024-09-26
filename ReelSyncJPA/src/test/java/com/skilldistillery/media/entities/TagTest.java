@@ -2,6 +2,7 @@ package com.skilldistillery.media.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -46,5 +47,10 @@ class TagTest {
 		assertEquals("Chill", tag.getName());
 	}
 
-
+	@Test
+	void test_Media_Playlist_ManyToMany_mapping() {
+		assertNotNull(tag.getPlaylists());
+		assertTrue(tag.getPlaylists().size() > 0);
+	}
+	
 }
