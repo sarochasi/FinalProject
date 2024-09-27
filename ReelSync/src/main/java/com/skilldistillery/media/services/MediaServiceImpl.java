@@ -1,5 +1,6 @@
 package com.skilldistillery.media.services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,8 +22,13 @@ public class MediaServiceImpl implements MediaService{
 	private UserRepository userRepo;
 
 	@Override
-	public Set<Media> index(String username) {
-		return mediaRepo.findByUser_Username(username);
+	public List<Media> index(String username) {
+		User user = userRepo.findByUsername(username);
+		
+		if(user != null) {
+			return mediaRepo.findByEnabledTrue();
+		}
+		return null;
 	}
 
 	@Override
@@ -30,7 +36,7 @@ public class MediaServiceImpl implements MediaService{
 		User user = userRepo.findByUsername(username);
 		Optional<Media> mediaOpt = mediaRepo.findById(mid);
 		Media media = null;
-		if(user != null && mediaOpt.isPresent()) {
+		if(user != null && mediaOpt.isPresent() && mediaOpt.get().getEnabled()) {
 			media = mediaOpt.get();
 		}
 		return media;
@@ -54,7 +60,7 @@ public class MediaServiceImpl implements MediaService{
 			existing.setName(media.getName());
 			existing.setCreatedAt(media.getCreatedAt());
 			existing.setDescription(media.getDescription());
-			existing.setEnabled(media.getEnabled());
+//			existing.setEnabled(media.getEnabled());
 			mediaRepo.saveAndFlush(existing);
 			
 		}
@@ -66,7 +72,8 @@ public class MediaServiceImpl implements MediaService{
 		boolean deleted = false;
 		Media toBeDeleted = mediaRepo.findByIdAndUser_Username(mid, username);
 		if(toBeDeleted != null) {
-			toBeDeleted.setEnabled(Boolean.FALSE);
+			toBeDeleted.setEnabled(false);
+			mediaRepo.saveAndFlush(toBeDeleted);
 			deleted = true;
 		}
 		return deleted;
