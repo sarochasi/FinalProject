@@ -1,12 +1,15 @@
 package com.skilldistillery.media.services;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.media.entities.Media;
 import com.skilldistillery.media.entities.Playlist;
 import com.skilldistillery.media.entities.User;
+import com.skilldistillery.media.repositories.MediaRepository;
 import com.skilldistillery.media.repositories.PlaylistRepository;
 import com.skilldistillery.media.repositories.UserRepository;
 
@@ -66,5 +69,22 @@ public class PlaylistServiceImpl implements PlaylistService {
 		}
 		return deleted;
 	}
+	
+	@Autowired
+    private MediaRepository mediaRepo;
+
+    public Playlist addMediaToPlaylist(int playlistId, int mediaId) {
+        Optional<Playlist> optPlaylist = playlistRepo.findById(playlistId);
+        Optional<Media> optMedia = mediaRepo.findById(mediaId);
+        
+        if (optPlaylist.isPresent() && optMedia.isPresent()) {
+            Playlist playlist = optPlaylist.get();
+            Media media = optMedia.get();
+            
+            playlist.getMedia().add(media); // Add the media to the playlist
+            return playlistRepo.save(playlist); // Save and return updated playlist
+        }
+        return null;
+    }
 
 }
