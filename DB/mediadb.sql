@@ -155,6 +155,7 @@ CREATE TABLE IF NOT EXISTS `media_comment` (
   `content` TEXT NULL,
   `created_at` DATETIME NULL,
   `in_reply_to_id` INT NULL,
+  `enabled` TINYINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_comment_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_comment_media1_idx` (`media_id` ASC) VISIBLE,
@@ -332,6 +333,7 @@ CREATE TABLE IF NOT EXISTS `playlist_comment` (
   `created_at` DATETIME NULL,
   `in_reply_to_id` INT NULL,
   `playlist_id` INT NOT NULL,
+  `enabled` TINYINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_comment_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_media_comment_media_comment1_idx` (`in_reply_to_id` ASC) VISIBLE,
@@ -509,7 +511,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `media_comment` (`id`, `user_id`, `media_id`, `content`, `created_at`, `in_reply_to_id`) VALUES (1, 1, 1, 'Not again!', NULL, 1);
+INSERT INTO `media_comment` (`id`, `user_id`, `media_id`, `content`, `created_at`, `in_reply_to_id`, `enabled`) VALUES (1, 1, 1, 'Not again!', NULL, 1, 1);
 
 COMMIT;
 
@@ -579,7 +581,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `playlist_comment` (`id`, `user_id`, `content`, `created_at`, `in_reply_to_id`, `playlist_id`) VALUES (1, 1, 'Rock on man!', NULL, 1, 1);
+INSERT INTO `playlist_comment` (`id`, `user_id`, `content`, `created_at`, `in_reply_to_id`, `playlist_id`, `enabled`) VALUES (1, 1, 'Rock on man!', NULL, 1, 1, 1);
 
 COMMIT;
 

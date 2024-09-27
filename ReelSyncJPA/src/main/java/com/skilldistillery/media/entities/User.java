@@ -53,6 +53,10 @@ public class User {
 	private List<MediaComment> mediaComments;
 	
 	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<PlaylistComment> playlistComments;
+	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="favorite_playlist",joinColumns = @JoinColumn(name="user_id")
 	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
@@ -185,6 +189,14 @@ public class User {
 
 	public void setMediaRatings(List<MediaRating> mediaRatings) {
 		this.mediaRatings = mediaRatings;
+	}
+
+	public List<PlaylistComment> getPlaylistComments() {
+		return playlistComments;
+	}
+
+	public void setPlaylistComments(List<PlaylistComment> playlistComments) {
+		this.playlistComments = playlistComments;
 	}
 
 	@Override

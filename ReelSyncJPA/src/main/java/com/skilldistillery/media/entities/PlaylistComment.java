@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,6 +33,7 @@ public class PlaylistComment {
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="playlist_id")
 	private Playlist playlist;
@@ -42,8 +44,15 @@ public class PlaylistComment {
 	
 	@JsonIgnore
 	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
+	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name = "in_reply_to_id")
 	private PlaylistComment reply;
+	
+	private Boolean enabled;
 	
 	public PlaylistComment() { }
 
@@ -93,6 +102,22 @@ public class PlaylistComment {
 
 	public void setReply(PlaylistComment reply) {
 		this.reply = reply;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override
