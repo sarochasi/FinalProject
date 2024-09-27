@@ -1,12 +1,17 @@
 package com.skilldistillery.media.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.media.entities.Media;
 import com.skilldistillery.media.entities.Playlist;
 import com.skilldistillery.media.entities.User;
+import com.skilldistillery.media.repositories.MediaRepository;
 import com.skilldistillery.media.repositories.PlaylistRepository;
 import com.skilldistillery.media.repositories.UserRepository;
 
@@ -18,6 +23,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private MediaRepository mediaRepo;
 
 	@Override
 	public Set<Playlist> index(String username) {
@@ -67,4 +75,26 @@ public class PlaylistServiceImpl implements PlaylistService {
 		return deleted;
 	}
 
+	@Override
+	public Playlist addMedia(String username, int pid, int mid) {
+	    Playlist managedPlaylist = null;
+	    Optional<Media> optMedia = mediaRepo.findById(mid);
+	    if (optMedia.isPresent()) {
+	        Media foundMedia = optMedia.get();
+	       
+	        Optional<Playlist> optPlaylist = playlistRepo.findById(pid);
+	        if (optPlaylist.isPresent()) {
+	            Playlist foundPlaylist = optPlaylist.get();
+	            
+	            List<Media> mediaList = foundPlaylist.getMedia();
+	            if (mediaList == null) {
+	                mediaList = new ArrayList<>();
+	                foundPlaylist.setMedia(mediaList);
+	            }
+	            mediaList.add(foundMedia);
+	            managedPlaylist = playlistRepo.save(foundPlaylist);
+	        }
+	    }
+	    return managedPlaylist;
+	}
 }

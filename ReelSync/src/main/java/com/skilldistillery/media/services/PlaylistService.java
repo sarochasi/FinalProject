@@ -17,4 +17,6 @@ public interface PlaylistService {
 	 public Playlist update(String username, int pid, Playlist playlist);
 
 	 public boolean destroy(String username, int pid);
+	 
+	 public Playlist addMedia(String username, int pid, int mid);
 }
