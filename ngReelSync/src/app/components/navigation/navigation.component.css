@@ -1,0 +1,35 @@
+
+.custom-navbar {
+  background-color: #985277;
+  color: white;
+}
+
+.custom-navbar .navbar-brand {
+  color: #FF8C61;
+  font-weight: bold;
+}
+
+.custom-navbar .nav-link {
+  color: #FAA275;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #FF8C61;
+}
+
+.custom-navbar .nav-link.active {
+  background-color: #5C374C;
+  color: white;
+}
+
+.custom-navbar .navbar-toggler {
+  border-color: #FF8C61;
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-color: #FF8C61;
+}
+
+.custom-navbar .navbar-nav .nav-item {
+  margin-left: 15px;
+}

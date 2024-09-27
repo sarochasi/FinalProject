@@ -1,0 +1,50 @@
+
+.custom-sidebar {
+  background-color: #CE6A85;
+  color: white;
+}
+
+
+.custom-sidebar .fs-4 {
+  color: #FF8C61;
+}
+
+
+.custom-sidebar .nav-link {
+  color: #FAA275;
+}
+
+
+.custom-sidebar .nav-link:hover {
+  color: #FF8C61;
+}
+
+
+.custom-sidebar .nav-link.active {
+  background-color: #985277;
+  color: white;
+}
+
+
+.custom-sidebar hr {
+  border-color: #CE6A85;
+}
+
+
+.custom-sidebar .dropdown-toggle {
+  color: #FAA275;
+}
+
+.custom-sidebar .dropdown-menu {
+  background-color: #5C374C;
+  color: white;
+}
+
+.custom-sidebar .dropdown-item {
+  color: #FAA275;
+}
+
+.custom-sidebar .dropdown-item:hover {
+  background-color: #985277;
+  color: white;
+}

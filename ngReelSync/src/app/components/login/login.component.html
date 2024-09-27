@@ -1,9 +1,12 @@
-<form>
 
-  <label for="username">Username</label>
-  <input type="text" [(ngModel)]="loginUser.username" name="username">
-  <label for="password">Password</label>
-  <input type="password" [(ngModel)]="loginUser.password" name="password">
-  <button class="btn btn-outline-primary" (click)="login(loginUser)">Log in</button>
+<div class="content-area flex-grow-1 p-3" style="margin-left: 350px;">
+  <form>
 
-</form>
+    <label for="username">Username</label>
+    <input type="text" [(ngModel)]="loginUser.username" name="username">
+    <label for="password">Password</label>
+    <input type="password" [(ngModel)]="loginUser.password" name="password">
+    <button class="btn btn-outline-primary" (click)="login(loginUser)">Log in</button>
+
+  </form>
+</div>

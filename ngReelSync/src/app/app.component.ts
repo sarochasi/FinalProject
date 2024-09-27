@@ -6,12 +6,13 @@ import { LoginComponent } from "./components/login/login.component";
 import { LogoutComponent } from './components/logout/logout.component';
 import { NavigationComponent } from "./components/navigation/navigation.component";
 import { MediaComponent } from './components/media/media.component';
+import { SidebarComponent } from "./components/sidebar/sidebar.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RegisterComponent, LoginComponent,
-    LogoutComponent, NavigationComponent, MediaComponent],
+    LogoutComponent, NavigationComponent, MediaComponent, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

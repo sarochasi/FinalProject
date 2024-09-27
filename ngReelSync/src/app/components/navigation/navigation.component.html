@@ -1,25 +1,35 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg custom-navbar">
   <div class="container-fluid">
+    <!-- Logo and Home -->
     <a class="navbar-brand" [routerLink]="['/home']">Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-    (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
+
+    <!-- Navbar toggle button for mobile view -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+      (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="navbarNav" [ngbCollapse]='isCollapsed'>
-      <ul class="navbar-nav">
+      <!-- Left-aligned links -->
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" [routerLink]="['/about']">About</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/contact']">Contact</a>
         </li>
-        <li class="nav-item" >
+        <li class="nav-item">
           <a class="nav-link" [routerLink]="['/playlists']">Playlists</a>
         </li>
-        <li class="nav-item" >
+        <li class="nav-item">
           <a class="nav-link" [routerLink]="['/media']">Media</a>
         </li>
+      </ul>
+
+      <!-- Right-aligned links (Login/Logout/Register) -->
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item" *ngIf="isLoggedIn()">
           <app-logout></app-logout>
         </li>
@@ -29,11 +39,7 @@
         <li class="nav-item" *ngIf="!isLoggedIn()">
           <a class="nav-link" [routerLink]="['/register']">Register</a>
         </li>
-
-
-
       </ul>
     </div>
   </div>
 </nav>
-
