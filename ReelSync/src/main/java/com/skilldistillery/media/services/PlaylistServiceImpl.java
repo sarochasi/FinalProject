@@ -46,6 +46,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	public Playlist create(String username, Playlist playlist) {
 		User user = userRepo.findByUsername(username);
 		playlist.setUser(user);
+		playlist.setEnabled(true);
 		playlistRepo.saveAndFlush(playlist);
 		return playlist;
 	}
@@ -77,24 +78,13 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 	@Override
 	public Playlist addMedia(String username, int pid, int mid) {
-	    Playlist managedPlaylist = null;
-	    Optional<Media> optMedia = mediaRepo.findById(mid);
-	    if (optMedia.isPresent()) {
-	        Media foundMedia = optMedia.get();
-	       
-	        Optional<Playlist> optPlaylist = playlistRepo.findById(pid);
-	        if (optPlaylist.isPresent()) {
-	            Playlist foundPlaylist = optPlaylist.get();
-	            
-	            List<Media> mediaList = foundPlaylist.getMedia();
-	            if (mediaList == null) {
-	                mediaList = new ArrayList<>();
-	                foundPlaylist.setMedia(mediaList);
-	            }
-	            mediaList.add(foundMedia);
-	            managedPlaylist = playlistRepo.save(foundPlaylist);
-	        }
-	    }
-	    return managedPlaylist;
+		Optional<Playlist> optPlaylist = playlistRepo.findById(pid); 
+		Optional<Media> optMedia = mediaRepo.findById(mid); 
+		Playlist playlist = null;
+		if (optPlaylist.isPresent() && optMedia.isPresent()) { 
+			playlist = optPlaylist.get(); 
+			Media media = optMedia.get(); 
+			playlist.getMedia().add(media);  
+		} return playlist; 
 	}
 }

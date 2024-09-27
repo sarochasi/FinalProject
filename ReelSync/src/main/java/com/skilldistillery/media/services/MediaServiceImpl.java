@@ -47,6 +47,7 @@ public class MediaServiceImpl implements MediaService{
 		User user = userRepo.findByUsername(username);
 		  if (user != null) {
 		    media.setUser(user);
+		    media.setEnabled(true);
 		    return mediaRepo.saveAndFlush(media);
 		  }
 		  return null;
