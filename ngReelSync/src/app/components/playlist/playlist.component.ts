@@ -6,6 +6,8 @@ import { Playlist } from '../../models/playlist';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { Media } from '../../models/media';
+import { MediaService } from '../../services/media.service';
 
 @Component({
   selector: 'app-playlist',
@@ -24,11 +26,17 @@ export class PlaylistComponent {
   editPlaylist: Playlist | null = null;
   selected: Playlist | null = null;
 
+  mediaList: Media[] = [];
+  showMediaForm = false;
+  newMedia: Media = new Media();
+  mediaInputs: { sourceUrl: string }[] = [{ sourceUrl: '' }];
+  selectedPlaylistId: number | null = null;
 
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private auth:AuthService,
+    private mediaService: MediaService
   ) {}
 
     isLoggedIn(): boolean {
@@ -52,6 +60,77 @@ export class PlaylistComponent {
         }
       }
     );
+  }
+
+  reloadMedia() {
+    this.mediaService.index().subscribe({
+      next: (mediaList) => {
+        this.mediaList = mediaList;
+      },
+      error: (fail) => {
+        console.error('MediaComponent.reloadMedia: error retrieving list');
+        console.error(fail);
+      }
+    });
+  }
+
+  addMedia(newMedia: Media, playlistId: number): void {
+    this.mediaService.create(newMedia).subscribe({
+      next: (createdMedia) => {
+        const mediaId = createdMedia.id; // Get media ID after creation
+
+        // Now associate the media with the playlist
+        this.addMediaToPlaylist(playlistId, mediaId);
+      },
+      error: (err) => {
+        console.error('Error creating media:', err);
+      },
+    });
+  }
+
+  // Adds the created media to a specific playlist
+  addMediaToPlaylist(playlistId: number, mediaId: number): void {
+    this.playlistService.addMediaToPlaylist(playlistId, mediaId).subscribe({
+      next: (updatedPlaylist) => {
+        console.log('Media added to playlist successfully:', updatedPlaylist);
+        this.reloadMedia();
+      },
+      error: (err) => {
+        console.error('Error adding media to playlist:', err);
+      }
+    });
+  }
+
+  submitMediaToPlaylist(): void {
+    if (this.selected) {
+      this.mediaInputs.forEach((mediaInput) => {
+        const newMedia = new Media();
+        newMedia.sourceUrl = mediaInput.sourceUrl;
+
+        this.mediaService.create(newMedia).subscribe({
+          next: (createdMedia) => {
+            const mediaId = createdMedia.id; // Assume createdMedia has the id
+            // Add each created media to the playlist
+            this.addMediaToPlaylist(this.selected!.id, mediaId);
+          },
+          error: (err) => {
+            console.error('Error creating media:', err);
+          }
+        });
+      });
+    }
+    // Reset the form after submission
+    this.mediaInputs = [{ sourceUrl: '' }];
+    this.toggleMediaForm(); // Close the form
+  }
+
+  toggleMediaForm() {
+    this.showMediaForm = !this.showMediaForm;
+  }
+
+  // Adds new input fields dynamically
+  addMoreInputs() {
+    this.mediaInputs.push({ sourceUrl: '' });
   }
 
   loadPlaylists() : void {
@@ -117,5 +196,7 @@ export class PlaylistComponent {
       }
     });
   }
+
+
 
 }

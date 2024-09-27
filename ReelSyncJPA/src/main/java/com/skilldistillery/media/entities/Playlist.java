@@ -50,6 +50,7 @@ public class Playlist {
 	@ManyToMany(mappedBy="playlists")
 	private List<Tag> tags;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="playlist")
 	private List<PlaylistComment> playlistComments;
 	
