@@ -1,5 +1,9 @@
 package com.skilldistillery.media.services;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,6 +25,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private MediaRepository mediaRepo;
 
 	@Override
 	public Set<Playlist> index(String username) {
@@ -69,22 +76,27 @@ public class PlaylistServiceImpl implements PlaylistService {
 		}
 		return deleted;
 	}
-	
-	@Autowired
-    private MediaRepository mediaRepo;
 
-    public Playlist addMediaToPlaylist(int playlistId, int mediaId) {
-        Optional<Playlist> optPlaylist = playlistRepo.findById(playlistId);
-        Optional<Media> optMedia = mediaRepo.findById(mediaId);
-        
-        if (optPlaylist.isPresent() && optMedia.isPresent()) {
-            Playlist playlist = optPlaylist.get();
-            Media media = optMedia.get();
-            
-            playlist.getMedia().add(media); // Add the media to the playlist
-            return playlistRepo.save(playlist); // Save and return updated playlist
-        }
-        return null;
-    }
-
+	@Override
+	public Playlist addMedia(String username, int pid, int mid) {
+	    Playlist managedPlaylist = null;
+	    Optional<Media> optMedia = mediaRepo.findById(mid);
+	    if (optMedia.isPresent()) {
+	        Media foundMedia = optMedia.get();
+	       
+	        Optional<Playlist> optPlaylist = playlistRepo.findById(pid);
+	        if (optPlaylist.isPresent()) {
+	            Playlist foundPlaylist = optPlaylist.get();
+	            
+	            List<Media> mediaList = foundPlaylist.getMedia();
+	            if (mediaList == null) {
+	                mediaList = new ArrayList<>();
+	                foundPlaylist.setMedia(mediaList);
+	            }
+	            mediaList.add(foundMedia);
+	            managedPlaylist = playlistRepo.save(foundPlaylist);
+	        }
+	    }
+	    return managedPlaylist;
+	}
 }

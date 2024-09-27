@@ -1,6 +1,7 @@
 package com.skilldistillery.media.controllers;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.media.entities.Media;
 import com.skilldistillery.media.entities.Playlist;
+import com.skilldistillery.media.services.MediaService;
 import com.skilldistillery.media.services.PlaylistService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +30,9 @@ public class PlaylistController {
 
 	@Autowired
 	private PlaylistService playlistService;
+	
+	@Autowired
+	private MediaService mediaService;
 	
 	@GetMapping("playlists")
 	public Set<Playlist> index(HttpServletRequest req, HttpServletResponse res, Principal principal) {
@@ -69,6 +75,25 @@ public class PlaylistController {
 		}
 		
 		return createdPlaylist;
+	}
+	
+	@PostMapping("playlists/{pid}/media/{mid}")
+	public Playlist addMedia(HttpServletRequest req, HttpServletResponse res, @PathVariable("mid") int mid, @PathVariable("pid") int pid, Principal principal) {
+		Playlist managedPlaylist = null;
+		try {
+			managedPlaylist = playlistService.addMedia(principal.getName(), pid, mid);
+			if (managedPlaylist.getMedia().contains(mediaService.show(principal.getName(), mid))) {
+				res.setStatus(201);
+				res.setHeader("location", req.getRequestURL().append("/").append(managedPlaylist.getId()).toString());
+			} else {
+				res.setStatus(401);
+			}
+		} catch (Exception e) {
+			res.setStatus(400);
+			e.printStackTrace();
+		}
+		
+		return managedPlaylist;
 	}
 
 	@PutMapping("playlists/{pid}")

@@ -15,7 +15,7 @@ export class Playlist {
     createdAt: string = '',
     updatedAt: string = '',
     imageUrl: string = '',
-    enabled: boolean = false,
+    enabled: boolean = true,
     published: boolean = false
   ) {
     this.id = id;

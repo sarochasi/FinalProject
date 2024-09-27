@@ -45,6 +45,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Created At</th>
+      <th>Active</th>
       <th>Image</th>
       <th>Actions</th>
     </tr>
@@ -54,6 +55,7 @@
       <td>{{ playlist.name }}</td>
       <td>{{ playlist.description }}</td>
       <td>{{ playlist.createdAt | date: 'short' }}</td>
+      <td>{{playlist.enabled}}</td>
       <td><img [src]="playlist.imageUrl" alt="playlist image" width="50"></td>
       <td>
         <button (click)="findPlaylistById(playlist.id)" class="btn btn-info btn-sm">Edit</button>
