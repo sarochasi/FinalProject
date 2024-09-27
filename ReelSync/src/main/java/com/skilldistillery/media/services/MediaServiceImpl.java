@@ -1,5 +1,6 @@
 package com.skilldistillery.media.services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,8 +22,13 @@ public class MediaServiceImpl implements MediaService{
 	private UserRepository userRepo;
 
 	@Override
-	public Set<Media> index(String username) {
-		return mediaRepo.findByUser_Username(username);
+	public List<Media> index(String username) {
+		User user = userRepo.findByUsername(username);
+		
+		if(user != null) {
+			return mediaRepo.findByEnabledTrue();
+		}
+		return null;
 	}
 
 	@Override

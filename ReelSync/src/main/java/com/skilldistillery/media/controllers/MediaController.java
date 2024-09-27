@@ -1,7 +1,7 @@
 package com.skilldistillery.media.controllers;
 
 import java.security.Principal;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,7 +29,7 @@ public class MediaController {
 	private MediaService mediaService;
 	
 	@GetMapping("media")
-	public Set<Media> index(Principal principal, HttpServletRequest req, HttpServletResponse res){
+	public List<Media> index(Principal principal, HttpServletRequest req, HttpServletResponse res){
 		return mediaService.index(principal.getName());
 		
 	}

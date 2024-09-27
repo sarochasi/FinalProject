@@ -1,11 +1,11 @@
 package com.skilldistillery.media.services;
 
-import java.util.Set;
+import java.util.List;
 
 import com.skilldistillery.media.entities.Media;
 
 public interface MediaService {
-	public Set<Media> index(String username);
+	public List<Media> index(String username);
 	
 	public Media show(String username, int mid);
 	
