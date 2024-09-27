@@ -81,7 +81,7 @@ public class MediaController {
 		try {
 			boolean result = mediaService.destroy(principal.getName(), mid);
 			if (result) {
-				res.setStatus(204);
+				res.setStatus(200);
 			} else {
 				res.setStatus(400);
 			}

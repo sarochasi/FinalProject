@@ -30,7 +30,7 @@ public class MediaServiceImpl implements MediaService{
 		User user = userRepo.findByUsername(username);
 		Optional<Media> mediaOpt = mediaRepo.findById(mid);
 		Media media = null;
-		if(user != null && mediaOpt.isPresent()) {
+		if(user != null && mediaOpt.isPresent() && mediaOpt.get().getEnabled()) {
 			media = mediaOpt.get();
 		}
 		return media;
@@ -54,7 +54,7 @@ public class MediaServiceImpl implements MediaService{
 			existing.setName(media.getName());
 			existing.setCreatedAt(media.getCreatedAt());
 			existing.setDescription(media.getDescription());
-			existing.setEnabled(media.getEnabled());
+//			existing.setEnabled(media.getEnabled());
 			mediaRepo.saveAndFlush(existing);
 			
 		}
@@ -66,7 +66,8 @@ public class MediaServiceImpl implements MediaService{
 		boolean deleted = false;
 		Media toBeDeleted = mediaRepo.findByIdAndUser_Username(mid, username);
 		if(toBeDeleted != null) {
-			toBeDeleted.setEnabled(Boolean.FALSE);
+			toBeDeleted.setEnabled(false);
+			mediaRepo.saveAndFlush(toBeDeleted);
 			deleted = true;
 		}
 		return deleted;
