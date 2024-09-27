@@ -56,6 +56,19 @@ export class PlaylistService {
     );
   }
 
+  showByKeyword(keyword: string) : Observable<Playlist> {
+    return this.http.get<Playlist>(`${this.url}/${keyword}`,this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => { return new Error("TodoService.show(): error retrieving todo with an id of " + keyword + ": "  + err); }
+          );
+      }
+    )
+  );
+  }
+
   update(updateTodo:Playlist) : Observable<Playlist> {
     return this.http.put<Playlist>(this.url + '/' + updateTodo.id ,updateTodo,this.getHttpOptions()).pipe(
       catchError(

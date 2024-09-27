@@ -9,6 +9,8 @@ public interface PlaylistService {
 	 public Set<Playlist> index(String username);
 
 	 public Playlist show(String username, int pid);
+	 
+	 public Set<Playlist> showByKeyword(String username, String nameKeyword, String descriptionKeyword);
 
 	 public Playlist create(String username, Playlist playlist);
 

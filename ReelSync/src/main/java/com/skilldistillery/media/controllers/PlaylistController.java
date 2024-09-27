@@ -35,12 +35,21 @@ public class PlaylistController {
 
 	@GetMapping("playlists/{pid}")
 	public Playlist show(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid, Principal principal) {
-		System.out.println(principal.getName() + " " + pid);
 		Playlist playlist = playlistService.show(principal.getName(), pid);
 		if(playlist == null) {
 			res.setStatus(404);
 		}
 		return playlist;
+	}
+	
+	@GetMapping("playlists/search/{keyword1}/{keyword2}")
+	public Set<Playlist> showByKeyword(HttpServletRequest req, HttpServletResponse res, Principal principal, @PathVariable("keyword1") String keyword1, @PathVariable("keyword2") String keyword2) {
+		Set<Playlist> playlists = playlistService.showByKeyword(principal.getName(),keyword1, keyword2);
+		System.out.println(playlists);
+		if(playlists == null) {
+			res.setStatus(404);
+		}
+		return playlists;
 	}
 
 	@PostMapping("playlists")

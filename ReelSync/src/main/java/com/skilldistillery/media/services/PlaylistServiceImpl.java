@@ -28,6 +28,11 @@ public class PlaylistServiceImpl implements PlaylistService {
 	public Playlist show(String username, int pid) {
 		return playlistRepo.findByIdAndUser_Username(pid, username);
 	}
+	
+	@Override
+	public Set<Playlist> showByKeyword(String username, String nameKeyword, String descriptionKeyword) {
+		return playlistRepo.findByUser_UsernameAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(username, nameKeyword, descriptionKeyword);
+	}
 
 	@Override
 	public Playlist create(String username, Playlist playlist) {
