@@ -1,69 +1,149 @@
-{{title}}
-<main class="content-area flex-grow-1 p-3" style="margin-left: 350px;">
-<div>
-  <!-- Add Playlist Form -->
-  <form (ngSubmit)="addPlaylist(newPlaylist)" #addForm="ngForm">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" [(ngModel)]="newPlaylist.name" name="name" class="form-control" required />
-    </div>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <input type="text" id="description" [(ngModel)]="newPlaylist.description" name="description" class="form-control" required />
-    </div>
-    <div class="form-group">
-      <label for="imageUrl">Image URL:</label>
-      <input type="text" id="imageUrl" [(ngModel)]="newPlaylist.imageUrl" name="imageUrl" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Add Playlist</button>
-  </form>
-</div>
+<main class="content-area flex-grow-1 p-3" style="margin-left: 350px;" >
+<div *ngIf="isLoggedIn()">
+  <!-- Add Playlist Form Section -->
+  <div class="container mt-5" >
+    <div class="card shadow p-4 mb-5 bg-white rounded" style="max-width: 800px; margin: 0 auto;">
+      <h2 class="mb-4 text-center" style="color: #5C374C;">Add New Playlist</h2>
+      <form (ngSubmit)="addPlaylist(newPlaylist)" #addForm="ngForm">
+        <div class="form-group mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input
+            type="text"
+            id="name"
+            [(ngModel)]="newPlaylist.name"
+            name="name"
+            class="form-control"
+            placeholder="Enter playlist name"
+            required
+          />
+        </div>
 
-<div>
-  <!-- Update Playlist Form -->
+        <div class="form-group mb-3">
+          <label for="description" class="form-label">Description:</label>
+          <input
+            type="text"
+            id="description"
+            [(ngModel)]="newPlaylist.description"
+            name="description"
+            class="form-control"
+            placeholder="Enter playlist description"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="imageUrl" class="form-label">Image URL:</label>
+          <input
+            type="text"
+            id="imageUrl"
+            [(ngModel)]="newPlaylist.imageUrl"
+            name="imageUrl"
+            class="form-control"
+            placeholder="Enter image URL"
+            required
+          />
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="addForm.invalid">
+            Create Playlist
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Playlist Cards Section -->
+  <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <div class="col" *ngFor="let playlist of playlists">
+        <div class="card shadow-sm" style="border-color: #FF8C61;">
+          <img
+            class="card-img-top"
+            [src]="playlist.imageUrl"
+            alt="{{playlist.name}}"
+            style="width: 100%; height: 225px; object-fit: cover;"
+          />
+
+          <div class="card-body" style="background-color: #FAA275;">
+            <h5 class="card-title" style="color: #5C374C;">{{playlist.name}}</h5>
+            <p class="card-text" style="color: #985277;">{{playlist.description}}</p>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm" style="background-color: #CE6A85; color: white;" (click)="findPlaylistById(playlist.id)">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deletePlaylist(playlist.id)">
+                  Delete
+                </button>
+              </div>
+              <small class="text-body-secondary">{{playlist.createdAt | date:'mediumDate'}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  <!-- Updating Form  -->
   <form *ngIf="selected" (ngSubmit)="updatePlaylist(selected)" #updateForm="ngForm">
-    <div class="form-group">
-      <label for="editName">Edit Name:</label>
-      <input type="text" id="editName" [(ngModel)]="selected.name" name="editName" class="form-control" required />
+    <div class="container mt-4">
+      <div class="card shadow-sm">
+        <div class="card-header" style="background-color: #FF8C61;">
+          <h4 class="mb-0" style="color: #5C374C;">Update Playlist</h4>
+        </div>
+        <div class="card-body" style="background-color: #FAA275;">
+          <div class="form-group mb-3">
+            <label for="editName" class="form-label" style="color: #5C374C;">Edit Name:</label>
+            <input
+              type="text"
+              id="editName"
+              [(ngModel)]="selected.name"
+              name="editName"
+              class="form-control"
+              style="border-color: #5C374C; color: #5C374C;"
+              placeholder="Enter updated playlist name"
+              required
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="editDescription" class="form-label" style="color: #5C374C;">Edit Description:</label>
+            <textarea
+              id="editDescription"
+              [(ngModel)]="selected.description"
+              name="editDescription"
+              class="form-control"
+              style="border-color: #5C374C; color: #5C374C;"
+              placeholder="Enter updated playlist description"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <label for="editImageUrl" class="form-label" style="color: #5C374C;">Edit Source URL:</label>
+            <input
+              type="text"
+              id="editImageUrl"
+              [(ngModel)]="selected.imageUrl"
+              name="editImageUrl"
+              class="form-control"
+              style="border-color: #5C374C; color: #5C374C;"
+              placeholder="Enter updated image URL"
+              required
+            />
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn" style="background-color: #CE6A85; color: white;">Update Playlist</button>
+            <button type="button" (click)="selected = null" class="btn btn-secondary" style="background-color: #5C374C; color: white;">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="editDescription">Edit Description:</label>
-      <input type="text" id="editDescription" [(ngModel)]="selected.description" name="editDescription" class="form-control" required />
-    </div>
-    <div class="form-group">
-      <label for="editImageUrl">Edit Image URL:</label>
-      <input type="text" id="editImageUrl" [(ngModel)]="selected.imageUrl" name="editImageUrl" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-success">Update Playlist</button>
-    <button type="button" (click)="selected = null" class="btn btn-secondary">Cancel</button>
   </form>
-</div>
+  </div>
+  </div>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Created At</th>
-      <th>Active</th>
-      <th>Image</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let playlist of playlists">
-      <td>{{ playlist.name }}</td>
-      <td>{{ playlist.description }}</td>
-      <td>{{ playlist.createdAt | date: 'short' }}</td>
-      <td>{{playlist.enabled}}</td>
-      <td><img [src]="playlist.imageUrl" alt="playlist image" width="50"></td>
-      <td>
-        <button (click)="findPlaylistById(playlist.id)" class="btn btn-info btn-sm">Edit</button>
-        <button (click)="deletePlaylist(playlist.id)" class="btn btn-danger btn-sm">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
 </main>
-
-

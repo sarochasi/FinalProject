@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-playlist',
@@ -22,9 +24,16 @@ export class PlaylistComponent {
   editPlaylist: Playlist | null = null;
   selected: Playlist | null = null;
 
+
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private auth:AuthService,
+  ) {}
+
+    isLoggedIn(): boolean {
+      return this.auth.checkLogin();
+    }
 
   ngOnInit() : void {
     this.loadPlaylists();

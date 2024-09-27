@@ -1,0 +1,10 @@
+
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
