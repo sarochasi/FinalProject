@@ -14,7 +14,7 @@ export class MediaService {
   private url = environment.baseUrl + 'api/media';
 
   constructor(
-    private http: HttpClient, private DatePipe: DatePipe, private auth: AuthService
+    private http: HttpClient, private auth: AuthService
   ) { }
 
   getHttpOptions() {
@@ -51,7 +51,7 @@ export class MediaService {
   }
 
   create(media: Media): Observable<Media>{
-    return this.http.post<Media>(this.url, media).pipe(
+    return this.http.post<Media>(this.url, media, this.getHttpOptions()).pipe(
       catchError((err:any) => {
         console.log(err);
         return throwError(
@@ -62,8 +62,8 @@ export class MediaService {
   }
 
   update(updateMedia: Media): Observable<Media>{
-    console.log(updateMedia);
-    return this.http.put<Media>(`${this.url}/${updateMedia.id}`, updateMedia).pipe(
+    console.log("Updating: " + updateMedia);
+    return this.http.put<Media>(this.url + '/' + updateMedia.id ,updateMedia,this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log('MediaService.update(): error updating media', err);
         return throwError(
@@ -73,8 +73,8 @@ export class MediaService {
     );
   }
 
-  destroy(id: number){
-    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+  destroy(id: number): Observable<void>{
+    return this.http.delete<void>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
       catchError(
         (err:any) => {
           console.error('MediaService.destroy(): errror deleteing media', err);

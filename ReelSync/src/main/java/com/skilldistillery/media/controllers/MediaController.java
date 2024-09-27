@@ -79,14 +79,15 @@ public class MediaController {
 	public void destroy(Principal principal, HttpServletRequest req, HttpServletResponse res,@PathVariable("mid") int mid) {
 		
 		try {
-			if(mediaService.destroy(principal.getName(), mid)) {
+			boolean result = mediaService.destroy(principal.getName(), mid);
+			if (result) {
 				res.setStatus(204);
-			}else {
-				res.setStatus(404);
+			} else {
+				res.setStatus(400);
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 			res.setStatus(400);
+			e.printStackTrace();
 		}
 	}
 

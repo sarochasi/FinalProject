@@ -54,10 +54,11 @@ public class MediaServiceImpl implements MediaService{
 			existing.setName(media.getName());
 			existing.setCreatedAt(media.getCreatedAt());
 			existing.setDescription(media.getDescription());
-			return mediaRepo.saveAndFlush(existing);
+			existing.setEnabled(media.getEnabled());
+			mediaRepo.saveAndFlush(existing);
 			
 		}
-		return null;
+		return existing;
 	}
 
 	@Override

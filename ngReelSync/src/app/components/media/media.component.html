@@ -24,11 +24,50 @@
           <td>{{ media.updatedAt }}</td>
           <td>{{ media.description }}</td>
           <td>
-            <button class="btn btn-sm btn-primary" (click)="displayMedia(media)">Details</button>
-            <!-- <button class="btn btn-sm btn-danger" (click)="deleteJob(job.id)">Delete</button> -->
+            <button class="btn btn-sm btn-primary" (click)="findMediaById(media.id)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteMedia(media.id)">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
+
+<div>
+  <!-- Add Media Form -->
+  <form (ngSubmit)="addMedia(newMedia)" #addForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="newMedia.name" name="name" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" id="description" [(ngModel)]="newMedia.description" name="description" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">Image URL:</label>
+      <input type="text" id="imageUrl" [(ngModel)]="newMedia.sourceUrl" name="imageUrl" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Media</button>
+  </form>
+</div>
+
+<div>
+  <!-- Update Media Form -->
+  <form *ngIf="selected" (ngSubmit)="updateMedia(selected)" #updateForm="ngForm">
+    <div class="form-group">
+      <label for="editName">Edit Name:</label>
+      <input type="text" id="editName" [(ngModel)]="selected.name" name="editName" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="editDescription">Edit Description:</label>
+      <input type="text" id="editDescription" [(ngModel)]="selected.description" name="editDescription" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="editImageUrl">Edit Image URL:</label>
+      <input type="text" id="editImageUrl" [(ngModel)]="selected.sourceUrl" name="editImageUrl" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success">Update Media</button>
+    <button type="button" (click)="selected = null" class="btn btn-secondary">Cancel</button>
+  </form>
 </div>
