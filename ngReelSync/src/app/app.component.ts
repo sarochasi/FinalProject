@@ -5,11 +5,13 @@ import { RegisterComponent } from "./components/register/register.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LogoutComponent } from './components/logout/logout.component';
 import { NavigationComponent } from "./components/navigation/navigation.component";
+import { MediaComponent } from './components/media/media.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RegisterComponent, LoginComponent, LogoutComponent, NavigationComponent],
+  imports: [RouterOutlet, RegisterComponent, LoginComponent,
+    LogoutComponent, NavigationComponent, MediaComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
