@@ -31,8 +31,8 @@ export class PlaylistService {
 
   }
 
-  create(newTodo:Playlist) : Observable<Playlist>{
-    return this.http.post<Playlist>(this.url,newTodo,this.getHttpOptions()).pipe(
+  create(newPlaylist:Playlist) : Observable<Playlist>{
+    return this.http.post<Playlist>(this.url,newPlaylist,this.getHttpOptions()).pipe(
       catchError(
         (err: any) => {
           console.log(err);
@@ -70,6 +70,20 @@ export class PlaylistService {
   );
   }
 
+  getPlaylistById(playlistId: number): Observable<Playlist> {
+    return this.http.get<Playlist>(`${this.url}/${playlistId}`, this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => new Error(`PlaylistService.getPlaylistById(): error retrieving playlist with an ID of ${playlistId}: ${err}`)
+          );
+        }
+      )
+    );
+  }
+
+
   update(updateTodo:Playlist) : Observable<Playlist> {
     return this.http.put<Playlist>(this.url + '/' + updateTodo.id ,updateTodo,this.getHttpOptions()).pipe(
       catchError(
@@ -96,6 +110,25 @@ export class PlaylistService {
     );
   }
 
+  addMediaToPlaylist(playlistId: number, mediaId: number): Observable<Playlist> {
+    const url = `${this.url}/${playlistId}/media/${mediaId}`;
+    return this.http.post<Playlist>(url, {}, this.getHttpOptions());
+  }
+
+  searchPlaylists(keyword1: string, keyword2: string): Observable<Set<Playlist>> {
+    const url = `${this.url}/search/${keyword1}/${keyword2}`;
+    return this.http.get<Set<Playlist>>(url, this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => {return new Error("TodoService.searchPlaylists(): error searching playlist " + err); }
+          );
+        }
+      )
+    );
+  }
+
   getHttpOptions() {
     let options = {
       headers: {
@@ -104,10 +137,5 @@ export class PlaylistService {
       },
     };
     return options;
-  }
-
-  addMediaToPlaylist(playlistId: number, mediaId: number): Observable<Playlist> {
-    const url = `${this.url}/${playlistId}/media/${mediaId}`;
-    return this.http.post<Playlist>(url, {}, this.getHttpOptions());
   }
 }

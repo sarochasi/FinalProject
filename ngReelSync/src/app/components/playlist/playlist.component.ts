@@ -8,14 +8,14 @@ import { Playlist } from '../../models/playlist';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
 import { BehaviorSubject } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
 import { Media } from '../../models/media';
 import { MediaService } from '../../services/media.service';
+import { PlaylistSearchComponent } from "../playlist-search/playlist-search.component";
 
 @Component({
   selector: 'app-playlist',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PlaylistSearchComponent],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.css'
 })
@@ -39,12 +39,12 @@ export class PlaylistComponent {
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private auth:AuthService,
+    private authService:AuthService,
     private mediaService: MediaService
   ) {}
 
     isLoggedIn(): boolean {
-      return this.auth.checkLogin();
+      return this.authService.checkLogin();
     }
 
     ngOnInit(): void {
@@ -170,6 +170,7 @@ export class PlaylistComponent {
   }
 
   addPlaylist(newPlaylist: Playlist) : void {
+    newPlaylist.creatorId = this.user.id;
     this.playlistService.create(newPlaylist).subscribe({
       next: (newPlaylist) => {
         this.loadPlaylists();
@@ -196,20 +197,30 @@ export class PlaylistComponent {
    });
   }
 
-  deletePlaylist(id: number) : void{
-    this.playlistService.destroy(id).subscribe({
-      next: () => {
-        this.loadPlaylists();
+  togglePlaylistEnabled(playlistId: number): void {
+    this.playlistService.getPlaylistById(playlistId).subscribe({
+      next: (playlist) => {
+        playlist.enabled = !playlist.enabled;
+
+        this.playlistService.update(playlist).subscribe({
+          next: (updatedPlaylist) => {
+            console.log('Playlist updated successfully:', updatedPlaylist);
+            this.loadPlaylists();
+          },
+          error: (err) => {
+            console.error('Error updating playlist:', err);
+          }
+        });
       },
       error: (err) => {
-        console.error(err);
-        console.error("error in subscribe");
+        console.error('Error retrieving playlist:', err);
       }
     });
   }
 
-  isAdmin(user: User) : boolean {
-    return this.user.role === 'admin';
-  }
 
+
+  isOwner(playlist: Playlist): boolean {
+    return playlist && this.user.id === playlist.creatorId;
+  }
 }

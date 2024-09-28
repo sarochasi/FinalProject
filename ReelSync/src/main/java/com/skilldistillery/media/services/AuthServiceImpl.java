@@ -25,15 +25,6 @@ public class AuthServiceImpl implements AuthService {
 		userRepo.saveAndFlush(user);
 		return user;
 	}
-	
-	@Override
-	public User registerAdmin(User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
-		user.setEnabled(true);
-		user.setRole("admin");
-		userRepo.saveAndFlush(user);
-		return user;
-	}
 
 	@Override
 	public User getUserByUsername(String username) {

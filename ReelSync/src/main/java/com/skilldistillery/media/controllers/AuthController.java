@@ -40,25 +40,5 @@ public class AuthController {
 	  }
 	  return authService.getUserByUsername(principal.getName());
 	}
-	
-	@PostMapping("register/admin")
-	public User registerAdmin(@RequestBody User user, HttpServletResponse res) {
-	  if (user == null) {
-	     res.setStatus(400);
-	     return null;
-	  }
-	  user = authService.registerAdmin(user);
-	  return user;
-	}
-	
-	@GetMapping("authenticate/admin")
-	public User authenticateAdmin(Principal principal, HttpServletResponse res) {
-		if (principal == null) { // no Authorization header sent
-		     res.setStatus(401);
-		     res.setHeader("WWW-Authenticate", "Basic");
-		     return null;
-		  }
-		  return authService.getUserByUsername(principal.getName());
-	}
   
 }

@@ -93,6 +93,10 @@ export class AuthService {
     return false;
   }
 
+  isAdmin(user: User) : boolean {
+    return user.role === 'admin';
+  }
+
   generateBasicAuthCredentials(username: string, password: string): string {
     return Buffer.from(`${username}:${password}`).toString('base64');
   }
