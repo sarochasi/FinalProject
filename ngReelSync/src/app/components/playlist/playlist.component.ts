@@ -1,9 +1,12 @@
+import { AuthService } from './../../services/auth.service';
+import { HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-playlist',
@@ -17,6 +20,7 @@ export class PlaylistComponent {
   title = "Playlists"
 
   playlists: Playlist[] = [];
+  user: User = new User();
 
   newPlaylist: Playlist = new Playlist();
   editPlaylist: Playlist | null = null;
@@ -24,26 +28,34 @@ export class PlaylistComponent {
 
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private authService: AuthService) {}
 
-  ngOnInit() : void {
-    this.loadPlaylists();
-    this.activatedRoute.paramMap.subscribe(
-      {
+    ngOnInit(): void {
+      this.loadPlaylists();
+      this.authService.getLoggedInUser().subscribe({
+        next: (loggedInUser) => {
+          this.user = loggedInUser;
+        },
+        error: (err) => {
+          console.error('Error fetching logged-in user:', err);
+        }
+      });
+      this.activatedRoute.paramMap.subscribe({
         next: (params) => {
           let playlistIdStr = params.get("playlistId");
-          if(playlistIdStr) { //make sure parameter was present
+          if (playlistIdStr) {
             let playlistId = parseInt(playlistIdStr);
-            if(isNaN(playlistId)){ //make sure parameter was a valid number
+            if (isNaN(playlistId)) {
               this.router.navigateByUrl('notFound');
             } else {
               this.findPlaylistById(playlistId);
             }
           }
         }
-      }
-    );
-  }
+      });
+    }
+
 
   loadPlaylists() : void {
     this.playlistService.index().subscribe({
@@ -107,6 +119,10 @@ export class PlaylistComponent {
         console.error("error in subscribe");
       }
     });
+  }
+
+  isAdmin(user: User) : boolean {
+    return this.user.role === 'admin';
   }
 
 }
