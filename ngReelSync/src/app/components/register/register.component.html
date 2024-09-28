@@ -1,16 +1,48 @@
 <main class="content-area flex-grow-1 p-3" style="margin-left: 350px;">
-<form>
-  <h3>Register</h3>
-  <div class="form-group">
-    <input class="form-control d-block mb-2" type="text" name="username" placeholder="Username" [(ngModel)]="newUser.username">
-  </div>
-  <div class="form-group">
-    <input class="form-control d-block mb-2" type="password" name="password" placeholder="Password" [(ngModel)]="newUser.password">
-  </div>
-  <div class="form-group">
-    <input class="form-control d-block mb-2" type="bio" name="bio" placeholder="Biography" [(ngModel)]="newUser.biography">
-  </div>
-  <input class="btn btn-success d-block w-50 mx-auto mb-2" (click)="register(newUser)" type="submit" value="Log in">
-</form>
-</main>
+  <form class="p-4 shadow-sm" style="background-color: #FAA275; border-radius: 8px; max-width: 400px; margin: auto;">
+    <h3 class="text-center mb-4" style="color: #5C374C;">Register</h3>
 
+    <div class="form-group mb-4">
+      <input
+        class="form-control"
+        type="text"
+        name="username"
+        placeholder="Username"
+        [(ngModel)]="newUser.username"
+        style="border-color: #5C374C; color: #5C374C;"
+        required
+      />
+    </div>
+
+    <div class="form-group mb-4">
+      <input
+        class="form-control"
+        type="password"
+        name="password"
+        placeholder="Password"
+        [(ngModel)]="newUser.password"
+        style="border-color: #5C374C; color: #5C374C;"
+        required
+      />
+    </div>
+
+    <div class="form-group mb-4">
+      <textarea
+        class="form-control"
+        type="text"
+        name="bio"
+        placeholder="Biography"
+        [(ngModel)]="newUser.biography"
+        style="border-color: #5C374C; color: #5C374C;"></textarea>
+
+    </div>
+
+    <input
+      class="btn btn-block"
+      style="background-color: #CE6A85; color: white; width: 100%;"
+      (click)="register(newUser)"
+      type="submit"
+      value="Register"
+    />
+  </form>
+</main>

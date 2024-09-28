@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
-import { Observable, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { Playlist } from '../models/playlist';
 
 @Injectable({
@@ -13,6 +13,7 @@ export class PlaylistService {
 
   private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/playlists';
+
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -103,5 +104,10 @@ export class PlaylistService {
       },
     };
     return options;
+  }
+
+  addMediaToPlaylist(playlistId: number, mediaId: number): Observable<Playlist> {
+    const url = `${this.url}/${playlistId}/media/${mediaId}`;
+    return this.http.post<Playlist>(url, {}, this.getHttpOptions());
   }
 }
