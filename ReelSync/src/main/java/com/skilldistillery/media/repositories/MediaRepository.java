@@ -14,5 +14,7 @@ public interface MediaRepository extends JpaRepository<Media, Integer>{
 	Media findByIdAndUser_Username(int mediaId, String username);
 	
 	List<Media> findByEnabledTrue();
+	
+	
 
 }

@@ -11,6 +11,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class MediaService {
 
+  private baseUrl = environment.baseUrl;
   private url = environment.baseUrl + 'api/media';
 
   constructor(
@@ -85,5 +86,7 @@ export class MediaService {
       )
     );
   }
+
+
 
 }

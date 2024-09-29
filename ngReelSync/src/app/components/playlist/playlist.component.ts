@@ -1,5 +1,4 @@
 import { AuthService } from './../../services/auth.service';
-import { HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +6,6 @@ import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
-import { BehaviorSubject } from 'rxjs';
 import { Media } from '../../models/media';
 import { MediaService } from '../../services/media.service';
 import { PlaylistSearchComponent } from "../playlist-search/playlist-search.component";
@@ -128,6 +126,10 @@ export class PlaylistComponent {
         console.log("Error loading media in showPlaylistMedia() :" + err);
       }
     })
+  }
+
+  viewPlaylistDetail(playlistId: number): void {
+    this.router.navigate(['/playlists', playlistId]);
   }
 
   submitMediaToPlaylist(): void {

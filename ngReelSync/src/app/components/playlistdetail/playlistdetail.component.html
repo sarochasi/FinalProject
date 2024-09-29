@@ -1,0 +1,43 @@
+<main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 0px">
+<div class="container mt-5">
+  <h2 class="mb-4 text-center" style="color: #5C374C;">{{ playlist?.name }}</h2>
+  <p class="text-center" style="color: #985277;">{{ playlist?.description }}</p>
+  <p class="text-center text-muted">Created At: {{ playlist?.createdAt | date: 'mediumDate' }}</p>
+
+  <div class="card-body" style="background-color: #FAA275;">
+    <h3 class="text-center" style="color: #5C374C;">Media List</h3>
+    <table class="table table-hover" style="background-color: #fff; border-radius: 5px;">
+      <thead class="thead-dark" style="background-color: #FF8C61; color: white;">
+        <tr>
+          <th>Source URL</th>
+          <th>Name</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let media of mediaList">
+          <td>{{ media.sourceUrl }}</td>
+          <td>{{ media.name }}</td>
+          <td>{{ media.createdAt | date: 'mediumDate' }}</td>
+          <td>{{ media.updatedAt | date: 'mediumDate' }}</td>
+          <td>{{ media.description }}</td>
+          <td>
+            <button type="button" class="btn btn-sm" style="background-color: #CE6A85; color: white;" (click)="findMediaById(media.id)">Edit</button>
+            <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deleteMedia(media.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <!-- Display this when there are no media items -->
+  <ng-template #noMedia>
+    <p>No media found for this playlist.</p>
+  </ng-template>
+</div>
+</main>

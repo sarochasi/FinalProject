@@ -6,7 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { MediaComponent } from './components/media/media.component';
 
 import { PlaylistComponent } from './components/playlist/playlist.component';
-
+import { PlaylistdetailComponent } from './components/playlistdetail/playlistdetail.component';
 
 
 export const routes: Routes = [
@@ -16,6 +16,7 @@ export const routes: Routes = [
   {path: 'register/admin', component: RegisterComponent},
   {path: 'media', component: MediaComponent},
   {path: 'playlists', component: PlaylistComponent},
+  {path: 'playlists/:id', component: PlaylistdetailComponent},
 
   { path: '', redirectTo: '/playlists', pathMatch: 'full' }
 ];

@@ -9,11 +9,12 @@ import { MediaComponent } from './components/media/media.component';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { PlaylistComponent } from './components/playlist/playlist.component';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RegisterComponent, LoginComponent,
-    LogoutComponent, NavigationComponent, MediaComponent, SidebarComponent, PlaylistComponent],
+    LogoutComponent, NavigationComponent, MediaComponent, SidebarComponent, PlaylistComponent, PlaylistComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
