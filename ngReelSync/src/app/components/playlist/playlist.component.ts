@@ -118,6 +118,18 @@ export class PlaylistComponent {
     });
   }
 
+  showPlaylistMedia(): void {
+    this.mediaService.index().subscribe({
+      next: (media) => {
+        console.log('Media loaded sucessfully', media);
+        this.reloadMedia();
+      },
+      error: (err) => {
+        console.log("Error loading media in showPlaylistMedia() :" + err);
+      }
+    })
+  }
+
   submitMediaToPlaylist(): void {
     if (this.selected) {
       this.mediaInputs.forEach((mediaInput) => {

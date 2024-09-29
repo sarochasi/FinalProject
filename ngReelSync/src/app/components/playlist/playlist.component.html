@@ -66,7 +66,7 @@
 
 <!-- Playlist Cards Section -->
 <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+  <div (click)="showPlaylistMedia()" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
     <div class="col" *ngFor="let playlist of playlists">
       <div class="card shadow-sm" style="border-color: #FF8C61;">
         <img
