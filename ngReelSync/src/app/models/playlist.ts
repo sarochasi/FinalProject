@@ -7,6 +7,7 @@ export class Playlist {
   imageUrl: string
   enabled: boolean
   published: boolean
+  creatorId: number
 
   constructor(
     id: number = 0,
@@ -16,7 +17,8 @@ export class Playlist {
     updatedAt: string = '',
     imageUrl: string = '',
     enabled: boolean = true,
-    published: boolean = false
+    published: boolean = false,
+    creatorId: number = 0,
   ) {
     this.id = id;
     this.name = name;
@@ -26,5 +28,6 @@ export class Playlist {
     this.imageUrl = imageUrl;
     this.enabled = enabled;
     this.published = published;
+    this.creatorId = creatorId;
   }
 }
