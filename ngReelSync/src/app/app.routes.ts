@@ -8,10 +8,13 @@ import { MediaComponent } from './components/media/media.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 
 
+
 export const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'media', component: MediaComponent},
-  {path: 'playlists', component: PlaylistComponent}
+  {path: 'playlists', component: PlaylistComponent},
+
+  { path: '', redirectTo: '/playlists', pathMatch: 'full' }
 ];

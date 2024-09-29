@@ -27,7 +27,12 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 	@Override
 	public Set<Playlist> index(String username) {
-		return playlistRepo.findByUser_Username(username);
+		User user = userRepo.findByUsername(username);
+		
+		if(user != null) {
+			return playlistRepo.findByEnabledTrue();
+		}
+		return null;
 	}
 
 	@Override
@@ -68,7 +73,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 		boolean deleted = false;
 		Playlist managedPlaylist = playlistRepo.findByIdAndUser_Username(pid, username);
 		if (managedPlaylist != null) {
-			managedPlaylist.setEnabled(Boolean.FALSE);
+			managedPlaylist.setEnabled(false);
+			playlistRepo.saveAndFlush(managedPlaylist);
 			deleted = true;
 		}
 		return deleted;

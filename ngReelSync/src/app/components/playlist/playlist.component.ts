@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Media } from '../../models/media';
 import { MediaService } from '../../services/media.service';
