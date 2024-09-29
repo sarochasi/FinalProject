@@ -223,4 +223,16 @@ export class PlaylistComponent {
   isOwner(playlist: Playlist): boolean {
     return playlist && this.user.id === playlist.creatorId;
   }
+
+  deletePlaylist(id: number) : void{
+    this.playlistService.destroy(id).subscribe({
+      next: () => {
+        this.loadPlaylists();
+      },
+      error: (err) => {
+        console.error(err);
+        console.error("error in subscribe");
+      }
+    });
+  }
 }
