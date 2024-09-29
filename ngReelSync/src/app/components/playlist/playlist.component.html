@@ -1,13 +1,19 @@
 
-{{title}}
-
-
 <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
   <app-playlist-search></app-playlist-search>
 <!-- Add Playlist Form Section -->
-<div class="container mt-5">
-  <div class="card shadow p-4 mb-5 bg-white rounded" style="max-width: 800px; margin: 0 auto;">
+<div class="container mt-5" style="max-width: 800px; margin: 0 auto;">
+  <!-- Button to toggle form visibility -->
+  <div class="text-center mb-4">
+    <button class="btn" style="background-color: #CE6A85; color: white;" (click)="showForm = !showForm">
+      Create New Playlist
+    </button>
+  </div>
+
+  <!-- Add New Playlist Form (Initially hidden) -->
+  <div class="card shadow p-4 mb-5 bg-white rounded" *ngIf="showForm">
     <h2 class="mb-4 text-center" style="color: #5C374C;">Add New Playlist</h2>
+
     <form #addForm="ngForm">
       <div class="form-group mb-3">
         <label for="name" class="form-label">Name:</label>
@@ -21,6 +27,7 @@
           required
         />
       </div>
+
       <div class="form-group mb-3">
         <label for="description" class="form-label">Description:</label>
         <input
@@ -33,6 +40,7 @@
           required
         />
       </div>
+
       <div class="form-group mb-4">
         <label for="imageUrl" class="form-label">Image URL:</label>
         <input
@@ -54,6 +62,7 @@
     </form>
   </div>
 </div>
+
 
 <!-- Playlist Cards Section -->
 <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">

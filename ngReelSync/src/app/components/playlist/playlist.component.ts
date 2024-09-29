@@ -29,6 +29,7 @@ export class PlaylistComponent {
   newPlaylist: Playlist = new Playlist();
   editPlaylist: Playlist | null = null;
   selected: Playlist | null = null;
+  showForm = false;
 
   mediaList: Media[] = [];
   showMediaForm = false;
