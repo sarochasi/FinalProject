@@ -34,7 +34,13 @@ export class PlaylistComponent {
   mediaList: Media[] = [];
   showMediaForm = false;
   newMedia: Media = new Media();
-  mediaInputs: { sourceUrl: string }[] = [{ sourceUrl: '' }];
+  mediaInputs: {
+    sourceUrl: string;
+    name: string;
+    description: string;
+  }[] = [
+    { sourceUrl: '', name: '', description: '' }
+  ];
   selectedPlaylistId: number | null = null;
 
   constructor(private playlistService: PlaylistService,
@@ -89,9 +95,9 @@ export class PlaylistComponent {
   addMedia(newMedia: Media, playlistId: number): void {
     this.mediaService.create(newMedia).subscribe({
       next: (createdMedia) => {
-        const mediaId = createdMedia.id; // Get media ID after creation
+        const mediaId = createdMedia.id;
 
-        // Now associate the media with the playlist
+
         this.addMediaToPlaylist(playlistId, mediaId);
       },
       error: (err) => {
@@ -100,7 +106,6 @@ export class PlaylistComponent {
     });
   }
 
-  // Adds the created media to a specific playlist
   addMediaToPlaylist(playlistId: number, mediaId: number): void {
     this.playlistService.addMediaToPlaylist(playlistId, mediaId).subscribe({
       next: (updatedPlaylist) => {
@@ -121,8 +126,7 @@ export class PlaylistComponent {
 
         this.mediaService.create(newMedia).subscribe({
           next: (createdMedia) => {
-            const mediaId = createdMedia.id; // Assume createdMedia has the id
-            // Add each created media to the playlist
+            const mediaId = createdMedia.id;
             this.addMediaToPlaylist(this.selected!.id, mediaId);
           },
           error: (err) => {
@@ -131,18 +135,18 @@ export class PlaylistComponent {
         });
       });
     }
-    // Reset the form after submission
-    this.mediaInputs = [{ sourceUrl: '' }];
-    this.toggleMediaForm(); // Close the form
+
+    this.mediaInputs = [{ sourceUrl: '', name: '', description: '' }];
+    this.toggleMediaForm();
   }
 
   toggleMediaForm() {
     this.showMediaForm = !this.showMediaForm;
   }
 
-  // Adds new input fields dynamically
+
   addMoreInputs() {
-    this.mediaInputs.push({ sourceUrl: '' });
+    this.mediaInputs.push({ sourceUrl: '', name: '', description: '' });
   }
 
   loadPlaylists() : void {

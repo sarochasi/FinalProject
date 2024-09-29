@@ -159,18 +159,49 @@
   <!-- Add Media Form (hidden initially) -->
   <form *ngIf="showMediaForm" #mediaForm="ngForm">
     <!-- Media Inputs -->
-    <div *ngFor="let media of mediaInputs; let i = index" class="form-group mb-3">
-      <label [for]="'sourceUrl' + i" class="form-label">Media Source URL {{i + 1}}:</label>
-      <input
-        type="text"
-        [id]="'sourceUrl' + i"
-        [(ngModel)]="media.sourceUrl"
-        name="sourceUrl{{i}}"
-        class="form-control"
-        placeholder="Enter media source URL"
-        required
-      />
+    <div *ngFor="let media of mediaInputs; let i = index" class="media-input-group mb-4">
+      <!-- Media Source URL Input -->
+      <div class="form-group mb-3">
+        <label [for]="'sourceUrl' + i" class="form-label">Media Source URL {{ i + 1 }}:</label>
+        <input
+          type="text"
+          [id]="'sourceUrl' + i"
+          [(ngModel)]="media.sourceUrl"
+          name="sourceUrl{{i}}"
+          class="form-control"
+          placeholder="Enter media source URL"
+          required
+        />
+      </div>
+
+      <!-- Media Name Input -->
+      <div class="form-group mb-3">
+        <label [for]="'name' + i" class="form-label">Media Name {{ i + 1 }}:</label>
+        <input
+          type="text"
+          [id]="'name' + i"
+          [(ngModel)]="media.name"
+          name="name{{i}}"
+          class="form-control"
+          placeholder="Enter media name"
+          required
+        />
+      </div>
+
+      <!-- Media Description Input -->
+      <div class="form-group mb-3">
+        <label [for]="'description' + i" class="form-label">Media Description {{ i + 1 }}:</label>
+        <input
+          type="text"
+          [id]="'description' + i"
+          [(ngModel)]="media.description"
+          name="description{{i}}"
+          class="form-control"
+          placeholder="Enter media description"
+        />
+      </div>
     </div>
+
 
     <!-- Add more button -->
     <button type="button" class="btn btn-secondary mb-3" (click)="addMoreInputs()">+ Add More</button>
