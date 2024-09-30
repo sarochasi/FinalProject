@@ -26,21 +26,12 @@
                   >
                     View
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm"
-                    style="background-color: #CE6A85; color: white;"
-                    (click)="toggleCommentSection()"
-                  >
-                    Comment
-                  </button>
                 </div>
               </div>
 
               <!-- Comment Section -->
               <div *ngIf="showCommentSection" class="mt-3">
                 <form (ngSubmit)="submitCommentToPlaylist(playlist.id, newCommentForm)" #newCommentForm="ngForm">
-                  <!-- <div class="form-group" *ngFor="let comment of commentInputs; let i = index"></div> -->
                   <div class="form-group">
                     <textarea
                       name="content"
@@ -49,9 +40,8 @@
                       placeholder="Write a comment..."
                       required
                       ngModel
+                      #commentInput="ngModel"
                       ></textarea>
-                      <!-- [(ngModel)]="comment.content" -->
-                      <!-- [ngModelOptions]="{standalone: true}" -->
                   </div>
                   <button type="submit" class="btn btn-sm" style="background-color: #FF8C61; color: white;">
                     Submit Comment
@@ -59,16 +49,16 @@
                 </form>
 
                 <!-- Display Comments -->
-                <div class="mt-3" *ngIf="commentInputs.length > 0">
-                  <h6>Comments:</h6>
-                  <ul class="list-group">
-                    <li *ngFor="let comment of commentInputs" class="list-group-item">
-                      {{ comment.content }}
-                    </li>
-                  </ul>
-                </div>
+                <h6>Comments:</h6>
+                <ul class="comment-list" style="max-height: 200px; overflow-y: auto;">
+                  <li *ngFor="let comment of playlist.playlistComments" class="list-group-item">
+                    {{ comment.content }}
+                    <small class="text-muted">
+                      By {{ comment.user.username || 'Anonymous' }} on {{ comment.createdAt | date: 'medium' }}
+                    </small>
+                  </li>
+                </ul>
               </div>
-
             </div>
           </div>
         </div>

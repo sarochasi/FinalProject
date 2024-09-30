@@ -43,6 +43,17 @@ public class PlaylistCommentController {
 		return comment;
 	}
 	
+	@GetMapping("playlists/{pid}/comments")
+    public List<PlaylistComment> getCommentsByPlaylistId(Principal principal, HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid) {
+        List<PlaylistComment> comments = commentService.getCommentsByPlaylistId(pid);
+        if (comments != null && !comments.isEmpty()) {
+            res.setStatus(200);
+        } else {
+            res.setStatus(204);
+        }
+        return comments;
+    }
+	
 	@PostMapping({"playlists/{pid}/comments","playlists/{pid}/comments/"})
 	public PlaylistComment create(@RequestBody PlaylistComment newComment, @PathVariable("pid") int pid, Principal principal, HttpServletRequest req, HttpServletResponse res) {
 		try {

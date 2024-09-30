@@ -55,6 +55,10 @@ export class PlaylistcommentService {
     );
   }
 
+  getCommentsForPlaylist(playlistId: number): Observable<PlaylistComment[]> {
+    return this.http.get<PlaylistComment[]>(`${this.baseUrl}api/playlists/${playlistId}/comments`, this.getHttpOptions());
+  }
+
   create(playlistId: number, comment: PlaylistComment): Observable<PlaylistComment>{
     // return this.http.post<PlaylistComment>(this.url, comment, this.getHttpOptions()).pipe(
     return this.http.post<PlaylistComment>(`${this.baseUrl}api/playlists/${playlistId}/comments`, comment, this.getHttpOptions()).pipe(
@@ -66,12 +70,6 @@ export class PlaylistcommentService {
       })
     );
   }
-
-  // addCommentToPlaylist(playlistId: number, commentId: number): Observable<Playlist> {
-  //   const url = `${this.baseUrl}/playlists/${playlistId}/comments/${commentId}`;
-  //   return this.http.post<Playlist>(url, {}, this.getHttpOptions());
-  // }
-
 
 
 

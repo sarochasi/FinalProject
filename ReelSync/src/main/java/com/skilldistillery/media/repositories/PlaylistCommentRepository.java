@@ -11,5 +11,6 @@ public interface PlaylistCommentRepository extends JpaRepository<PlaylistComment
 	List<PlaylistComment> findByUser_Username(String username);
 	PlaylistComment findByIdAndUser_Username(int pid, String username);
 	List<PlaylistComment> findByEnabledTrue();
+	List<PlaylistComment> findByPlaylistId(int playlistId);
 
 }

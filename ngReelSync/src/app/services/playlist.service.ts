@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { Playlist } from '../models/playlist';
 import { User } from '../models/user';
 import { Media } from '../models/media';
+import { PlaylistComment } from '../models/playlistcomment';
 
 @Injectable({
   providedIn: 'root'
@@ -122,6 +123,10 @@ export class PlaylistService {
   //   const url = `${this.url}/${playlistId}/comments/${commentId}`;
   //   return this.http.post<Playlist>(url, {}, this.getHttpOptions());
   // }
+
+  getCommentsForPlaylist(playlistId: number): Observable<PlaylistComment[]> {
+    return this.http.get<PlaylistComment[]>(`${this.baseUrl}api/playlists/${playlistId}/comments`, this.getHttpOptions());
+  }
 
   searchPlaylists(keyword1: string, keyword2: string): Observable<Set<Playlist>> {
     const url = `${this.url}/search/${keyword1}/${keyword2}`;

@@ -1,3 +1,5 @@
+import { PlaylistComment } from "./playlistcomment"
+
 export class Playlist {
   id: number
   name: string
@@ -9,6 +11,7 @@ export class Playlist {
   published: boolean
   creatorId: number
   favorite: boolean
+  playlistComments: PlaylistComment[]
 
   constructor(
     id: number = 0,
@@ -20,7 +23,8 @@ export class Playlist {
     enabled: boolean = true,
     published: boolean = false,
     creatorId: number = 0,
-    favorite: boolean = false
+    favorite: boolean = false,
+    playlistComments: PlaylistComment[] =[]
   ) {
     this.id = id;
     this.name = name;
@@ -32,5 +36,6 @@ export class Playlist {
     this.published = published;
     this.creatorId = creatorId;
     this.favorite = favorite;
+    this.playlistComments = playlistComments
   }
 }

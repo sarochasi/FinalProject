@@ -10,6 +10,7 @@ import { MediaService } from '../../services/media.service';
 import { CommonModule } from '@angular/common';
 import { PlaylistcommentService } from '../../services/playlistcomment.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,8 +29,7 @@ export class HomeComponent {
 
   playlistComment: PlaylistComment[] = [];
   commentList: PlaylistComment[] = [];
-  // newComment: PlaylistComment = new PlaylistComment();
-  showCommentSection = false;
+  showCommentSection = true;
 
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
@@ -53,6 +53,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.loadPlaylists();
+    this.fetchPlaylists();
     this.authService.getLoggedInUser().subscribe({
       next: (loggedInUser) => {
         this.user = loggedInUser;
@@ -61,20 +62,32 @@ export class HomeComponent {
         console.error('Error fetching logged-in user:', err);
       }
     });
-    this.activatedRoute.paramMap.subscribe({
-      next: (params) => {
-        let playlistIdStr = params.get("playlistId");
-        if (playlistIdStr) {
-          let playlistId = parseInt(playlistIdStr);
-          if (isNaN(playlistId)) {
-            this.router.navigateByUrl('notFound');
-          } else {
-            this.findPlaylistById(playlistId);
-          }
-        }
+    this.playlists.forEach((playlist) => {
+      this.getCommentsForPlaylist(playlist.id);
+    });
+
+  }
+
+  fetchPlaylists(): void {
+
+    this.playlistService.index().subscribe({
+      next: (playlists) => {
+
+        this.playlists = playlists.map(playlist => ({
+          ...playlist,
+          showCommentSection: true
+        }));
+
+        this.playlists.forEach(playlist => {
+          this.reloadComments(playlist.id);
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching playlists:', err);
       }
     });
   }
+
 
   loadPlaylists() : void {
     this.playlistService.index().subscribe({
@@ -105,77 +118,54 @@ export class HomeComponent {
     this.router.navigate(['/playlists', playlistId]);
   }
 
-  // addComment(newComment: PlaylistComment, playlistId: number): void {
-  //   this.commentService.create(playlistId, newComment).subscribe({
-  //     next: (createdComment) => {
-  //       const commentId = createdComment.id;
-
-
-  //       this.addCommentToPlaylist(playlistId, commentId);
-  //     },
-  //     error: (err) => {
-  //       console.error('Error creating comment:', err);
-  //     },
-  //   });
-  // }
-
-  // addCommentToPlaylist(playlistId: number, commentId: number): void {
-  //   this.playlistService.addCommentToPlaylist(playlistId, commentId).subscribe({
-  //     next: (updatedPlaylist) => {
-  //       console.log('Comment added to playlist successfully:', updatedPlaylist);
-  //       this.reloadComment();
-  //     },
-  //     error: (err) => {
-  //       console.error('Error adding comment to playlist:', err);
-  //     }
-  //   });
-  // }
-
-  reloadComment() {
-    this.commentService.index().subscribe({
-      next: (commentList) => {
-        this.commentList = commentList;
+  getCommentsForPlaylist(playlistId: number): void {
+    this.playlistService.getCommentsForPlaylist(playlistId).subscribe({
+      next: (comments) => {
+        const playlist = this.playlists.find(p => p.id === playlistId);
+        if (playlist) {
+          playlist.playlistComments = comments;
+        }
       },
-      error: (fail) => {
-        console.error('CommentComponent.reloadComment: error retrieving list');
-        console.error(fail);
+      error: (err) => {
+        console.error('Error fetching comments for playlist:', err);
       }
     });
   }
 
-  // submitCommentToPlaylist(): void {
-  submitCommentToPlaylist(playlistId: number, form: NgForm): void {
+  reloadComments(playlistId: number): void {
+    this.commentService.getCommentsForPlaylist(playlistId).subscribe({
+      next: (comments) => {
 
-    // if (this.selected) {
-      // this.commentInputs.forEach((commentInputs) => {
-        // const newComment = new PlaylistComment();
-        // newComment.content = commentInputs.content;
-        console.log(form);
-        console.log(form.value);
-
-
-        const newComment = form.value;
-
-        this.commentService.create(playlistId, newComment).subscribe({
-          next: (createdComment) => {
-            const commentId = createdComment.id;
-            // this.addCommentToPlaylist(this.selected!.id, commentId);
-          },
-          error: (err) => {
-            console.error('Error creating comment:', err);
-          }
-        });
-      // );
-      // });
-    // }
-
-    // this.commentInputs = [{ content: '', createdAt: ''}];
-    // this.toggleCommentSection();
+        const playlist = this.playlists.find(p => p.id === playlistId);
+        if (playlist) {
+          playlist.playlistComments = comments;
+        }
+      },
+      error: (err) => {
+        console.error('Error reloading comments:', err);
+      }
+    });
   }
 
 
+  submitCommentToPlaylist(playlistId: number, form: NgForm): void {
+    if (form.valid) {
+      const newComment = form.value;
+      this.commentService.create(playlistId, newComment).subscribe({
+        next: () => {
+
+          this.reloadComments(playlistId);
+          form.reset();
+        },
+        error: (err) => {
+          console.error('Error adding comment:', err);
+        }
+      });
+    }
+  }
 
   toggleCommentSection(): void {
+
     this.showCommentSection = !this.showCommentSection;
   }
 

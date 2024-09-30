@@ -15,4 +15,6 @@ public List<PlaylistComment> index(String username);
 	public PlaylistComment update(String username, int cid, PlaylistComment comment);
 	
 	public boolean destroy(String username, int cid);
+
+	public List<PlaylistComment> getCommentsByPlaylistId(int pid);
 }

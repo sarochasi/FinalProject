@@ -84,4 +84,9 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 		}
 		return deleted;
 	}
+
+	@Override
+	public List<PlaylistComment> getCommentsByPlaylistId(int pid) {
+		return commentRepo.findByPlaylistId(pid);
+	}
 }
