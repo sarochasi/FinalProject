@@ -9,11 +9,12 @@ import { User } from '../../models/user';
 import { Media } from '../../models/media';
 import { MediaService } from '../../services/media.service';
 import { PlaylistSearchComponent } from "../playlist-search/playlist-search.component";
+import { LoginComponent } from "../login/login.component";
 
 @Component({
   selector: 'app-playlist',
   standalone: true,
-  imports: [CommonModule, FormsModule, PlaylistSearchComponent],
+  imports: [CommonModule, FormsModule, PlaylistSearchComponent, LoginComponent],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.css'
 })
@@ -169,14 +170,16 @@ export class PlaylistComponent {
   loadPlaylists() : void {
     this.playlistService.index().subscribe({
       next: (playlists) => {
+
         this.playlists = playlists;
-        this.updateFavoritePlaylists();
+        // this.updateFavoritePlaylists();
       },
       error: (err) => {
         console.error(err);
-        console.error("error in subscribe");
+        console.error("Error loading playlists");
       }
     });
+
   }
 
   findPlaylistById(playlistId: number) : void {

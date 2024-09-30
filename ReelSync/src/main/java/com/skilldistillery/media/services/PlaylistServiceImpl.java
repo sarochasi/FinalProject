@@ -30,7 +30,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		User user = userRepo.findByUsername(username);
 		
 		if(user != null) {
-			return playlistRepo.findByEnabledTrue();
+			return playlistRepo.findByUser_UsernameAndEnabledTrue(username);
 		}
 		return null;
 	}

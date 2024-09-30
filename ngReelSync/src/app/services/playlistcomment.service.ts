@@ -13,7 +13,7 @@ import { Playlist } from '../models/playlist';
 export class PlaylistcommentService {
 
   private baseUrl = environment.baseUrl;
-  private url = environment.baseUrl + 'api/';
+  private url = environment.baseUrl + 'api/comments';
 
   user: User = new User();
 
@@ -66,7 +66,7 @@ export class PlaylistcommentService {
   }
 
   addCommentToPlaylist(playlistId: number, commentId: number): Observable<Playlist> {
-    const url = `${this.url}/playlists/${playlistId}/comments/${commentId}`;
+    const url = `${this.baseUrl}/playlists/${playlistId}/comments/${commentId}`;
     return this.http.post<Playlist>(url, {}, this.getHttpOptions());
   }
 

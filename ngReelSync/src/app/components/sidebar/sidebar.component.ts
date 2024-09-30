@@ -64,14 +64,22 @@ export class SidebarComponent {
     loadPlaylists() : void {
       this.playlistService.index().subscribe({
         next: (playlists) => {
+
           this.playlists = playlists;
+
         },
         error: (err) => {
           console.error(err);
-          console.error("error in subscribe");
+          console.error("Error loading playlists");
         }
       });
+
     }
+
+    isOwner(playlist: Playlist): boolean {
+      return playlist && this.user.id === playlist.creatorId;
+    }
+
 
     findPlaylistById(playlistId: number) : void {
       this.playlistService.show(playlistId).subscribe({
@@ -81,7 +89,7 @@ export class SidebarComponent {
         error: (err) => {
           this.router.navigateByUrl('notFound');
           console.error(err);
-          console.error("error in subscribe for finding todo by id");
+          console.error("error in subscribe for finding playlist by id");
         }
       });
     }

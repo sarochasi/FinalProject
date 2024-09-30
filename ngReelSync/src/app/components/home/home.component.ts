@@ -7,11 +7,12 @@ import { PlaylistService } from '../../services/playlist.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MediaService } from '../../services/media.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -83,6 +84,10 @@ export class HomeComponent {
         console.error("error in subscribe for finding todo by id");
       }
     });
+  }
+
+  viewPlaylistDetail(playlistId: number): void {
+    this.router.navigate(['/playlists', playlistId]);
   }
 
 }
