@@ -94,6 +94,25 @@ public class PlaylistController {
 		
 		return managedPlaylist;
 	}
+	
+	@PostMapping("playlists/{pid}/favorite")
+	public Playlist addToFavorites(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid, Principal principal) {
+	    Playlist playlist = playlistService.addToFavorites(principal.getName(), pid);
+	    if (playlist == null) {
+	        res.setStatus(404);
+	    } else {
+	        res.setStatus(201);
+	        res.setHeader("location", req.getRequestURL().toString());
+	    }
+	    return playlist;
+	}
+	
+	@GetMapping("playlists/favorite")
+	public Set<Playlist> getFavorites(HttpServletRequest req, HttpServletResponse res, Principal principal) {
+		Set<Playlist> favorites = playlistService.getFavorites(principal.getName());
+		return favorites;
+	}
+
 
 	@PutMapping("playlists/{pid}")
 	public Playlist update(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid, @RequestBody Playlist playlist, Principal principal) {

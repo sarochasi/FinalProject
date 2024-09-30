@@ -19,4 +19,8 @@ public interface PlaylistService {
 	 public boolean destroy(String username, int pid);
 	 
 	 public Playlist addMedia(String username, int pid, int mid);
+	 
+	 public Playlist addToFavorites(String username, int playlistId);
+	 
+	 public Set<Playlist> getFavorites(String username);
 }

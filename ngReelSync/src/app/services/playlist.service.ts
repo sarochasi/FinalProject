@@ -132,6 +132,17 @@ export class PlaylistService {
     );
   }
 
+  addToFavorites(playlistId: number): Observable<Playlist> {
+    const url = `${this.url}/${playlistId}/favorite`;
+    return this.http.post<Playlist>(url, {}, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(() => new Error('PlaylistService.addToFavorites(): error updating favorite status: ' + err));
+      })
+    );
+  }
+
+
   getHttpOptions() {
     let options = {
       headers: {

@@ -25,7 +25,7 @@ export class PlaylistComponent {
   user: User = new User();
 
   newPlaylist: Playlist = new Playlist();
-  favoritePlaylist: Playlist = new Playlist();
+  favoritePlaylists: Playlist[] = [];
   editPlaylist: Playlist | null = null;
   selected: Playlist | null = null;
   showForm = false;
@@ -33,9 +33,6 @@ export class PlaylistComponent {
   mediaList: Media[] = [];
   showMediaForm = false;
   newMedia: Media = new Media();
-
-
-
 
   mediaInputs: {
     sourceUrl: string;
@@ -173,6 +170,7 @@ export class PlaylistComponent {
     this.playlistService.index().subscribe({
       next: (playlists) => {
         this.playlists = playlists;
+        this.updateFavoritePlaylists();
       },
       error: (err) => {
         console.error(err);
@@ -264,5 +262,18 @@ export class PlaylistComponent {
     });
   }
 
+  toggleFavorite(playlist: Playlist): void {
+    this.playlistService.addToFavorites(playlist.id).subscribe({
+      next: (updatedPlaylist) => {
+        playlist.favorite = updatedPlaylist.favorite;
+        this.updateFavoritePlaylists();
+      },
+      error: (err) => console.error('Error updating favorite status:', err),
+    });
+  }
+
+  updateFavoritePlaylists(): void {
+    this.favoritePlaylists = this.playlists.filter((playlist) => playlist.favorite);
+  }
 
 }

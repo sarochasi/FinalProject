@@ -12,4 +12,5 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
 	Playlist findByIdAndUser_Username(int pid, String username);
     Set<Playlist> findByUser_UsernameAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String username, String nameKeyword, String descriptionKeyword);
     Set<Playlist> findByEnabledTrue();
+    Set<Playlist> findByFavoriteTrue();
 }

@@ -21,6 +21,7 @@ import { User } from '../../models/user';
 export class SidebarComponent {
 
   playlists: Playlist[] = [];
+  favoritePlaylists: Playlist[] = [];
   user: User = new User();
   selected: Playlist | null = null;
 

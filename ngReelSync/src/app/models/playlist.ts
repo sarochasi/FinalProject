@@ -8,6 +8,7 @@ export class Playlist {
   enabled: boolean
   published: boolean
   creatorId: number
+  favorite: boolean
 
   constructor(
     id: number = 0,
@@ -19,6 +20,7 @@ export class Playlist {
     enabled: boolean = true,
     published: boolean = false,
     creatorId: number = 0,
+    favorite: boolean = false
   ) {
     this.id = id;
     this.name = name;
@@ -29,5 +31,6 @@ export class Playlist {
     this.enabled = enabled;
     this.published = published;
     this.creatorId = creatorId;
+    this.favorite = favorite;
   }
 }

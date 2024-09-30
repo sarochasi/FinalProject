@@ -91,4 +91,28 @@ public class PlaylistServiceImpl implements PlaylistService {
 			playlist.getMedia().add(media);  
 		} return playlist; 
 	}
+	
+	@Override
+    public Playlist addToFavorites(String username, int playlistId) {
+        User user = userRepo.findByUsername(username);
+        Optional<Playlist> playlistOpt = playlistRepo.findById(playlistId);
+
+        if (playlistOpt.isPresent()) {
+        	Playlist playlist = playlistOpt.get();
+
+            if (!user.getFavoritePlaylists().contains(playlist)) {
+            	user.getFavoritePlaylists().add(playlist);
+                userRepo.save(user);
+            }
+            return playlist;
+        }
+        return null;
+    }
+	
+	@Override
+	public Set<Playlist> getFavorites(String username) {
+		Set<Playlist> favorites = playlistRepo.findByFavoriteTrue();
+		return favorites;
+		
+	}
 }
