@@ -7,7 +7,8 @@ export class User {
   imageUrl: string | null;
   biography: string | null;
   createdAt: string | null;
-  updatedAt: string | null
+  updatedAt: string | null;
+  favorites: number[];
 
   constructor(
     id: number = 0,
@@ -18,7 +19,8 @@ export class User {
     imageUrl: string = '',
     biography: string = '',
     createdAt: string = '',
-    updatedAt: string = ''
+    updatedAt: string = '',
+    favorites: number[] = []
   ){
     this.id = id;
     this.username = username;
@@ -28,7 +30,8 @@ export class User {
     this.imageUrl = imageUrl;
     this.biography = biography;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt
+    this.updatedAt = updatedAt;
+    this.favorites = favorites;
   }
 }
 

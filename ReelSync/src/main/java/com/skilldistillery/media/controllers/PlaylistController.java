@@ -1,7 +1,7 @@
 package com.skilldistillery.media.controllers;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.media.entities.Media;
 import com.skilldistillery.media.entities.Playlist;
 import com.skilldistillery.media.services.MediaService;
 import com.skilldistillery.media.services.PlaylistService;
@@ -98,7 +97,6 @@ public class PlaylistController {
 
 	@PutMapping("playlists/{pid}")
 	public Playlist update(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid, @RequestBody Playlist playlist, Principal principal) {
-		System.out.println(playlist);
 		Playlist updatedPlaylist = null;
 		try {
 			updatedPlaylist = playlistService.update(principal.getName(), pid, playlist);

@@ -25,6 +25,7 @@ export class PlaylistComponent {
   user: User = new User();
 
   newPlaylist: Playlist = new Playlist();
+  favoritePlaylist: Playlist = new Playlist();
   editPlaylist: Playlist | null = null;
   selected: Playlist | null = null;
   showForm = false;
@@ -246,8 +247,6 @@ export class PlaylistComponent {
       }
     });
   }
-
-
 
   isOwner(playlist: Playlist): boolean {
     return playlist && this.user.id === playlist.creatorId;

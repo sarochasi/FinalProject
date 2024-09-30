@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { Playlist } from '../models/playlist';
+import { User } from '../models/user';
 import { Media } from '../models/media';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class PlaylistService {
   private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/playlists';
 
+  user: User = new User();
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
