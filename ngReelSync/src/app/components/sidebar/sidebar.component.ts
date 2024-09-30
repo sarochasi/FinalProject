@@ -38,6 +38,7 @@ export class SidebarComponent {
 
     ngOnInit(): void {
       this.loadPlaylists();
+      this.updateFavoritePlaylists();
       this.authService.getLoggedInUser().subscribe({
         next: (loggedInUser) => {
           this.user = loggedInUser;
@@ -92,6 +93,17 @@ export class SidebarComponent {
           console.error("error in subscribe for finding playlist by id");
         }
       });
+    }
+
+    updateFavoritePlaylists(): void {
+      //subscribe to GET /api/playlists/favorites
+      // this.favoritePlaylists = this.playlists.filter((playlist) => playlist.favorite);
+      this.playlistService.loadFavorites().subscribe({
+        next: (favorites) => {
+          this.favoritePlaylists = favorites;
+        },
+        error: (err) => console.error('Error updating favorite status:', err),
+      })
     }
 
 }

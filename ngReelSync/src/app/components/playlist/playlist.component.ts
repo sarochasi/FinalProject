@@ -253,6 +253,10 @@ export class PlaylistComponent {
     return playlist && this.user.id === playlist.creatorId;
   }
 
+  isFavorite(playlist: Playlist): boolean {
+    return playlist && this.favoritePlaylists.some((pl) => {return pl.id === playlist.id})
+  }
+
   deletePlaylist(id: number) : void{
     this.playlistService.destroy(id).subscribe({
       next: () => {
@@ -265,7 +269,7 @@ export class PlaylistComponent {
     });
   }
 
-  toggleFavorite(playlist: Playlist): void {
+  addToFavorites(playlist: Playlist): void {
     this.playlistService.addToFavorites(playlist.id).subscribe({
       next: (updatedPlaylist) => {
         playlist.favorite = updatedPlaylist.favorite;
@@ -275,8 +279,25 @@ export class PlaylistComponent {
     });
   }
 
+  removeFromFavorites(playlist: Playlist): void {
+    this.playlistService.removeFromFavorites(playlist.id).subscribe({
+      next: (updatedPlaylist) => {
+        playlist.favorite = false;
+        this.updateFavoritePlaylists();
+      },
+      error: (err) => console.error('Error updating favorite status:', err),
+    })
+  }
+
   updateFavoritePlaylists(): void {
-    this.favoritePlaylists = this.playlists.filter((playlist) => playlist.favorite);
+    //subscribe to GET /api/playlists/favorites
+    // this.favoritePlaylists = this.playlists.filter((playlist) => playlist.favorite);
+    this.playlistService.loadFavorites().subscribe({
+      next: (favorites) => {
+        this.favoritePlaylists = favorites;
+      },
+      error: (err) => console.error('Error updating favorite status:', err),
+    })
   }
 
 }

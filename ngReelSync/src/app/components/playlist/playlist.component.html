@@ -96,8 +96,8 @@
               <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deletePlaylist(playlist.id)">
                 Delete
               </button>
-              <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': playlist.favorite, 'btn-outline-secondary': !playlist.favorite}" (click)="toggleFavorite(playlist)">
-                {{ playlist.favorite ? 'Favorited' : 'Add to Favorites' }}
+              <button type="button" class="btn btn-sm"[ngClass]="{'btn-success': playlist.favorite, 'btn-outline-secondary': !playlist.favorite}" (click)="isFavorite(playlist) ? removeFromFavorites(playlist) : addToFavorites(playlist)">
+              {{ isFavorite(playlist) ? 'Favorited' : 'Add to Favorites' }}
               </button>
             </div>
 

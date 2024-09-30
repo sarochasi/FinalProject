@@ -23,4 +23,6 @@ public interface PlaylistService {
 	 public Playlist addToFavorites(String username, int playlistId);
 	 
 	 public Set<Playlist> getFavorites(String username);
+
+	 public void removeFromFavorites(String username, int playlistId);
 }

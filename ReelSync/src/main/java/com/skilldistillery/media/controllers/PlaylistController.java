@@ -106,6 +106,17 @@ public class PlaylistController {
 	    return playlist;
 	}
 	
+	@DeleteMapping("playlists/{pid}/favorite")
+	public void removeFromFavorites(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid, Principal principal) {
+		try {
+			playlistService.removeFromFavorites(principal.getName(), pid);
+			res.setStatus(204);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+		}
+	}
+	
 	@GetMapping("playlists/favorite")
 	public Set<Playlist> getFavorites(HttpServletRequest req, HttpServletResponse res, Principal principal) {
 		Set<Playlist> favorites = playlistService.getFavorites(principal.getName());
