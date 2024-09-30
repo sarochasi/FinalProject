@@ -142,6 +142,25 @@ export class PlaylistService {
     );
   }
 
+  removeFromFavorites(playlistId: number): Observable<Playlist> {
+    const url = `${this.url}/${playlistId}/favorite`;
+    return this.http.delete<Playlist>(url, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(() => new Error('PlaylistService.deleteFromFavorites(): error updating favorite status: ' + err));
+      })
+    );
+  }
+
+  loadFavorites() : Observable<Playlist[]> {
+    const url = `${this.url}/favorite`;
+    return this.http.get<Playlist[]>(url, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(() => new Error('PlaylistService.addToFavorites(): error updating favorite status: ' + err));
+      })
+    );
+  }
 
   getHttpOptions() {
     let options = {

@@ -46,7 +46,6 @@ public class Playlist {
 	
 	private Boolean enabled;
 	private Boolean published;
-	private Boolean favorite;
 	
 	@ManyToMany(mappedBy="playlists")
 	private List<Tag> tags;
@@ -130,14 +129,6 @@ public class Playlist {
 
 	public void setPublished(Boolean published) {
 		this.published = published;
-	}
-
-	public Boolean getFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(Boolean favorite) {
-		this.favorite = favorite;
 	}
 
 	public List<Media> getMedia() {

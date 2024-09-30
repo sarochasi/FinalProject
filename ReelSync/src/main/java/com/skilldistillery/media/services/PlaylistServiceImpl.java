@@ -110,8 +110,23 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 	
 	@Override
+	public void removeFromFavorites(String username, int playlistId) {
+		User user = userRepo.findByUsername(username);
+		Optional<Playlist> playlistOpt = playlistRepo.findById(playlistId);
+		
+		if (playlistOpt.isPresent()) {
+			Playlist playlist = playlistOpt.get();
+			
+			if (user.getFavoritePlaylists().contains(playlist)) {
+				user.getFavoritePlaylists().remove(playlist);
+				userRepo.save(user);
+			}
+		}
+	}
+	
+	@Override
 	public Set<Playlist> getFavorites(String username) {
-		Set<Playlist> favorites = playlistRepo.findByFavoriteTrue();
+		Set<Playlist> favorites = playlistRepo.findByPlaylistUsers_UsernameAndEnabledTrue(username);
 		return favorites;
 		
 	}

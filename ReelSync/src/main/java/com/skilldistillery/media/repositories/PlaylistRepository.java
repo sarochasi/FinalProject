@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.skilldistillery.media.entities.Playlist;
+import com.skilldistillery.media.entities.User;
 
 public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
 
@@ -12,5 +13,6 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
 	Playlist findByIdAndUser_Username(int pid, String username);
     Set<Playlist> findByUser_UsernameAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String username, String nameKeyword, String descriptionKeyword);
     Set<Playlist> findByEnabledTrue();
-    Set<Playlist> findByFavoriteTrue();
+    Set<Playlist> findByPlaylistUsersContainsAndEnabledTrue(User user);
+    Set<Playlist> findByPlaylistUsers_UsernameAndEnabledTrue(String username);
 }

@@ -73,7 +73,6 @@ CREATE TABLE IF NOT EXISTS `playlist` (
   `image_url` VARCHAR(2000) NULL,
   `enabled` TINYINT NULL,
   `published` TINYINT NULL,
-  `favorite` TINYINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_playlist_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_playlist_user1`
@@ -472,7 +471,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`, `favorite`) VALUES (1, 'My Playlist', 1, 'Road trip jams', NULL, NULL, 'https://previews.123rf.com/images/macsim/macsim1202/macsim120200073/12369837-portrait-of-a-male-teenager-listening-to-music.jpg', 1, 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (1, 'My Playlist', 1, 'Road trip jams', NULL, NULL, 'https://previews.123rf.com/images/macsim/macsim1202/macsim120200073/12369837-portrait-of-a-male-teenager-listening-to-music.jpg', 1, 1);
 
 COMMIT;
 
