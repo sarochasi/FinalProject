@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { Media } from '../../models/media';
 import { ActivatedRoute, Router } from '@angular/router';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-media',
   standalone: true,
@@ -117,5 +119,13 @@ export class MediaComponent {
 
       })
     }
+
+    openEditModal(media: any) {
+      this.selected = media;
+      const modalElement = document.getElementById('updateMediaModal');
+      const modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.show();
+    }
+
 
 }
