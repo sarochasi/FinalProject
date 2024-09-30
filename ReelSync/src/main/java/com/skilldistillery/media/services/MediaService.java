@@ -14,4 +14,5 @@ public interface MediaService {
 	public Media update(String username, int mid, Media media);
 	
 	public boolean destroy(String username, int mid);
+	
 }

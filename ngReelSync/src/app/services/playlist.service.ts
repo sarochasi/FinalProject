@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { Playlist } from '../models/playlist';
 import { User } from '../models/user';
+import { Media } from '../models/media';
 
 @Injectable({
   providedIn: 'root'
@@ -46,13 +47,13 @@ export class PlaylistService {
     );
   }
 
-  show(todoId: number) : Observable<Playlist> {
-    return this.http.get<Playlist>(`${this.url}/${todoId}`,this.getHttpOptions()).pipe(
+  show(pid: number) : Observable<Playlist> {
+    return this.http.get<Playlist>(`${this.url}/${pid}`,this.getHttpOptions()).pipe(
       catchError(
         (err: any) => {
           console.log(err);
           return throwError(
-            () => { return new Error("TodoService.show(): error retrieving todo with an id of " + todoId + ": "  + err); }
+            () => { return new Error("TodoService.show(): error retrieving todo with an id of " + pid + ": "  + err); }
           );
         }
       )
@@ -139,5 +140,9 @@ export class PlaylistService {
       },
     };
     return options;
+  }
+
+  getMediaByPlaylistId(playlistId: number): Observable<Media[]> {
+    return this.http.get<Media[]>(`${this.url}/${playlistId}`, this.getHttpOptions());
   }
 }

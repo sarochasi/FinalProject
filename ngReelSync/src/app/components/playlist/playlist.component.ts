@@ -1,13 +1,11 @@
 import { AuthService } from './../../services/auth.service';
-import { HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
-import { BehaviorSubject } from 'rxjs';
 import { Media } from '../../models/media';
 import { MediaService } from '../../services/media.service';
 import { PlaylistSearchComponent } from "../playlist-search/playlist-search.component";
@@ -35,6 +33,10 @@ export class PlaylistComponent {
   mediaList: Media[] = [];
   showMediaForm = false;
   newMedia: Media = new Media();
+
+
+
+
   mediaInputs: {
     sourceUrl: string;
     name: string;
@@ -48,7 +50,8 @@ export class PlaylistComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
-    private mediaService: MediaService
+    private mediaService: MediaService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
     isLoggedIn(): boolean {
@@ -131,6 +134,10 @@ export class PlaylistComponent {
     })
   }
 
+  viewPlaylistDetail(playlistId: number): void {
+    this.router.navigate(['/playlists', playlistId]);
+  }
+
   submitMediaToPlaylist(): void {
     if (this.selected) {
       this.mediaInputs.forEach((mediaInput) => {
@@ -178,6 +185,8 @@ export class PlaylistComponent {
     this.playlistService.show(playlistId).subscribe({
       next: (playlist) => {
         this.selected = playlist;
+        this.cdRef.detectChanges();
+
       },
       error: (err) => {
         this.router.navigateByUrl('notFound');
@@ -202,11 +211,14 @@ export class PlaylistComponent {
 
   }
 
+
+
   updatePlaylist(editPlaylist: Playlist) : void {
    this.playlistService.update(editPlaylist).subscribe({
     next: (playlist) => {
       this.loadPlaylists();
       this.selected = null;
+
     },
     error: (err) => {
       console.error(err);
@@ -251,4 +263,6 @@ export class PlaylistComponent {
       }
     });
   }
+
+
 }
