@@ -1,6 +1,9 @@
 package com.skilldistillery.media.services;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.xml.stream.events.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +34,15 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 	}
 
 	@Override
-	public PlaylistComment show(String username, int pid) {
-		return commentRepo.findByIdAndUser_Username(pid, username);
+	public PlaylistComment show(String username, int cid) {
+		User user = userRepo.findByUsername(username);
+		Optional<PlaylistComment> commentOpt = commentRepo.findById(cid);
+		PlaylistComment comment = null;
+		
+		if(user != null && commentOpt.isPresent()) {
+			comment = commentOpt.get();
+		}
+		return comment;
 	}
 	
 	@Override
@@ -62,7 +72,7 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 		boolean deleted = false;
 		PlaylistComment toBeDeleted = commentRepo.findByIdAndUser_Username(mid, username);
 		if(toBeDeleted != null) {
-			toBeDeleted.setEnabled(false);
+//			toBeDeleted.setEnabled(false);
 			commentRepo.saveAndFlush(toBeDeleted);
 			deleted = true;
 		}

@@ -23,18 +23,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("api")
 @CrossOrigin({"*", "http://localhost/"})
-public class CommentController {
+public class PlaylistCommentController {
 
 	@Autowired
 	private PlaylistCommentService commentService;
 	
-	@GetMapping("comments")
+	@GetMapping("playlistcomments")
 	public List<PlaylistComment> index(Principal principal, HttpServletRequest req, HttpServletResponse res){
 		return commentService.index(principal.getName());
 		
 	}
 	
-	@GetMapping("comments/{cid}")
+	@GetMapping("playlistcomments/{cid}")
 	public PlaylistComment show(Principal principal, HttpServletRequest req, HttpServletResponse res, @PathVariable("cid") int cid) {
 		PlaylistComment comment = commentService.show(principal.getName(), cid);
 		if( comment == null) {
@@ -43,7 +43,7 @@ public class CommentController {
 		return comment;
 	}
 	
-	@PostMapping({"comments/playlist/{pid}","comments/playlist/{pid}/"})
+	@PostMapping({"playlists/{pid}/comments","playlists/{pid}/comments/"})
 	public PlaylistComment create(@RequestBody PlaylistComment newComment, @PathVariable("pid") int pid, Principal principal, HttpServletRequest req, HttpServletResponse res) {
 		try {
 			newComment = commentService.create(principal.getName(), newComment, pid);
