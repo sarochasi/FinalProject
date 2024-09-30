@@ -10,6 +10,7 @@ import { Media } from '../../models/media';
 import { MediaService } from '../../services/media.service';
 import { PlaylistSearchComponent } from "../playlist-search/playlist-search.component";
 import { LoginComponent } from "../login/login.component";
+import { ChangeService } from '../../services/change.service';
 
 @Component({
   selector: 'app-playlist',
@@ -49,7 +50,8 @@ export class PlaylistComponent {
     private router: Router,
     private authService:AuthService,
     private mediaService: MediaService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private changeService: ChangeService
   ) {}
 
     isLoggedIn(): boolean {
@@ -172,7 +174,7 @@ export class PlaylistComponent {
       next: (playlists) => {
 
         this.playlists = playlists;
-        // this.updateFavoritePlaylists();
+        this.updateFavoritePlaylists();
       },
       error: (err) => {
         console.error(err);
@@ -295,6 +297,7 @@ export class PlaylistComponent {
     this.playlistService.loadFavorites().subscribe({
       next: (favorites) => {
         this.favoritePlaylists = favorites;
+        this.changeService.makeChange();
       },
       error: (err) => console.error('Error updating favorite status:', err),
     })

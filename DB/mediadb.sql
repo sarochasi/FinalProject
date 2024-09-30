@@ -461,7 +461,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (1, 1, 'https://youtu.be/dQw4w9WgXcQ?si=7mzkgoF6R_RZdf9S', 'Test', NULL, NULL, 'test', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (1, 1, 'https://www.youtube.com/embed/dQw4w9WgXcQ?si=SYnGpwzgCj2eGx0o', 'Test', NULL, NULL, 'test', 1);
 
 COMMIT;
 

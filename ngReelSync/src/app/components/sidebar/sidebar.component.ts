@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LogoutComponent } from "../logout/logout.component";
@@ -10,6 +10,7 @@ import { PlaylistComponent } from "../playlist/playlist.component";
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
 import { User } from '../../models/user';
+import { ChangeService } from '../../services/change.service';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -28,8 +29,12 @@ export class SidebarComponent {
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private authService:AuthService){
-
+    private authService:AuthService,
+    private changeService: ChangeService){
+      effect(() => {
+        console.log(changeService.changeMade());
+        this.updateFavoritePlaylists();
+      })
     }
 
     isLoggedIn(): boolean {
