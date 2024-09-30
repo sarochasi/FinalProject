@@ -85,7 +85,7 @@
               <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="viewPlaylistDetail(playlist.id)">
                 View
               </button>
-              <button type="button" class="btn btn-sm" style="background-color: #CE6A85; color: white;" (click)="findPlaylistById(playlist.id)">
+              <button type="submit" class="btn btn-sm simple-list-example-scrollspy" style="background-color: #CE6A85; color: white;" (click)="findPlaylistById(playlist.id)">
                 Edit
               </button>
               <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deletePlaylist(playlist.id)">
@@ -100,7 +100,7 @@
   </div>
 
   <!-- Update Playlist Form -->
-  <form *ngIf="selected" (ngSubmit)="updatePlaylist(selected)" #updateForm="ngForm">
+  <form *ngIf="selected" (ngSubmit)="updatePlaylist(selected)" #updateForm="ngForm" #updateFormElement>
     <div class="container mt-4">
       <div class="card shadow-sm">
         <div class="card-header" style="background-color: #FF8C61;">

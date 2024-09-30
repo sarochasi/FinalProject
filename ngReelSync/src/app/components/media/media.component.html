@@ -1,12 +1,9 @@
 
 <main class="content-area flex-grow-1 p-3" style="margin-left: 350px;">
-<div class="card shadow">
-  <div class="card-header">
-    <h5 class="mb-0">Your Media List</h5>
-  </div>
-  <div class="card-body">
-    <table class="table table-hover">
-      <thead class="thead-dark">
+  <div class="card-body" style="background-color: #FAA275;">
+    <h3 class="text-center" style="color: #5C374C;">Media List</h3>
+    <table class="table table-hover" style="background-color: #fff; border-radius: 5px;">
+      <thead class="thead-dark" style="background-color: #FF8C61; color: white;">
         <tr>
           <th>Source_url</th>
           <th>Name</th>
@@ -24,14 +21,14 @@
           <td>{{ media.updatedAt }}</td>
           <td>{{ media.description }}</td>
           <td>
-            <button class="btn btn-sm btn-primary" (click)="findMediaById(media.id)">Edit</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteMedia(media.id)">Delete</button>
+            <button type="button" class="btn btn-sm" style="background-color: #CE6A85; color: white;" (click)="findMediaById(media.id)">Edit</button>
+            <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deleteMedia(media.id)">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-</div>
+
 
 <div>
   <!-- Add Media Form -->

@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
@@ -32,6 +32,10 @@ export class PlaylistComponent {
   mediaList: Media[] = [];
   showMediaForm = false;
   newMedia: Media = new Media();
+
+
+
+
   mediaInputs: {
     sourceUrl: string;
     name: string;
@@ -45,7 +49,8 @@ export class PlaylistComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
-    private mediaService: MediaService
+    private mediaService: MediaService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
     isLoggedIn(): boolean {
@@ -179,6 +184,8 @@ export class PlaylistComponent {
     this.playlistService.show(playlistId).subscribe({
       next: (playlist) => {
         this.selected = playlist;
+        this.cdRef.detectChanges();
+
       },
       error: (err) => {
         this.router.navigateByUrl('notFound');
@@ -203,11 +210,14 @@ export class PlaylistComponent {
 
   }
 
+
+
   updatePlaylist(editPlaylist: Playlist) : void {
    this.playlistService.update(editPlaylist).subscribe({
     next: (playlist) => {
       this.loadPlaylists();
       this.selected = null;
+
     },
     error: (err) => {
       console.error(err);
