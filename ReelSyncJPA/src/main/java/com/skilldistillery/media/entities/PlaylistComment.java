@@ -42,7 +42,7 @@ public class PlaylistComment {
 	@OneToMany(mappedBy = "reply")
 	private List<PlaylistComment> replies;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

@@ -54,7 +54,10 @@
                   <li *ngFor="let comment of playlist.playlistComments" class="list-group-item">
                     {{ comment.content }}
                     <small class="text-muted">
-                      By {{ comment.user.username || 'Anonymous' }} on {{ comment.createdAt | date: 'medium' }}
+                      By {{ comment.user.username || 'Anonymous' }}
+                    </small>
+                    <small class="text-muted">
+                      on {{ comment.createdAt | date: 'medium' }}
                     </small>
                   </li>
                 </ul>
