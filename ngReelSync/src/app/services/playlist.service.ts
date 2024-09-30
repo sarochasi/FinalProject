@@ -26,7 +26,7 @@ export class PlaylistService {
         (err: any) => {
           console.log(err);
           return throwError(
-            () => { return new Error("TodoService.index(): error retrieving todos:"  + err); }
+            () => { return new Error("PlaylistService.index(): error retrieving playlists:"  + err); }
           );
         }
       )
@@ -40,7 +40,7 @@ export class PlaylistService {
         (err: any) => {
           console.log(err);
           return throwError(
-            () => { return new Error("TodoService.create(): error creating todo:"  + err); }
+            () => { return new Error("PlaylistService.create(): error creating playlist:"  + err); }
           );
         }
       )
@@ -53,7 +53,7 @@ export class PlaylistService {
         (err: any) => {
           console.log(err);
           return throwError(
-            () => { return new Error("TodoService.show(): error retrieving todo with an id of " + pid + ": "  + err); }
+            () => { return new Error("PlaylistService.show(): error retrieving playlist with an id of " + pid + ": "  + err); }
           );
         }
       )
@@ -66,7 +66,7 @@ export class PlaylistService {
         (err: any) => {
           console.log(err);
           return throwError(
-            () => { return new Error("TodoService.show(): error retrieving todo with an id of " + keyword + ": "  + err); }
+            () => { return new Error("PlaylistService.show(): error retrieving playlist with an id of " + keyword + ": "  + err); }
           );
       }
     )
@@ -117,6 +117,11 @@ export class PlaylistService {
     const url = `${this.url}/${playlistId}/media/${mediaId}`;
     return this.http.post<Playlist>(url, {}, this.getHttpOptions());
   }
+
+  // addCommentToPlaylist(playlistId: number, commentId: number): Observable<Playlist> {
+  //   const url = `${this.url}/${playlistId}/comments/${commentId}`;
+  //   return this.http.post<Playlist>(url, {}, this.getHttpOptions());
+  // }
 
   searchPlaylists(keyword1: string, keyword2: string): Observable<Set<Playlist>> {
     const url = `${this.url}/search/${keyword1}/${keyword2}`;

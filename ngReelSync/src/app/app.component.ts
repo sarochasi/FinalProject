@@ -9,6 +9,7 @@ import { MediaComponent } from './components/media/media.component';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { CommonModule } from '@angular/common';
+import { PlaylistComment } from './models/playlistcomment';
 
 
 @Component({

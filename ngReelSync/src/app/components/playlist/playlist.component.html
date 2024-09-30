@@ -83,6 +83,7 @@
         <div class="card-body" style="background-color: #FAA275;">
           <h5 class="card-title" style="color: #5C374C;">{{ playlist.name }}</h5>
           <p class="card-text" style="color: #985277;">{{ playlist.description }}</p>
+          <small class="text-body-secondary">{{ playlist.createdAt | date: 'mediumDate' }}</small>
 
           <div class="d-flex justify-content-between align-items-center">
             <div class="btn-group">
@@ -99,7 +100,7 @@
                 {{ playlist.favorite ? 'Favorited' : 'Add to Favorites' }}
               </button>
             </div>
-            <small class="text-body-secondary">{{ playlist.createdAt | date: 'mediumDate' }}</small>
+
           </div>
         </div>
       </div>

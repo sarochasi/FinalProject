@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Playlist } from '../../models/playlist';
 import { User } from '../../models/user';
-import { Playlistcomment } from '../../models/playlistcomment';
+import { PlaylistComment } from '../../models/playlistcomment';
 import { AuthService } from '../../services/auth.service';
 import { PlaylistService } from '../../services/playlist.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class PlaylistcommentComponent {
   playlists: Playlist[] = [];
   user: User = new User();
   selected: Playlist | null = null;
-  commentList: Playlistcomment[] = [];
+  commentList: PlaylistComment[] = [];
 
   commentInputs: {
     content: string;

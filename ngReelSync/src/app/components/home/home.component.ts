@@ -1,5 +1,5 @@
+import { PlaylistComment } from './../../models/playlistcomment';
 import { Component } from '@angular/core';
-import { PlaylistComponent } from "../playlist/playlist.component";
 import { Playlist } from '../../models/playlist';
 import { User } from '../../models/user';
 import { Media } from '../../models/media';
@@ -8,11 +8,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MediaService } from '../../services/media.service';
 import { CommonModule } from '@angular/common';
+import { PlaylistcommentService } from '../../services/playlistcomment.service';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -20,17 +22,30 @@ export class HomeComponent {
 
   playlists: Playlist[] = [];
   user: User = new User();
+
   selected: Playlist | null = null;
   mediaList: Media[] = [];
-  playlistComment: PlaylistComponent[] = [];
+
+  playlistComment: PlaylistComment[] = [];
+  commentList: PlaylistComment[] = [];
+  // newComment: PlaylistComment = new PlaylistComment();
+  showCommentSection = false;
 
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
     private mediaService: MediaService,
+    private commentService: PlaylistcommentService
 
   ) {}
+
+  commentInputs: {
+    content: string;
+    createdAt: string;
+  }[] = [
+    { content: '', createdAt: ''}
+  ];
 
   isLoggedIn(): boolean {
     return this.authService.checkLogin();
@@ -89,5 +104,80 @@ export class HomeComponent {
   viewPlaylistDetail(playlistId: number): void {
     this.router.navigate(['/playlists', playlistId]);
   }
+
+  // addComment(newComment: PlaylistComment, playlistId: number): void {
+  //   this.commentService.create(playlistId, newComment).subscribe({
+  //     next: (createdComment) => {
+  //       const commentId = createdComment.id;
+
+
+  //       this.addCommentToPlaylist(playlistId, commentId);
+  //     },
+  //     error: (err) => {
+  //       console.error('Error creating comment:', err);
+  //     },
+  //   });
+  // }
+
+  // addCommentToPlaylist(playlistId: number, commentId: number): void {
+  //   this.playlistService.addCommentToPlaylist(playlistId, commentId).subscribe({
+  //     next: (updatedPlaylist) => {
+  //       console.log('Comment added to playlist successfully:', updatedPlaylist);
+  //       this.reloadComment();
+  //     },
+  //     error: (err) => {
+  //       console.error('Error adding comment to playlist:', err);
+  //     }
+  //   });
+  // }
+
+  reloadComment() {
+    this.commentService.index().subscribe({
+      next: (commentList) => {
+        this.commentList = commentList;
+      },
+      error: (fail) => {
+        console.error('CommentComponent.reloadComment: error retrieving list');
+        console.error(fail);
+      }
+    });
+  }
+
+  // submitCommentToPlaylist(): void {
+  submitCommentToPlaylist(playlistId: number, form: NgForm): void {
+
+    // if (this.selected) {
+      // this.commentInputs.forEach((commentInputs) => {
+        // const newComment = new PlaylistComment();
+        // newComment.content = commentInputs.content;
+        console.log(form);
+        console.log(form.value);
+
+
+        const newComment = form.value;
+
+        this.commentService.create(playlistId, newComment).subscribe({
+          next: (createdComment) => {
+            const commentId = createdComment.id;
+            // this.addCommentToPlaylist(this.selected!.id, commentId);
+          },
+          error: (err) => {
+            console.error('Error creating comment:', err);
+          }
+        });
+      // );
+      // });
+    // }
+
+    // this.commentInputs = [{ content: '', createdAt: ''}];
+    // this.toggleCommentSection();
+  }
+
+
+
+  toggleCommentSection(): void {
+    this.showCommentSection = !this.showCommentSection;
+  }
+
 
 }

@@ -4,8 +4,9 @@ import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Playlistcomment } from '../models/playlistcomment';
+
 import { Playlist } from '../models/playlist';
+import { PlaylistComment } from '../models/playlistcomment';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,8 @@ export class PlaylistcommentService {
     return options;
   }
 
-  index():Observable<Playlistcomment[]>{
-    return this.http.get<Playlistcomment[]>(this.url, this.getHttpOptions()).pipe(
+  index():Observable<PlaylistComment[]>{
+    return this.http.get<PlaylistComment[]>(this.url, this.getHttpOptions()).pipe(
       catchError(
         (err: any) => {
           console.log(err);
@@ -43,8 +44,8 @@ export class PlaylistcommentService {
 
   }
 
-  show(cid: number): Observable<Playlistcomment>{
-    return this.http.get<Playlistcomment>(this.url + '/' + cid, this.getHttpOptions()).pipe(
+  show(cid: number): Observable<PlaylistComment>{
+    return this.http.get<PlaylistComment>(this.url + '/' + cid, this.getHttpOptions()).pipe(
       catchError((err:any) => {
         console.log(err);
         return throwError(
@@ -54,8 +55,9 @@ export class PlaylistcommentService {
     );
   }
 
-  create(comment: Playlistcomment): Observable<Playlistcomment>{
-    return this.http.post<Playlistcomment>(this.url, comment, this.getHttpOptions()).pipe(
+  create(playlistId: number, comment: PlaylistComment): Observable<PlaylistComment>{
+    // return this.http.post<PlaylistComment>(this.url, comment, this.getHttpOptions()).pipe(
+    return this.http.post<PlaylistComment>(`${this.baseUrl}api/playlists/${playlistId}/comments`, comment, this.getHttpOptions()).pipe(
       catchError((err:any) => {
         console.log(err);
         return throwError(
@@ -65,10 +67,10 @@ export class PlaylistcommentService {
     );
   }
 
-  addCommentToPlaylist(playlistId: number, commentId: number): Observable<Playlist> {
-    const url = `${this.baseUrl}/playlists/${playlistId}/comments/${commentId}`;
-    return this.http.post<Playlist>(url, {}, this.getHttpOptions());
-  }
+  // addCommentToPlaylist(playlistId: number, commentId: number): Observable<Playlist> {
+  //   const url = `${this.baseUrl}/playlists/${playlistId}/comments/${commentId}`;
+  //   return this.http.post<Playlist>(url, {}, this.getHttpOptions());
+  // }
 
 
 
