@@ -30,7 +30,12 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 
 	@Override
 	public List<PlaylistComment> index(String username) {
-		return commentRepo.findByUser_Username(username);
+		User user = userRepo.findByUsername(username);
+		
+		if(user != null) {
+			return commentRepo.findByEnabledTrue();
+		}
+		return null;
 	}
 
 	@Override
@@ -39,7 +44,7 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 		Optional<PlaylistComment> commentOpt = commentRepo.findById(cid);
 		PlaylistComment comment = null;
 		
-		if(user != null && commentOpt.isPresent()) {
+		if(user != null && commentOpt.isPresent() && commentOpt.get().getEnabled()) {
 			comment = commentOpt.get();
 		}
 		return comment;
@@ -51,6 +56,7 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 		Playlist playlist = playlistRepo.findByIdAndUser_Username(pid, username);
 		comment.setUser(user);
 		comment.setPlaylist(playlist);
+		comment.setEnabled(true);
 		playlist.getPlaylistComments().add(comment);
 		commentRepo.saveAndFlush(comment);
 		return comment;
@@ -72,7 +78,7 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 		boolean deleted = false;
 		PlaylistComment toBeDeleted = commentRepo.findByIdAndUser_Username(mid, username);
 		if(toBeDeleted != null) {
-//			toBeDeleted.setEnabled(false);
+			toBeDeleted.setEnabled(false);
 			commentRepo.saveAndFlush(toBeDeleted);
 			deleted = true;
 		}
