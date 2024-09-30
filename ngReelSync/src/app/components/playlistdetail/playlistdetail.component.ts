@@ -6,6 +6,7 @@ import { MediaService } from '../../services/media.service';
 import { Media } from '../../models/media';
 import { CommonModule } from '@angular/common';
 import { Playlist } from '../../models/playlist';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-playlistdetail',
@@ -21,13 +22,15 @@ export class PlaylistdetailComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
-    private mediaService: MediaService
+    private mediaService: MediaService,
+    private sanitizer: DomSanitizer
   ) {}
 
   playlistId: number = 0;
   mediaList: Media[] = [];
   playlist: Playlist | null = null;
   selected: Media | null = null;
+  safeSrc: SafeResourceUrl = '';
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -35,6 +38,11 @@ export class PlaylistdetailComponent {
       this.getPlaylistDetails(this.playlistId);
       this.showPlaylistMedia(this.playlistId);
     });
+  }
+
+  sanitizeUrl(url: string) {
+    console.log(url);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   getPlaylistDetails(pid: number): void {
@@ -49,11 +57,10 @@ export class PlaylistdetailComponent {
     });
   }
 
-  findMediaById(mediaId: number) : void{
+  findMediaById(mediaId: number) : void {
     this.mediaService.show(mediaId).subscribe({
       next:(media) => {
         this.selected = media;
-
       },
       error: (err) => {
         this.router.navigateByUrl('notFound');
