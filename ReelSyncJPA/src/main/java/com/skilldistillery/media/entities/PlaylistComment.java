@@ -52,7 +52,7 @@ public class PlaylistComment {
 	@JoinColumn(name = "in_reply_to_id")
 	private PlaylistComment reply;
 	
-//	private Boolean enabled;
+	private Boolean enabled;
 	
 	public PlaylistComment() { }
 
@@ -112,13 +112,13 @@ public class PlaylistComment {
 		this.user = user;
 	}
 
-//	public Boolean getEnabled() {
-//		return enabled;
-//	}
-//
-//	public void setEnabled(Boolean enabled) {
-//		this.enabled = enabled;
-//	}
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	@Override
 	public int hashCode() {

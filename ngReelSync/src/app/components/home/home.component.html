@@ -1,9 +1,49 @@
 
-
+<main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
   <!-- Main content area -->
   <div class="content-area flex-grow-1 p-3" style="margin-left: 350px;">
     <!-- Dynamic content goes here -->
     <h1>Main Content</h1>
     <p>This is the main content area that changes when you click any button or navigate.</p>
   </div>
+
+  <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <div class="col" *ngFor="let playlist of playlists">
+        <div class="card shadow-sm" style="border-color: #FF8C61;">
+          <img
+            class="card-img-top"
+            [src]="playlist.imageUrl"
+            alt="{{ playlist.name }}"
+            style="width: 100%; height: 225px; object-fit: cover;"
+            (click)="viewPlaylistDetail(playlist.id)"
+          />
+          <div class="card-body" style="background-color: #FAA275;">
+            <h5 class="card-title" style="color: #5C374C;">{{ playlist.name }}</h5>
+            <p class="card-text" style="color: #985277;">{{ playlist.description }}</p>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="viewPlaylistDetail(playlist.id)">
+                  View
+                </button>
+                <button type="submit" class="btn btn-sm simple-list-example-scrollspy" style="background-color: #CE6A85; color: white;" (click)="findPlaylistById(playlist.id)">
+                  Comment
+                </button>
+                <!-- <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deletePlaylist(playlist.id)">
+                  Delete
+                </button>
+                <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': playlist.favorite, 'btn-outline-secondary': !playlist.favorite}" (click)="toggleFavorite(playlist)">
+                  {{ playlist.favorite ? 'Favorited' : 'Add to Favorites' }}
+                </button> -->
+              </div>
+              <!-- <small class="text-body-secondary">{{ playlist.createdAt | date: 'mediumDate' }}</small> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
 

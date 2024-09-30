@@ -1,8 +1,12 @@
-
-<main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
-  <app-playlist-search></app-playlist-search>
+  <div *ngIf="!isLoggedIn()">
+  <app-login></app-login>
+  </div>
 <!-- Add Playlist Form Section -->
-<div class="container mt-5" style="max-width: 800px; margin: 0 auto;">
+<div *ngIf="isLoggedIn()">
+<main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
+
+  <app-playlist-search></app-playlist-search>
+<div class="container mt-5" style="max-width: 800px; margin: 0 auto;" >
   <!-- Button to toggle form visibility -->
   <div class="text-center mb-4">
     <button class="btn" style="background-color: #CE6A85; color: white;" (click)="showForm = !showForm">
@@ -223,4 +227,6 @@
 
   </div>
 
-    </main>
+
+  </main>
+  </div>

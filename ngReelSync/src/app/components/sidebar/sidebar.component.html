@@ -7,8 +7,15 @@
       </svg>
       <span class="fs-4">Your Library</span>
     </a>
+
     <hr>
 
+    <div *ngIf="!isLoggedIn()">
+      <p class="please">Please Log in to see your Playlists</p>
+      <a class="nav-link" [routerLink]="['/login']">Log in</a>
+    </div>
+
+    <div *ngIf="isLoggedIn()">
     <!-- Create New Playlist Section -->
     <div class="d-flex flex-column justify-content-between" >
       <ul class="nav nav-pills flex-column mb-auto">
@@ -23,6 +30,7 @@
       </ul>
 
       <!-- Playlists Table -->
+
       <div class="table-responsive" style="flex-grow: 1;" [routerLink]="['/playlists']">
         <table class="table table-hover table-striped custom-table mt-3 custom-table">
           <thead>
@@ -41,7 +49,7 @@
           </tbody>
         </table>
       </div>
-    </div>
+
 
     <hr>
 
@@ -70,5 +78,7 @@
 
     </div>
     <hr>
+  </div>
+  </div>
   </div>
 </main>

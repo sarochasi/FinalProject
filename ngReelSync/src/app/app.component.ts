@@ -8,13 +8,14 @@ import { NavigationComponent } from "./components/navigation/navigation.componen
 import { MediaComponent } from './components/media/media.component';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { PlaylistComponent } from './components/playlist/playlist.component';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RegisterComponent, LoginComponent,
-    LogoutComponent, NavigationComponent, MediaComponent, SidebarComponent, PlaylistComponent, PlaylistComponent],
+    LogoutComponent, NavigationComponent, MediaComponent, SidebarComponent, PlaylistComponent, PlaylistComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -25,20 +26,9 @@ export class AppComponent {
     private auth: AuthService
   ) {}
 
-  ngOnInit() {
-    this.tempTestDeleteMeLater(); // DELETE LATER!!!
+  checkLoggedIn(){
+    return this.auth.checkLogin();
   }
 
-  tempTestDeleteMeLater() {
-    this.auth.login('test','test').subscribe({ // change username to match DB
-      next: (data) => {
-        console.log('Logged in:');
-        console.log(data);
-      },
-      error: (fail) => {
-        console.error('Error authenticating:')
-        console.error(fail);
-      }
-    });
-  }
+
 }
