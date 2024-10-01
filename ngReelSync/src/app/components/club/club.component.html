@@ -5,6 +5,68 @@
   <div *ngIf="isLoggedIn()">
     <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
 
+      <!-- Button to toggle form visibility -->
+  <div class="text-center mb-4">
+    <button class="btn" style="background-color: #CE6A85; color: white;" (click)="showForm = !showForm">
+      Create New Club
+    </button>
+  </div>
+
+  <!-- Add New Playlist Form (Initially hidden) -->
+  <div class="card shadow p-4 mb-5 bg-white rounded" *ngIf="showForm">
+    <h2 class="mb-4 text-center" style="color: #5C374C;">Add New club</h2>
+
+    <form #addForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="newClub.name"
+          name="name"
+          class="form-control"
+          placeholder="Enter playlist name"
+          required
+        />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <input
+          type="text"
+          id="description"
+          [(ngModel)]="newClub.description"
+          name="description"
+          class="form-control"
+          placeholder="Enter playlist description"
+          required
+        />
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="imageUrl" class="form-label">Image URL:</label>
+        <input
+          type="text"
+          id="imageUrl"
+          [(ngModel)]="newClub.imageUrl"
+          name="imageUrl"
+          class="form-control"
+          placeholder="Enter image URL"
+          required
+        />
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="addForm.invalid" (click)="addClub(newClub)">
+          Create Club
+        </button>
+      </div>
+    </form>
+  </div>
+
+
+
+
       <!-- Clubs Cards Section -->
 <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">

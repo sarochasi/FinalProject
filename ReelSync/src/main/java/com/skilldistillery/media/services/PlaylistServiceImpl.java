@@ -26,6 +26,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Autowired
 	private MediaRepository mediaRepo;
 	
+	@Override
 	public List<Playlist> showAll(String username){
 		User user = userRepo.findByUsername(username);
 		

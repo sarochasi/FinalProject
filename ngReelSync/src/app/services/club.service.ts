@@ -41,5 +41,16 @@ export class ClubService {
     );
   }
 
+  create(club: Club): Observable<Club>{
+    return this.http.post<Club>(this.url, club, this.getHttpOptions()).pipe(
+      catchError((err:any) => {
+        console.log(err);
+        return throwError(
+          () => new Error('ClubService.create(): error adding club; ' + err)
+        );
+      })
+    );
+  }
+
 
 }
