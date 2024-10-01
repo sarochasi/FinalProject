@@ -70,7 +70,7 @@ export class HomeComponent {
 
   fetchPlaylists(): void {
 
-    this.playlistService.index().subscribe({
+    this.playlistService.showAll().subscribe({
       next: (playlists) => {
 
         this.playlists = playlists.map(playlist => ({
