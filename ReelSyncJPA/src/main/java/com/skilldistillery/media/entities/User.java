@@ -74,7 +74,15 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<MediaRating> mediaRatings;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<Club> clubs;
 	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="club_has_user",joinColumns = @JoinColumn(name="user_id")
+	, inverseJoinColumns = @JoinColumn(name="club_id"))
+	private List<Club> joinedClubs;
 	
 	public User() { }
 
@@ -197,6 +205,30 @@ public class User {
 
 	public void setPlaylistComments(List<PlaylistComment> playlistComments) {
 		this.playlistComments = playlistComments;
+	}
+
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+
+	public List<Club> getClubs() {
+		return clubs;
+	}
+
+	public void setClubs(List<Club> clubs) {
+		this.clubs = clubs;
+	}
+
+	public List<Club> getJoinedClubs() {
+		return joinedClubs;
+	}
+
+	public void setJoinedClubs(List<Club> joinedClubs) {
+		this.joinedClubs = joinedClubs;
 	}
 
 	@Override

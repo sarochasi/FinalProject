@@ -1,0 +1,38 @@
+<div *ngIf="!isLoggedIn()">
+  <app-login></app-login>
+  </div>
+
+  <div *ngIf="isLoggedIn()">
+    <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
+
+      <!-- Clubs Cards Section -->
+<div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let club of clubs">
+      <div class="card shadow-sm" style="border-color: #FF8C61;">
+        <img
+          class="card-img-top"
+          [src]="club.imageUrl"
+          alt="{{ club.name }}"
+          style="width: 100%; height: 225px; object-fit: cover;"
+
+        />
+        <div class="card-body" style="background-color: #FAA275;">
+          <h5 class="card-title" style="color: #5C374C;">{{ club.name }}</h5>
+          <p class="card-text" style="color: #985277;">{{ club.description }}</p>
+          <small class="text-body-secondary">{{ club.createdAt | date: 'mediumDate' }}</small>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+</div>
+

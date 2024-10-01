@@ -53,6 +53,18 @@ class ClubTest {
 		assertNotNull(club.getClubPlaylists());
 		assertTrue(club.getClubPlaylists().size() > 0);
 	}
+	
+	@Test
+	void test_Club_User_ManyToOne_mapping() {
+		assertNotNull(club.getUser());
+		assertEquals("test", club.getUser().getUsername());
+	}
+	
+	@Test
+	void test_Club_User_ManyToMany_mapping() {
+		assertNotNull(club.getClubUsers());
+		assertTrue(club.getClubUsers().size() > 0);
+	}
 
 
 }

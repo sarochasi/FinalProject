@@ -10,13 +10,15 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { CommonModule } from '@angular/common';
 import { PlaylistComment } from './models/playlistcomment';
+import { ClubComponent } from './components/club/club.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RegisterComponent, LoginComponent,
-    LogoutComponent, NavigationComponent, MediaComponent, SidebarComponent, PlaylistComponent, PlaylistComponent, CommonModule],
+    LogoutComponent, NavigationComponent, MediaComponent, SidebarComponent,
+    PlaylistComponent, PlaylistComponent, CommonModule, ClubComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
