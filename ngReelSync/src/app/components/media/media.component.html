@@ -42,11 +42,36 @@
           <td>
             <button type="button" class="btn btn-sm" style="background-color: #CE6A85; color: white;" (click)="findMediaById(media.id)">Edit</button>
             <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deleteMedia(media.id)">Delete</button>
+            <button type="button" class="btn btn-sm btn-secondary" (click)="open(playlistModal, media)">Add to Playlist</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
+<!-- MODAL START -->
+<ng-template #playlistModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add to Playlist</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form #choosePlaylistForm="ngForm">
+      <div class="mb-3">
+        <label for="dateOfBirth">Please select a playlist:</label>
+        <div class="input-group">
+          <select name="playlist" ngModel>
+            <option *ngFor="let playlist of playlists" value="{{playlist.id}}">{{playlist.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="submitAddToPlaylist(choosePlaylistForm, playlistModal)">Save</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<!-- MODAL END -->
 
 <div>
   <!-- Update Media Form -->

@@ -1,14 +1,4 @@
 <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 0px">
-<div class="form-group">
-  <label for="mediaDropdown">Select Media to Add:</label>
-  <select id="mediaDropdown" class="form-select" [(ngModel)]="selectedMediaId">
-    <option *ngFor="let media of mediaList" [value]="media.id">{{ media.name }}</option>
-  </select>
-</div>
-<button type="button" class="btn btn-primary" (click)="addSelectedMediaToPlaylist()" style="background-color: #CE6A85; color: white;">
-  Add Selected Media to Playlist
-</button>
-
 <div class="container mt-5">
   <h2 class="mb-4 text-center" style="color: #5C374C;">{{ playlist?.name }}</h2>
   <p class="text-center" style="color: #985277;">{{ playlist?.description }}</p>

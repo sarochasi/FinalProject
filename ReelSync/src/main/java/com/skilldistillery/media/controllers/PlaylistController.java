@@ -80,7 +80,7 @@ public class PlaylistController {
 		Playlist managedPlaylist = null;
 		try {
 			managedPlaylist = playlistService.addMedia(principal.getName(), pid, mid);
-			if (managedPlaylist.getMedia().contains(mediaService.show(principal.getName(), mid))) {
+			if (managedPlaylist != null) {
 				res.setStatus(201);
 				res.setHeader("location", req.getRequestURL().append("/").append(managedPlaylist.getId()).toString());
 			} else {

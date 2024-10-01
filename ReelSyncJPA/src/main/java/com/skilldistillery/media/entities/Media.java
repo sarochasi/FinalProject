@@ -175,12 +175,7 @@ public class Media {
 	}
 	@Override
 	public String toString() {
-		return "MediaComment [id=" + id + ", sourceUrl=" + sourceUrl + ", name=" + name + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + ", description=" + description + ", enabled=" + enabled + "]";
+		return "Media [id=" + id + ", name=" + name + "]";
 	}
-	
-	
-	
-	
 
 }

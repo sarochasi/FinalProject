@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, TemplateRef } from '@angular/core';
 import { PlaylistService } from '../../services/playlist.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -8,16 +8,16 @@ import { CommonModule } from '@angular/common';
 import { Playlist } from '../../models/playlist';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { NgbModal, ModalDismissReasons, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-playlistdetail',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgbModule],
   templateUrl: './playlistdetail.component.html',
   styleUrl: './playlistdetail.component.css'
 })
 export class PlaylistdetailComponent {
-
 
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
