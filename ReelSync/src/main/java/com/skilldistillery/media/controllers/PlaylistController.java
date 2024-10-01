@@ -74,7 +74,7 @@ public class PlaylistController {
 		
 		return createdPlaylist;
 	}
-	
+		
 	@PostMapping("playlists/{pid}/media/{mid}")
 	public Playlist addMedia(HttpServletRequest req, HttpServletResponse res, @PathVariable("mid") int mid, @PathVariable("pid") int pid, Principal principal) {
 		Playlist managedPlaylist = null;

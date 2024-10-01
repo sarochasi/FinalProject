@@ -87,6 +87,17 @@ export class MediaService {
     );
   }
 
-
+  showPlaylistMedia(id: number): Observable<Media[]> {
+    return this.http.get<Media[]>(`${this.url}/playlist/${id}`, this.getHttpOptions()).pipe(
+      catchError(
+        (err:any) => {
+          console.error('MediaService.showPlaylistMedia(): errror retrieving media', err);
+          return throwError(
+            () => new Error('MediaService.get(): error getting media: ' + err)
+          );
+        }
+      )
+    );
+  }
 
 }

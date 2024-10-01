@@ -114,9 +114,9 @@ export class PlaylistService {
     );
   }
 
-  addMediaToPlaylist(playlistId: number, mediaId: number): Observable<Playlist> {
+  addMediaToPlaylist(playlistId: number, mediaId: number, media: Media): Observable<Playlist> {
     const url = `${this.url}/${playlistId}/media/${mediaId}`;
-    return this.http.post<Playlist>(url, {}, this.getHttpOptions());
+    return this.http.post<Playlist>(url, {media}, this.getHttpOptions());
   }
 
   // addCommentToPlaylist(playlistId: number, commentId: number): Observable<Playlist> {

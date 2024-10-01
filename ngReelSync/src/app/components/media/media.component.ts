@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Media } from '../../models/media';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 declare var bootstrap: any;
 
@@ -23,12 +24,14 @@ export class MediaComponent {
   newMedia: Media = new Media();
   editMedia: Media | null = null;
   showCreateForm: boolean = false;
+  safeSrc: SafeResourceUrl = '';
 
   constructor(
 
     private mediaService: MediaService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ){}
 
   ngOnInit(): void{
@@ -48,6 +51,11 @@ export class MediaComponent {
         }
       }
     );
+  }
+
+  sanitizeUrl(url: string) {
+    console.log(url);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   findMediaById(mediaId: number) : void{
@@ -86,6 +94,7 @@ export class MediaComponent {
       next: (createdTodo) => {
         this.reloadMedia();
         this.newMedia = new Media();
+        this.mediaList.push(newMedia);
       },
       error: (oopsy) => {
         console.error('Error creating todo;');

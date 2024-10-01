@@ -462,6 +462,7 @@ COMMIT;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (1, 1, 'https://www.youtube.com/embed/dQw4w9WgXcQ?si=SYnGpwzgCj2eGx0o', 'Test', NULL, NULL, 'test', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (2, 1, 'https://www.youtube.com/embed/jfKfPfyJRdk?si=9GPVb1dI2KmJI6da', 'Test2', NULL, NULL, 'test2', 1);
 
 COMMIT;
 
@@ -472,6 +473,7 @@ COMMIT;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (1, 'My Playlist', 1, 'Road trip jams', NULL, NULL, 'https://previews.123rf.com/images/macsim/macsim1202/macsim120200073/12369837-portrait-of-a-male-teenager-listening-to-music.jpg', 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (2, 'A Second Playlist', 1, 'Chill Vibes', NULL, NULL, 'https://lofigirl.com/wp-content/uploads/2023/02/DAY_UPDATE_ILLU.jpg', 1, 1);
 
 COMMIT;
 
@@ -552,6 +554,8 @@ COMMIT;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (1, 1);
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (2, 1);
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (2, 2);
 
 COMMIT;
 
