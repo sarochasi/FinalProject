@@ -35,6 +35,20 @@ export class PlaylistService {
 
   }
 
+  showAll():Observable<Playlist[]>{
+    return this.http.get<Playlist[]>(`${this.url}/all`, this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => { return new Error("PlaylistService.showAll(): error retrieving playlists:"  + err); }
+          );
+        }
+      )
+    );
+
+  }
+
   create(newPlaylist:Playlist) : Observable<Playlist>{
     return this.http.post<Playlist>(this.url,newPlaylist,this.getHttpOptions()).pipe(
       catchError(

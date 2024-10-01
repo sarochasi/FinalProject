@@ -1,4 +1,5 @@
 import { PlaylistComment } from "./playlistcomment"
+import { User } from "./user"
 
 export class Playlist {
   id: number
@@ -12,6 +13,7 @@ export class Playlist {
   creatorId: number
   favorite: boolean
   playlistComments: PlaylistComment[]
+  user: User
 
   constructor(
     id: number = 0,
@@ -24,7 +26,8 @@ export class Playlist {
     published: boolean = false,
     creatorId: number = 0,
     favorite: boolean = false,
-    playlistComments: PlaylistComment[] =[]
+    playlistComments: PlaylistComment[] =[],
+    user: User = new User(),
   ) {
     this.id = id;
     this.name = name;
@@ -37,5 +40,6 @@ export class Playlist {
     this.creatorId = creatorId;
     this.favorite = favorite;
     this.playlistComments = playlistComments
+    this.user = user
   }
 }

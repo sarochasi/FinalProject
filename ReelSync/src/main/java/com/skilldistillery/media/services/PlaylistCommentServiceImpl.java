@@ -53,13 +53,21 @@ public class PlaylistCommentServiceImpl implements PlaylistCommentService {
 	@Override
 	public PlaylistComment create(String username, PlaylistComment comment, int pid) {
 		User user = userRepo.findByUsername(username);
-		Playlist playlist = playlistRepo.findByIdAndUser_Username(pid, username);
-		comment.setUser(user);
-		comment.setPlaylist(playlist);
-		comment.setEnabled(true);
-		playlist.getPlaylistComments().add(comment);
-		commentRepo.saveAndFlush(comment);
-		return comment;
+		Optional<Playlist> playlistOpt = playlistRepo.findById(pid);
+		if(playlistOpt.isPresent()) {
+			Playlist playlist = playlistOpt.get();
+			comment.setUser(user);
+			comment.setPlaylist(playlist);
+			comment.setEnabled(true);
+			
+			playlist.getPlaylistComments().add(comment);
+			commentRepo.saveAndFlush(comment);
+			
+			return comment;
+		}
+		return null;
+			
+		
 	}
 
 	@Override

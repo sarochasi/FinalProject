@@ -1,6 +1,7 @@
 package com.skilldistillery.media.controllers;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class PlaylistController {
 	
 	@Autowired
 	private MediaService mediaService;
+	
+	@GetMapping("playlists/all")
+	public List<Playlist> showAll(Principal principal){
+		return playlistService.showAll(principal.getName());
+	}
 	
 	@GetMapping("playlists")
 	public Set<Playlist> index(HttpServletRequest req, HttpServletResponse res, Principal principal) {
