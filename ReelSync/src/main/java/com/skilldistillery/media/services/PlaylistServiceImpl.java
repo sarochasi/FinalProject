@@ -1,5 +1,6 @@
 package com.skilldistillery.media.services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,6 +25,15 @@ public class PlaylistServiceImpl implements PlaylistService {
 	
 	@Autowired
 	private MediaRepository mediaRepo;
+	
+	public List<Playlist> showAll(String username){
+		User user = userRepo.findByUsername(username);
+		
+		if(user != null) {
+			return playlistRepo.findAll();
+		}
+		return null;
+	}
 
 	@Override
 	public Set<Playlist> index(String username) {

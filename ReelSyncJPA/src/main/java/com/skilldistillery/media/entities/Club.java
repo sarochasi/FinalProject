@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Club {
@@ -44,6 +45,15 @@ public class Club {
 	@JoinTable(name="club_has_playlist",joinColumns = @JoinColumn(name="club_id")
 	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
 	private List<Playlist> clubPlaylists;
+	
+	@ManyToOne
+	@JoinColumn(name = "created_by_user_id")
+	private User user;
+	
+	@ManyToMany
+	@JoinTable(name="club_has_user",joinColumns = @JoinColumn(name="club_id")
+	, inverseJoinColumns = @JoinColumn(name="user_id"))
+	private List<User> clubUsers;
 	
 	public Club() { }
 
@@ -101,6 +111,22 @@ public class Club {
 
 	public void setClubPlaylists(List<Playlist> clubPlaylists) {
 		this.clubPlaylists = clubPlaylists;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<User> getClubUsers() {
+		return clubUsers;
+	}
+
+	public void setClubUsers(List<User> clubUsers) {
+		this.clubUsers = clubUsers;
 	}
 
 	@Override

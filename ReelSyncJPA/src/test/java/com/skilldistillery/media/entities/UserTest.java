@@ -66,6 +66,18 @@ class UserTest {
 		assertNotNull(user.getFavoritePlaylists());
 		assertTrue(user.getFavoritePlaylists().size() > 0);
 	}
+	
+	@Test
+	void test_User_Club_OneToMany_mapping() {
+		assertNotNull(user.getClubs());
+		assertTrue(user.getClubs().size() > 0);
+	}
+	
+	@Test
+	void test_User_Club_ManyToMany_mapping() {
+		assertNotNull(user.getClubs());
+		assertTrue(user.getClubs().size() > 0);
+	}
 
 
 }
