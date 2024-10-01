@@ -8,6 +8,7 @@ export class Club {
   createdAt: string;
   updatedAt: string;
   user: User;
+  creatorId: number
 
   constructor(
     id: number = 0,
@@ -16,7 +17,8 @@ export class Club {
   imageUrl: string = '',
   createdAt: string = '',
   updatedAt: string = '',
-  user: User = new User()
+  user: User = new User(),
+  creatorId: number = 0
 
   ){
     this.id = id;
@@ -25,6 +27,7 @@ export class Club {
     this.imageUrl = imageUrl;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.user = user
+    this.user = user;
+    this.creatorId = creatorId;
   }
 }

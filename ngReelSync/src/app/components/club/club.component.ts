@@ -20,7 +20,11 @@ export class ClubComponent {
   clubs: Club[] = [];
   playlists: Playlist[] =[];
   user: User = new User();
-  newPlaylist: Playlist = new Playlist();
+
+  newClub: Club = new Club();
+  // newPlaylist: Playlist = new Playlist();
+
+  showForm = false;
 
   constructor(private clubService: ClubService,
     private activatedRoute: ActivatedRoute,
@@ -56,6 +60,21 @@ export class ClubComponent {
       error: (err) => {
         console.error(err);
         console.error("Error loading clubs");
+      }
+    });
+
+  }
+
+  addClub(newClub: Club) : void {
+    newClub.creatorId = this.user.id;
+    this.clubService.create(newClub).subscribe({
+      next: (newClub) => {
+        this.loadClub();
+        this.newClub = new Playlist();
+      },
+      error: (err) => {
+        console.error(err);
+        console.error("error in subscribe");
       }
     });
 
