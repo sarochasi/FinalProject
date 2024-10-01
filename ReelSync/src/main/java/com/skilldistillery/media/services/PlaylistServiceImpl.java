@@ -99,7 +99,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 		if (optPlaylist.isPresent() && optMedia.isPresent()) { 
 			playlist = optPlaylist.get(); 
 			Media media = optMedia.get(); 
-			playlist.getMedia().add(media);  
+			playlist.getMedia().add(media);
+			media.getPlaylists().add(playlist);
+			playlistRepo.saveAndFlush(playlist);
 		} return playlist; 
 	}
 	

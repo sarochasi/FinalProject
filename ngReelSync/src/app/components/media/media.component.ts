@@ -1,21 +1,59 @@
 import { MediaService } from './../../services/media.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, TemplateRef } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Media } from '../../models/media';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NgbModal, ModalDismissReasons, NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { PlaylistService } from '../../services/playlist.service';
+import { Playlist } from '../../models/playlist';
 
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-media',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgbModule],
   templateUrl: './media.component.html',
   styleUrl: './media.component.css'
 })
 export class MediaComponent {
+
+  private modalService = inject(NgbModal);
+	closeResult = '';
+  modalRef : NgbModalRef | null = null;
+
+	open(content: TemplateRef<any>, media: Media) {
+    this.loadPlaylists();
+		this.modalRef = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalRef.result.then(
+			(playlistId) => {
+        this.addMediaToPlaylist(playlistId, media.id, media);
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			},
+		);
+	}
+
+	private getDismissReason(reason: any): string {
+		switch (reason) {
+			case ModalDismissReasons.ESC:
+				return 'by pressing ESC';
+			case ModalDismissReasons.BACKDROP_CLICK:
+				return 'by clicking on a backdrop';
+			default:
+				return `with: ${reason}`;
+		}
+	}
+
+  submitAddToPlaylist(form: NgForm, playlistModal: TemplateRef<any>): void {
+    // console.log(form.value.playlist);
+    if(this.modalRef) {
+      this.modalRef.close(form.value.playlist);
+    }
+  }
 
   title = "Media"
 
@@ -25,9 +63,11 @@ export class MediaComponent {
   editMedia: Media | null = null;
   showCreateForm: boolean = false;
   safeSrc: SafeResourceUrl = '';
+  playlists: Playlist[] = [];
+  selectedPlaylistId: number = 0;
 
   constructor(
-
+    private playlistService: PlaylistService,
     private mediaService: MediaService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -54,7 +94,6 @@ export class MediaComponent {
   }
 
   sanitizeUrl(url: string) {
-    console.log(url);
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
@@ -103,6 +142,17 @@ export class MediaComponent {
     });
   }
 
+  addMediaToPlaylist(pid: number, mid : number, media: Media): void {
+    this.playlistService.addMediaToPlaylist(pid, mid, media).subscribe({
+      next: (success) => {
+        console.log(success);
+      },
+      error: (fail) => {
+        console.log(fail);
+      }
+    });
+  }
+
   updateMedia(editMedia: Media) : void {
     this.mediaService.update(editMedia).subscribe({
      next: (mediaList) => {
@@ -127,6 +177,18 @@ export class MediaComponent {
         }
 
       })
+    }
+
+    loadPlaylists(): void {
+      this.playlistService.index().subscribe({
+        next: (playlists) => {
+          this.playlists = playlists;
+        },
+        error: (kaboom) => {
+          console.log('MediaListComponent.loadPlaylists failed');
+          console.log(kaboom);
+        }
+      });
     }
 
     openEditModal(media: any) {
