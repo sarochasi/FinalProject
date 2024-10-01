@@ -12,7 +12,7 @@
         <input type="text" id="description" [(ngModel)]="newMedia.description" name="description" class="form-control" required />
       </div>
       <div class="form-group">
-        <label for="imageUrl">Image URL:</label>
+        <label for="imageUrl">Source URL:</label>
         <input type="text" id="imageUrl" [(ngModel)]="newMedia.sourceUrl" name="imageUrl" class="form-control" required />
       </div>
       <button type="submit" class="btn" style="background-color: #CE6A85; color: white;">Add Media</button>
@@ -24,7 +24,7 @@
     <table class="table table-hover" style="background-color: #fff; border-radius: 5px;">
       <thead class="thead-dark" style="background-color: #FF8C61; color: white;">
         <tr>
-          <th>Source_url</th>
+          <th></th>
           <th>Name</th>
           <th>Created at</th>
           <th>Updated at</th>
@@ -34,7 +34,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let media of mediaList" >
-          <td>{{ media.sourceUrl }}</td>
+          <td><iframe width="460" height="215" [src]="sanitizeUrl(media.sourceUrl)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
           <td>{{ media.name }}</td>
           <td>{{ media.createdAt }}</td>
           <td>{{ media.updatedAt }}</td>

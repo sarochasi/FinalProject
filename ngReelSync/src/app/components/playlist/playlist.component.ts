@@ -96,13 +96,11 @@ export class PlaylistComponent {
     });
   }
 
-  addMedia(newMedia: Media, playlistId: number): void {
+  addMedia(newMedia: Media): void {
     this.mediaService.create(newMedia).subscribe({
       next: (createdMedia) => {
-        const mediaId = createdMedia.id;
-
-
-        this.addMediaToPlaylist(playlistId, mediaId);
+        this.reloadMedia();
+        this.newMedia = new Media();
       },
       error: (err) => {
         console.error('Error creating media:', err);
@@ -110,8 +108,8 @@ export class PlaylistComponent {
     });
   }
 
-  addMediaToPlaylist(playlistId: number, mediaId: number): void {
-    this.playlistService.addMediaToPlaylist(playlistId, mediaId).subscribe({
+  addMediaToPlaylist(playlistId: number, mediaId: number, media: Media): void {
+    this.playlistService.addMediaToPlaylist(playlistId, mediaId, media).subscribe({
       next: (updatedPlaylist) => {
         console.log('Media added to playlist successfully:', updatedPlaylist);
         this.reloadMedia();
@@ -147,7 +145,7 @@ export class PlaylistComponent {
         this.mediaService.create(newMedia).subscribe({
           next: (createdMedia) => {
             const mediaId = createdMedia.id;
-            this.addMediaToPlaylist(this.selected!.id, mediaId);
+            this.addMediaToPlaylist(this.selected!.id, mediaId, newMedia);
           },
           error: (err) => {
             console.error('Error creating media:', err);

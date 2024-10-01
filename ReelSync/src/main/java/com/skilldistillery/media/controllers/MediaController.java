@@ -2,6 +2,7 @@ package com.skilldistillery.media.controllers;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,9 +30,8 @@ public class MediaController {
 	private MediaService mediaService;
 	
 	@GetMapping("media")
-	public List<Media> index(Principal principal, HttpServletRequest req, HttpServletResponse res){
-		return mediaService.index(principal.getName());
-		
+	public Set<Media> index(Principal principal, HttpServletRequest req, HttpServletResponse res){
+		return mediaService.findByUser_Username(principal.getName());
 	}
 	
 	@GetMapping("media/{mid}")
@@ -41,6 +41,15 @@ public class MediaController {
 			res.setStatus(404);
 		}
 		return media;
+	}
+	
+	@GetMapping("media/playlist/{pid}")
+	public Set<Media> showByPlaylist(@PathVariable("pid") int pid, HttpServletRequest req, HttpServletResponse res) {
+		Set<Media> playlistMedia = mediaService.showByPlaylist(pid);
+		if(playlistMedia == null) {
+			res.setStatus(404);
+		}
+		return playlistMedia;
 	}
 	
 	@PostMapping({"media","media/"})
@@ -55,6 +64,7 @@ public class MediaController {
 		}
 		return newMedia; 
 	}
+	
 	
 	@PutMapping("media/{mid}")
 	public Media update(Principal principal, HttpServletRequest req, 

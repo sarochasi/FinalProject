@@ -7,11 +7,12 @@ import { Media } from '../../models/media';
 import { CommonModule } from '@angular/common';
 import { Playlist } from '../../models/playlist';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-playlistdetail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './playlistdetail.component.html',
   styleUrl: './playlistdetail.component.css'
 })
@@ -21,12 +22,13 @@ export class PlaylistdetailComponent {
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private authService:AuthService,
+    private authService: AuthService,
     private mediaService: MediaService,
     private sanitizer: DomSanitizer
   ) {}
 
   playlistId: number = 0;
+  selectedMediaId: number | null = null;
   mediaList: Media[] = [];
   playlist: Playlist | null = null;
   selected: Media | null = null;
@@ -70,8 +72,8 @@ export class PlaylistdetailComponent {
     })
   }
 
-  reloadMedia() {
-    this.mediaService.index().subscribe({
+  reloadMedia(pid: number): void {
+    this.mediaService.showPlaylistMedia(pid).subscribe({
       next: (mediaList) => {
         this.mediaList = mediaList;
       },
@@ -83,10 +85,10 @@ export class PlaylistdetailComponent {
   }
 
   showPlaylistMedia(pid: number): void {
-    this.playlistService.getMediaByPlaylistId(pid).subscribe({
-      next: (media) => {
-        console.log('Media loaded sucessfully', media);
-        this.reloadMedia();
+    this.mediaService.showPlaylistMedia(pid).subscribe({
+      next: (mediaList) => {
+        console.log('Media loaded sucessfully', mediaList);
+        this.mediaList = mediaList;
       },
       error: (err) => {
         console.log("Error loading media in showPlaylistMedia() :" + err);
@@ -97,7 +99,7 @@ export class PlaylistdetailComponent {
   updateMedia(editMedia: Media) : void {
     this.mediaService.update(editMedia).subscribe({
      next: (mediaList) => {
-       this.reloadMedia();
+       this.reloadMedia(this.playlistId);
        this.selected = null;
      },
      error: (err) => {
@@ -110,7 +112,7 @@ export class PlaylistdetailComponent {
     deleteMedia(mediaId: number): void{
       this.mediaService.destroy(mediaId).subscribe({
         next: () => {
-          this.reloadMedia();
+          this.reloadMedia(this.playlistId);
         },
         error: (kaboom) =>{
           console.log('MediaListComponent.deleteMedia failed');
@@ -118,6 +120,15 @@ export class PlaylistdetailComponent {
         }
 
       })
+    }
+
+    addSelectedMediaToPlaylist(): void {
+      if (this.selected && this.selectedMediaId) {
+        const media = this.mediaList.find(m => m.id === this.selectedMediaId);
+        if (media) {
+          this.playlistService.addMediaToPlaylist(this.selected.id, media.id, media);
+        }
+      }
     }
 
 }
