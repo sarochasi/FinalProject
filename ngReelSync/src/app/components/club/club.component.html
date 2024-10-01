@@ -82,10 +82,18 @@
         <div class="card-body" style="background-color: #FAA275;">
           <h5 class="card-title" style="color: #5C374C;">{{ club.name }}</h5>
           <p class="card-text" style="color: #985277;">{{ club.description }}</p>
+          <small class="text-body-secondary">Created by: {{ club.user.username }}</small>
+          <br>
           <small class="text-body-secondary">{{ club.createdAt | date: 'mediumDate' }}</small>
 
           <div class="d-flex justify-content-between align-items-center">
             <div class="btn-group">
+              <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isJoined(club),
+              'btn-outline-secondary': !isJoined(club)}"
+              (click)="isJoined(club) ? leaveClub(club) : joinClub(club.id)">
+              {{ isJoined(club) ? 'Joined' : 'Join club' }}
+            </button>
+
 
             </div>
 

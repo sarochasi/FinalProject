@@ -8,7 +8,8 @@ export class Club {
   createdAt: string;
   updatedAt: string;
   user: User;
-  creatorId: number
+  creatorId: number;
+  clubUsers: User[];
 
   constructor(
     id: number = 0,
@@ -18,7 +19,8 @@ export class Club {
   createdAt: string = '',
   updatedAt: string = '',
   user: User = new User(),
-  creatorId: number = 0
+  creatorId: number = 0,
+  clubUsers: User[] = []
 
   ){
     this.id = id;
@@ -29,5 +31,6 @@ export class Club {
     this.updatedAt = updatedAt;
     this.user = user;
     this.creatorId = creatorId;
+    this.clubUsers = clubUsers;
   }
 }

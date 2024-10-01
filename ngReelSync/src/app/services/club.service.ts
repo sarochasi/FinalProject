@@ -52,5 +52,28 @@ export class ClubService {
     );
   }
 
+  joinclub(cid: number): Observable<Club>{
+    return this.http.post<Club>((`${this.url}/${cid}/join`), {}, this.getHttpOptions());
+  }
+
+  leaveClub(cid: number): Observable<Club>{
+    return this.http.delete<Club>(`${this.url}/${cid}/leave`, this.getHttpOptions()).pipe(
+      catchError((err: any) =>
+      {
+        console.log(err);
+        return throwError(() => new Error('ClubService.leaveClub(): error: ' + err));
+      })
+    );
+  }
+
+  getClubMembers(clubId: number): Observable<User[]>{
+    return this.http.get<User[]>(`${this.url}/${clubId}/members`, this.getHttpOptions()).pipe(
+      catchError((err: any) =>
+        {
+          console.log(err);
+          return throwError(() => new Error('ClubService.getClubMembers(): error: ' + err));
+        })
+    );
+  }
 
 }

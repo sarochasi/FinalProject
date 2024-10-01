@@ -68,7 +68,49 @@ public class ClubServiceImpl implements ClubService{
 		}
 		return existing;
 	}
+
+	@Override
+	public Club joinClub(String username, int clubId) {
+		User user = userRepo.findByUsername(username);
+		Optional<Club> clubOpt = clubRepo.findById(clubId);
+		
+		if(clubOpt.isPresent() && user != null) {
+			Club club = clubOpt.get();
+			
+			if(!club.getClubUsers().contains(user)) {
+				club.getClubUsers().add(user);
+				user.getClubs().add(club);
+				clubRepo.saveAndFlush(club);
+			}
+			return club;
+		}
+		return null;
+	}
+
+	@Override
+	public void leaveClub(String username, int clubId) {
+		User user = userRepo.findByUsername(username);
+		Optional<Club> clubOpt = clubRepo.findById(clubId);
+		
+		if(clubOpt.isPresent() && user != null) {
+			Club club = clubOpt.get();
+			
+			if(club.getClubUsers().contains(user)) {
+				club.getClubUsers().remove(user);
+				clubRepo.save(club);
+			}
+		}
+	}
 	
+	@Override
+    public List<User> getClubUsers(int clubId) {
+        Optional<Club> clubOpt = clubRepo.findById(clubId);
+        if (clubOpt.isPresent()) {
+            Club club = clubOpt.get();
+            return club.getClubUsers(); 
+        }
+        return null;
+    }
 	
 	
 

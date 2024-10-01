@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.media.entities.Club;
 import com.skilldistillery.media.entities.Media;
+import com.skilldistillery.media.entities.User;
 import com.skilldistillery.media.services.ClubService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,6 +43,13 @@ public class ClubController {
 			res.setStatus(404);
 		}
 		return club;
+	}
+	
+	@GetMapping("clubs/{cid}/members")
+	public List<User> getClubMembers(Principal principal, HttpServletRequest req, 
+		HttpServletResponse res, @PathVariable("cid") int cid){
+		List<User> clubMembers = clubService.getClubUsers(cid);
+		return clubMembers;
 	}
 	
 	@PostMapping({"clubs", "clubs/"})
@@ -76,5 +85,26 @@ public class ClubController {
 		}
 		return updatedClub;
 	}
+	
+	@PostMapping("clubs/{cid}/join")
+	public Club joinClub(Principal principal, @PathVariable("cid") int clubId) {
+		String username = principal.getName();
+		return clubService.joinClub(username, clubId);
+	}
+	
+	@DeleteMapping("clubs/{cid}/leave")
+	public void leaveclub(Principal principal, @PathVariable("cid") int clubId,
+			HttpServletRequest req, HttpServletResponse res){
+		try {
+			clubService.leaveClub(principal.getName(), clubId);
+			res.setStatus(204);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+		}
+	}
+	
+
 
 }
