@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.media.entities.Club;
 import com.skilldistillery.media.entities.Media;
+import com.skilldistillery.media.entities.Playlist;
 import com.skilldistillery.media.entities.User;
 import com.skilldistillery.media.services.ClubService;
 
@@ -50,6 +51,13 @@ public class ClubController {
 		HttpServletResponse res, @PathVariable("cid") int cid){
 		List<User> clubMembers = clubService.getClubUsers(cid);
 		return clubMembers;
+	}
+	
+	@GetMapping("clubs/{cid}/playlists")
+	public List<Playlist> getClubPlaylist(Principal principal, HttpServletRequest req, 
+			HttpServletResponse res, @PathVariable("cid") int cid){
+		List<Playlist> clubPlaylist = clubService.getClubPlaylist(cid);
+		return clubPlaylist;
 	}
 	
 	@PostMapping({"clubs", "clubs/"})
@@ -103,6 +111,50 @@ public class ClubController {
 			e.printStackTrace();
 			res.setStatus(400);
 		}
+	}
+	
+	@PostMapping("clubs/{clubId}/playlists/{pid}")
+	public Club addPlaylistToClub(HttpServletRequest req, HttpServletResponse res, 
+			@PathVariable("clubId") int cid, @PathVariable("pid") int pid, Principal principal) {
+		Club managedClub = null;
+		try {
+			managedClub = clubService.addPlaylistToClub(cid, pid, principal.getName());
+			if (managedClub != null) {
+				res.setStatus(201);
+				res.setHeader("location", req.getRequestURL().append("/").append(managedClub.getId()).toString());
+			} else {
+				System.out.println("Unauthorized");
+				res.setStatus(401);
+			}
+		} catch (Exception e) {
+			res.setStatus(400);
+			e.printStackTrace();
+		}
+		
+		return managedClub;
+		
+	}
+	
+	@DeleteMapping("clubs/{clubId}/playlists/{pid}")
+	public Club removePlaylistFromClub(HttpServletRequest req, HttpServletResponse res, 
+			@PathVariable("clubId") int cid, @PathVariable("pid") int pid, Principal principal) {
+		Club managedClub = null;
+		try {
+			managedClub = clubService.removePlaylistFromClub(cid, pid, principal.getName());
+			if (managedClub != null) {
+				res.setStatus(201);
+				res.setHeader("location", req.getRequestURL().append("/").append(managedClub.getId()).toString());
+			} else {
+				System.out.println("Unauthorized");
+				res.setStatus(401);
+			}
+		} catch (Exception e) {
+			res.setStatus(400);
+			e.printStackTrace();
+		}
+		
+		return managedClub;
+		
 	}
 	
 

@@ -8,6 +8,7 @@ import { MediaComponent } from './components/media/media.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { PlaylistdetailComponent } from './components/playlistdetail/playlistdetail.component';
 import { ClubComponent } from './components/club/club.component';
+import { ClubdetailComponent } from './components/clubdetail/clubdetail.component';
 
 
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
   {path: 'playlists', component: PlaylistComponent},
   {path: 'playlists/:id', component: PlaylistdetailComponent},
   {path: 'clubs', component: ClubComponent},
+  { path: 'club/:id', component: ClubdetailComponent },
 
   { path: '', redirectTo: '/playlists', pathMatch: 'full' }
 ];

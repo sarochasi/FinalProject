@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
+import { Club } from '../../models/club';
 
 @Component({
   selector: 'app-clubdetail',
@@ -24,9 +25,23 @@ export class ClubdetailComponent {
 
   ) {}
 
-  playlists: Playlist[] = [];
+  club: Club | undefined;
+  newPlaylist: Playlist = new Playlist();
 
   ngOnInit(){
+
+  }
+
+  getClubDetails(){
+    this.clubService.index().subscribe({
+      next: (data) => {
+        // this.clubs = data;
+      },
+      error: (failed) => {
+        console.log('getClubDetails() error');
+        console.log(failed);
+      }
+    });
 
   }
 
