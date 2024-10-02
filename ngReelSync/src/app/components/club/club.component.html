@@ -68,8 +68,10 @@
     </div>
 
     <div *ngIf="selected">
+      <button class="btn btn-outline-danger mt-4" (click)="selected = null">Back</button>
       <div class="club-detail mb-5">
         <h2 class="text-center" style="color: #5C374C;">{{ selected.name }}</h2>
+        <h3 class="text-center" style="color: #c675a3;">{{ selected.description }}</h3>
         <div class="card shadow-sm mb-4" style="border-color: #FF8C61;">
           <div class="card-body" style="background-color: #FAA275;">
             <h3 style="color: #5C374C;">Members</h3>
