@@ -1,3 +1,4 @@
+import { Playlist } from "./playlist";
 import { User } from "./user";
 
 export class Club {
@@ -10,6 +11,7 @@ export class Club {
   user: User;
   creatorId: number;
   clubUsers: User[];
+  clubPlaylists: Playlist[];
 
   constructor(
     id: number = 0,
@@ -20,7 +22,8 @@ export class Club {
   updatedAt: string = '',
   user: User = new User(),
   creatorId: number = 0,
-  clubUsers: User[] = []
+  clubUsers: User[] = [],
+  clubPlaylists: Playlist[] = []
 
   ){
     this.id = id;
@@ -32,5 +35,6 @@ export class Club {
     this.user = user;
     this.creatorId = creatorId;
     this.clubUsers = clubUsers;
+    this.clubPlaylists = clubPlaylists;
   }
 }

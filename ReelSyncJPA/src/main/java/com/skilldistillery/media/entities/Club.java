@@ -40,7 +40,7 @@ public class Club {
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
 	
-	@JsonIgnore
+	
 	@ManyToMany
 	@JoinTable(name="club_has_playlist",joinColumns = @JoinColumn(name="club_id")
 	, inverseJoinColumns = @JoinColumn(name="playlist_id"))
@@ -52,10 +52,10 @@ public class Club {
 	
 	@ManyToMany
 	@JoinTable(name="club_has_user",joinColumns = @JoinColumn(name="club_id")
-	, inverseJoinColumns = @JoinColumn(name="user_id"))
+	, inverseJoinColumns = @JoinColumn(name="user_id")) 
 	private List<User> clubUsers;
-	
-	public Club() { }
+		
+		public Club() { }
 
 	public int getId() {
 		return id;

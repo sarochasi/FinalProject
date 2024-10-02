@@ -4,9 +4,9 @@
 
   <div *ngIf="isLoggedIn()">
     <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
-
+<div *ngIf="!selected">
       <!-- Button to toggle form visibility -->
-  <div class="text-center mb-4">
+  <div class="text-center mb-4" >
     <button class="btn" style="background-color: #CE6A85; color: white;" (click)="showForm = !showForm">
       Create New Club
     </button>
@@ -78,9 +78,10 @@
           alt="{{ club.name }}"
           style="width: 100%; height: 225px; object-fit: cover;"
 
+
         />
         <div class="card-body" style="background-color: #FAA275;">
-          <h5 class="card-title" style="color: #5C374C;">{{ club.name }}</h5>
+          <h5 class="card-title" style="color: #5C374C;" (click)="selectedClub(club)">{{ club.name }}</h5>
           <p class="card-text" style="color: #985277;">{{ club.description }}</p>
           <small class="text-body-secondary">Created by: {{ club.user.username }}</small>
           <br>
@@ -102,6 +103,48 @@
       </div>
     </div>
   </div>
+</div>
+</div>
+
+<div *ngIf="selected">
+  <p>{{selected.name}}</p>
+  <div class="club-detail">
+    <h2>{{ selected.name }} Club Details</h2>
+
+    <div class="members">
+      <h3>Members</h3>
+      <ul>
+        <li *ngFor="let member of selected.clubUsers">{{ member.username }}</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="playlists">
+    <h3>Playlists</h3>
+    <ul>
+      <li *ngFor="let playlist of selected.clubPlaylists">{{ playlist.name }}</li>
+    </ul>
+  </div>
+
+<!-- Adding Playllists to the club -->
+  <div>
+    <label for="playlistSelect">Select Playlist to Add:</label>
+    <select [(ngModel)]="selectedPlaylistId">
+      <option *ngFor="let playlist of getAvailablePlaylists()" [value]="playlist.id">
+        {{ playlist.name }}
+      </option>
+    </select>
+    <button (click)="addPlaylistToClub()">Add playlist to the club</button>
+
+    <p *ngIf="getAvailablePlaylists().length === 0">All playlists are already added to this club.</p>
+  </div>
+
+
+
+
+  <button class="btn btn-outline-danger" (click)="selected=null">Back</button>
+
 </div>
 </main>
 </div>

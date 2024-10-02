@@ -58,6 +58,7 @@ public class Playlist {
 	@ManyToMany(mappedBy="favoritePlaylists")
 	private List<User> playlistUsers;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="clubPlaylists")
 	private List<Club> clubs;
 	

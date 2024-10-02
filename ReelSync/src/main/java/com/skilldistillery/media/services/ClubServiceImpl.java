@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.media.entities.Club;
+import com.skilldistillery.media.entities.Playlist;
 import com.skilldistillery.media.entities.User;
 import com.skilldistillery.media.repositories.ClubRepository;
+import com.skilldistillery.media.repositories.PlaylistRepository;
 import com.skilldistillery.media.repositories.UserRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class ClubServiceImpl implements ClubService{
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private PlaylistRepository playlistRepo;
 
 	@Override
 	public List<Club> index(String username) {
@@ -111,6 +116,31 @@ public class ClubServiceImpl implements ClubService{
         }
         return null;
     }
+
+	@Override
+	public Club addPlaylistToClub(int clubId, int pid, String username) {
+		Optional<Club> clubOpt = clubRepo.findById(clubId);
+		Optional<Playlist> playlistOpt = playlistRepo.findById(pid);
+		if(clubOpt.isPresent() && playlistOpt.isPresent()) {
+			Club club = clubOpt.get();
+			Playlist playlist = playlistOpt.get();
+			club.getClubPlaylists().add(playlist);
+			playlist.getClubs().add(club);
+			clubRepo.save(club);
+			return club;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Playlist> getClubPlaylist(int clubId) {
+		Optional<Club> clubOpt = clubRepo.findById(clubId);
+        if (clubOpt.isPresent()) {
+            Club club = clubOpt.get();
+            return club.getClubPlaylists(); 
+        }
+        return null;
+	}
 	
 	
 

@@ -3,6 +3,7 @@ package com.skilldistillery.media.services;
 import java.util.List;
 
 import com.skilldistillery.media.entities.Club;
+import com.skilldistillery.media.entities.Playlist;
 import com.skilldistillery.media.entities.User;
 
 public interface ClubService {
@@ -22,4 +23,8 @@ public interface ClubService {
 	public void leaveClub(String username, int clubId);
 
 	List<User> getClubUsers(int clubId);
+	
+	List<Playlist> getClubPlaylist(int clubId);
+	
+	Club addPlaylistToClub(int clubId, int pid, String username);
 }
