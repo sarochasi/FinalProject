@@ -213,7 +213,6 @@ export class PlaylistComponent {
   }
 
 
-
   updatePlaylist(editPlaylist: Playlist) : void {
    this.playlistService.update(editPlaylist).subscribe({
     next: (playlist) => {
