@@ -110,4 +110,14 @@ export class ClubService {
     );
   }
 
+  removePlaylistFromClub(clubId: number, pid:number): Observable<Club>{
+    return this.http.delete<Club>(`${this.url}/${clubId}/playlists/${pid}` ,this.getHttpOptions()).pipe(
+      catchError((err: any) =>
+        {
+          console.log(err);
+          return throwError(() => new Error('ClubService.removePlaylistToClub(): error: ' + err));
+        })
+    );
+  }
+
 }

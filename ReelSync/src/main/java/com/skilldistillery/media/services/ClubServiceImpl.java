@@ -141,6 +141,22 @@ public class ClubServiceImpl implements ClubService{
         }
         return null;
 	}
+
+	@Override
+	public Club removePlaylistFromClub(int clubId, int pid, String username) {
+		Optional<Club> clubOpt = clubRepo.findById(clubId);
+		Optional<Playlist> playlistOpt = playlistRepo.findById(pid);
+		if(clubOpt.isPresent() && playlistOpt.isPresent()) {
+			Club club = clubOpt.get();
+			Playlist playlist = playlistOpt.get();
+			club.getClubPlaylists().remove(playlist);
+			playlist.getClubs().remove(club);
+			clubRepo.save(club);
+			System.out.println("User " + username + " removed playlist " + pid + " from club " + clubId);
+			return club;
+		}
+		return null;
+	}
 	
 	
 

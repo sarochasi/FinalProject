@@ -1,0 +1,15 @@
+.card {
+  border-radius: 10px;
+}
+
+.card-body {
+  border-radius: 10px;
+}
+
+.btn {
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #CE6A85;
+}

@@ -33,6 +33,8 @@ export class ClubComponent {
   newClub: Club = new Club();
 
   showForm = false;
+  hasJoinedClub: boolean = false;
+  hasLeftClub: boolean = false;
 
   constructor(private clubService: ClubService,
     private activatedRoute: ActivatedRoute,
@@ -99,6 +101,7 @@ export class ClubComponent {
         console.log('Join club: ', club);
         this.loadClub();
         this.loadLoggedInUser();
+        this.hasJoinedClub = true;
 
       },
       error: (err) =>{
@@ -148,6 +151,7 @@ export class ClubComponent {
         console.log('Successfully left the club');
         this.loadClub();
         this.loadLoggedInUser();
+        this.hasLeftClub = true;
 
       },
       error: (err) => {
@@ -236,6 +240,45 @@ export class ClubComponent {
     return availablePlaylists;
   }
 
+  removePlaylistFromClub(playlistId: number): void {
+      if (!this.selected) {
+        console.log('No club selected');
+        return;
+      }
+
+      const playlistToRemove = this.selected.clubPlaylists.find(playlist => playlist.id === playlistId);
+
+      if (!playlistToRemove) {
+        console.log('Playlist not found in the selected club');
+        alert('This playlist is not part of the selected club.');
+        return;
+      }
+
+      if (playlistToRemove.user.username !== this.user.username) {
+        console.log('User is not the owner of the playlist');
+        alert('You cannot remove this playlist because you are not the owner.');
+        return;
+      }
+
+      this.clubService.removePlaylistFromClub(this.selected.id, playlistId).subscribe({
+        next: (updatedClub) => {
+          this.selected = updatedClub;
+          console.log('Playlist removed from club successfully');
+        },
+        error: (err) => {
+          console.error('Error removing playlist from club:', err);
+        }
+      });
+    }
+
+    isClubUser(username: string, clubUsers: any[]): boolean {
+      return clubUsers.some(member => member.username === username);
+    }
 
 
-}
+  }
+
+
+
+
+

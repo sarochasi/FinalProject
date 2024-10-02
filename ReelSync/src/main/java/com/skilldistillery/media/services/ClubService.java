@@ -27,4 +27,6 @@ public interface ClubService {
 	List<Playlist> getClubPlaylist(int clubId);
 	
 	Club addPlaylistToClub(int clubId, int pid, String username);
+	
+	Club removePlaylistFromClub(int clubId, int pid, String username);
 }

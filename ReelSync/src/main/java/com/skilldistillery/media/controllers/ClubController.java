@@ -135,6 +135,28 @@ public class ClubController {
 		
 	}
 	
+	@DeleteMapping("clubs/{clubId}/playlists/{pid}")
+	public Club removePlaylistFromClub(HttpServletRequest req, HttpServletResponse res, 
+			@PathVariable("clubId") int cid, @PathVariable("pid") int pid, Principal principal) {
+		Club managedClub = null;
+		try {
+			managedClub = clubService.removePlaylistFromClub(cid, pid, principal.getName());
+			if (managedClub != null) {
+				res.setStatus(201);
+				res.setHeader("location", req.getRequestURL().append("/").append(managedClub.getId()).toString());
+			} else {
+				System.out.println("Unauthorized");
+				res.setStatus(401);
+			}
+		} catch (Exception e) {
+			res.setStatus(400);
+			e.printStackTrace();
+		}
+		
+		return managedClub;
+		
+	}
+	
 
 
 }

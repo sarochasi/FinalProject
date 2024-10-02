@@ -1,151 +1,146 @@
 <div *ngIf="!isLoggedIn()">
   <app-login></app-login>
-  </div>
+</div>
 
-  <div *ngIf="isLoggedIn()">
-    <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
-<div *ngIf="!selected">
-      <!-- Button to toggle form visibility -->
-  <div class="text-center mb-4" >
-    <button class="btn" style="background-color: #CE6A85; color: white;" (click)="showForm = !showForm">
-      Create New Club
-    </button>
-  </div>
+<div *ngIf="isLoggedIn()">
+  <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
 
-  <!-- Add New Playlist Form (Initially hidden) -->
-  <div class="card shadow p-4 mb-5 bg-white rounded" *ngIf="showForm">
-    <h2 class="mb-4 text-center" style="color: #5C374C;">Add New club</h2>
-
-    <form #addForm="ngForm">
-      <div class="form-group mb-3">
-        <label for="name" class="form-label">Name:</label>
-        <input
-          type="text"
-          id="name"
-          [(ngModel)]="newClub.name"
-          name="name"
-          class="form-control"
-          placeholder="Enter playlist name"
-          required
-        />
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="description" class="form-label">Description:</label>
-        <input
-          type="text"
-          id="description"
-          [(ngModel)]="newClub.description"
-          name="description"
-          class="form-control"
-          placeholder="Enter playlist description"
-          required
-        />
-      </div>
-
-      <div class="form-group mb-4">
-        <label for="imageUrl" class="form-label">Image URL:</label>
-        <input
-          type="text"
-          id="imageUrl"
-          [(ngModel)]="newClub.imageUrl"
-          name="imageUrl"
-          class="form-control"
-          placeholder="Enter image URL"
-          required
-        />
-      </div>
-
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="addForm.invalid" (click)="addClub(newClub)">
-          Create Club
+    <div *ngIf="!selected">
+      <div class="text-center mb-4">
+        <button class="btn" style="background-color: #CE6A85; color: white;" (click)="showForm = !showForm">
+          Create New Club
         </button>
       </div>
-    </form>
-  </div>
 
+      <!-- Add New Club Form (Initially hidden) -->
+      <div class="card shadow p-4 mb-5 bg-white rounded" *ngIf="showForm">
+        <h2 class="mb-4 text-center" style="color: #5C374C;">Add New Club</h2>
 
+        <form #addForm="ngForm">
+          <div class="form-group mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" id="name" [(ngModel)]="newClub.name" name="name" class="form-control" placeholder="Enter club name" required />
+          </div>
 
+          <div class="form-group mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" id="description" [(ngModel)]="newClub.description" name="description" class="form-control" placeholder="Enter club description" required />
+          </div>
+
+          <div class="form-group mb-4">
+            <label for="imageUrl" class="form-label">Image URL:</label>
+            <input type="text" id="imageUrl" [(ngModel)]="newClub.imageUrl" name="imageUrl" class="form-control" placeholder="Enter image URL" required />
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="addForm.invalid" (click)="addClub(newClub)">
+              Create Club
+            </button>
+          </div>
+        </form>
+      </div>
 
       <!-- Clubs Cards Section -->
-<div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-    <div class="col" *ngFor="let club of clubs">
-      <div class="card shadow-sm" style="border-color: #FF8C61;">
-        <img
-          class="card-img-top"
-          [src]="club.imageUrl"
-          alt="{{ club.name }}"
-          style="width: 100%; height: 225px; object-fit: cover;"
+      <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+          <div class="col" *ngFor="let club of clubs">
+            <div class="card shadow-sm" style="border-color: #FF8C61;">
+              <img class="card-img-top" [src]="club.imageUrl" alt="{{ club.name }}" style="width: 100%; height: 225px; object-fit: cover;" />
+              <div class="card-body" style="background-color: #FAA275;">
+                <h5 class="card-title" style="color: #5C374C;" (click)="selectedClub(club)">{{ club.name }}</h5>
+                <p class="card-text" style="color: #985277;">{{ club.description }}</p>
+                <small class="text-body-secondary">Created by: {{ club.user.username }}</small>
+                <br>
+                <small class="text-body-secondary">{{ club.createdAt | date: 'mediumDate' }}</small>
 
-
-        />
-        <div class="card-body" style="background-color: #FAA275;">
-          <h5 class="card-title" style="color: #5C374C;" (click)="selectedClub(club)">{{ club.name }}</h5>
-          <p class="card-text" style="color: #985277;">{{ club.description }}</p>
-          <small class="text-body-secondary">Created by: {{ club.user.username }}</small>
-          <br>
-          <small class="text-body-secondary">{{ club.createdAt | date: 'mediumDate' }}</small>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
-              <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isJoined(club),
-              'btn-outline-secondary': !isJoined(club)}"
-              (click)="isJoined(club) ? leaveClub(club) : joinClub(club.id)">
-              {{ isJoined(club) ? 'Joined' : 'Join club' }}
-            </button>
-
-
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isJoined(club), 'btn-outline-secondary': !isJoined(club)}" (click)="isJoined(club) ? leaveClub(club) : joinClub(club.id)">
+                      {{ isJoined(club) ? 'Joined' : 'Join club' }}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
+
+    <div *ngIf="selected">
+      <div class="club-detail mb-5">
+        <h2 class="text-center" style="color: #5C374C;">{{ selected.name }}</h2>
+        <div class="card shadow-sm mb-4" style="border-color: #FF8C61;">
+          <div class="card-body" style="background-color: #FAA275;">
+            <h3 style="color: #5C374C;">Members</h3>
+            <ul class="list-unstyled">
+              <li *ngFor="let member of selected.clubUsers" class="mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span style="color: #985277;">{{ member.username }}</span>
+
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+  <!-- Check if the user is a club member -->
+  <div *ngIf="!isClubUser(user.username, selected.clubUsers) && !hasJoinedClub && !hasLeftClub">
+    <h3>Join the Club</h3>
+    <p>You need to join this club to see the playlists and details.</p>
+    <button (click)="joinClub(selected.id)" class="btn btn-primary">Join Club</button>
   </div>
-</div>
-</div>
 
-<div *ngIf="selected">
-  <p>{{selected.name}}</p>
-  <div class="club-detail">
-    <h2>{{ selected.name }} Club Details</h2>
+        <div *ngIf="isClubUser(user.username, selected.clubUsers) || hasJoinedClub || hasLeftClub">
+        <!-- Playlist Section -->
+        <div class="playlists" >
+          <h3 style="color: #5C374C;">Playlists</h3>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            <div class="col" *ngFor="let playlist of selected.clubPlaylists">
+              <div class="card shadow-sm" style="border-color: #FF8C61;">
+                <img
+                  class="card-img-top"
+                  [src]="playlist.imageUrl"
+                  alt="{{ playlist.name }}"
+                  style="height: 200px; object-fit: cover;"
+                />
+                <div class="card-body" style="background-color: #FAA275;">
+                  <h5 class="card-title" style="color: #5C374C;">{{ playlist.name }}</h5>
+                  <p class="card-text" style="color: #985277;">{{ playlist.description }}</p>
+                  <small class="text-body-secondary">Created by: {{ playlist.user.username }}</small>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <!-- Show Remove Playlist button if the user is the owner -->
+                    <button *ngIf="playlist.user.username === user.username" (click)="removePlaylistFromClub(playlist.id)" class="btn btn-danger btn-sm">
+                      Remove Playlist
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div class="members">
-      <h3>Members</h3>
-      <ul>
-        <li *ngFor="let member of selected.clubUsers">{{ member.username }}</li>
-      </ul>
+          <!-- Adding Playlists to the club -->
+          <div class="mt-4">
+            <label for="playlistSelect" class="form-label">Select Playlist to Add:</label>
+            <select [(ngModel)]="selectedPlaylistId" class="form-select mb-3">
+              <option *ngFor="let playlist of getAvailablePlaylists()" [value]="playlist.id">
+                {{ playlist.name }}
+              </option>
+            </select>
+            <button class="btn btn-primary" (click)="addPlaylistToClub()">Add Playlist to the Club</button>
+
+            <p *ngIf="getAvailablePlaylists().length === 0" class="text-danger mt-2">All playlists are already added to this club.</p>
+          </div>
+        </div>
+
+
+        <button class="btn btn-outline-danger mt-4" (click)="selected = null">Back</button>
+      </div>
     </div>
-  </div>
-
-
-  <div class="playlists">
-    <h3>Playlists</h3>
-    <ul>
-      <li *ngFor="let playlist of selected.clubPlaylists">{{ playlist.name }}</li>
-    </ul>
-  </div>
-
-<!-- Adding Playllists to the club -->
-  <div>
-    <label for="playlistSelect">Select Playlist to Add:</label>
-    <select [(ngModel)]="selectedPlaylistId">
-      <option *ngFor="let playlist of getAvailablePlaylists()" [value]="playlist.id">
-        {{ playlist.name }}
-      </option>
-    </select>
-    <button (click)="addPlaylistToClub()">Add playlist to the club</button>
-
-    <p *ngIf="getAvailablePlaylists().length === 0">All playlists are already added to this club.</p>
-  </div>
 
 
 
-
-  <button class="btn btn-outline-danger" (click)="selected=null">Back</button>
-
+  </main>
 </div>
-</main>
-</div>
-

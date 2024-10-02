@@ -13,6 +13,7 @@ export class Club {
   clubUsers: User[];
   clubPlaylists: Playlist[];
 
+
   constructor(
     id: number = 0,
   name: string = '',
@@ -23,7 +24,8 @@ export class Club {
   user: User = new User(),
   creatorId: number = 0,
   clubUsers: User[] = [],
-  clubPlaylists: Playlist[] = []
+  clubPlaylists: Playlist[] = [],
+
 
   ){
     this.id = id;
@@ -36,5 +38,6 @@ export class Club {
     this.creatorId = creatorId;
     this.clubUsers = clubUsers;
     this.clubPlaylists = clubPlaylists;
+
   }
 }
