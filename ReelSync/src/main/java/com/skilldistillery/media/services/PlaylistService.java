@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.skilldistillery.media.entities.Playlist;
+import com.skilldistillery.media.entities.Tag;
 
 public interface PlaylistService {
 	
@@ -13,7 +14,7 @@ public interface PlaylistService {
 
 	 public Playlist show(String username, int pid);
 	 
-	 public Set<Playlist> showByKeyword(String username, String nameKeyword, String descriptionKeyword);
+	 public Set<Playlist> showByKeyword(String username, String nameKeyword, String descriptionKeyword, String tagKeyword);
 	 
 	 public Playlist create(String username, Playlist playlist);
 

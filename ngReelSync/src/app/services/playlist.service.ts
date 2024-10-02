@@ -142,8 +142,8 @@ export class PlaylistService {
     return this.http.get<PlaylistComment[]>(`${this.baseUrl}api/playlists/${playlistId}/comments`, this.getHttpOptions());
   }
 
-  searchPlaylists(keyword1: string, keyword2: string): Observable<Set<Playlist>> {
-    const url = `${this.url}/search/${keyword1}/${keyword2}`;
+  searchPlaylists(keyword1: string, keyword2: string, keyword3: string): Observable<Set<Playlist>> {
+    const url = `${this.url}/search/${keyword1}/${keyword2}/${keyword3}`;
     return this.http.get<Set<Playlist>>(url, this.getHttpOptions()).pipe(
       catchError(
         (err: any) => {

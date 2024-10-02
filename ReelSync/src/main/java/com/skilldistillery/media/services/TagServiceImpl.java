@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.media.entities.Media;
+import com.skilldistillery.media.entities.Playlist;
 import com.skilldistillery.media.entities.Tag;
-import com.skilldistillery.media.entities.User;
+import com.skilldistillery.media.repositories.PlaylistRepository;
 import com.skilldistillery.media.repositories.TagRepository;
 import com.skilldistillery.media.repositories.UserRepository;
 
@@ -20,6 +21,9 @@ public class TagServiceImpl implements TagService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private PlaylistRepository playlistRepo;
 
 	@Override
 	public List<Tag> index() {
@@ -61,6 +65,20 @@ public class TagServiceImpl implements TagService {
 			deleted = true;
 		}
 		return deleted;
+	}
+
+	@Override
+	public Tag addToPlaylist(int pid, int tid) {
+		Optional<Playlist> optPlaylist = playlistRepo.findById(pid);
+		Optional<Tag> optTag = tagRepo.findById(tid);
+		Tag tag = null;
+		if (optPlaylist.isPresent() && optTag.isPresent()) { 
+			Playlist playlist = optPlaylist.get(); 
+			tag = optTag.get(); 
+			tag.getPlaylists().add(playlist);
+			playlist.getTags().add(tag);
+			playlistRepo.saveAndFlush(playlist);
+		} return tag; 
 	}
 
 }

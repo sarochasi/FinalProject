@@ -104,7 +104,15 @@
             </div>
 
           </div>
-        </div>
+      <div class="tag-list-container mt-4" style="background-color: #FFE3E0; padding: 15px; border-radius: 5px;">
+        <h4 class="text-center" style="color: #5C374C;">Associated Tags</h4>
+        <ul class="tag-list" style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+          <li *ngFor="let tag of playlist?.tags" class="tag-item" style="background-color: #FF8C61; padding: 5px 10px; border-radius: 3px; color: white;">
+            {{ tag.name }}
+          </li>
+        </ul>
+      </div>
+      </div>
       </div>
     </div>
   </div>

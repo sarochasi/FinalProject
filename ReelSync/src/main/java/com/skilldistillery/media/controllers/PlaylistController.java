@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.media.entities.Playlist;
+import com.skilldistillery.media.entities.Tag;
 import com.skilldistillery.media.services.MediaService;
 import com.skilldistillery.media.services.PlaylistService;
 
@@ -52,9 +53,9 @@ public class PlaylistController {
 		return playlist;
 	}
 	
-	@GetMapping("playlists/search/{keyword1}/{keyword2}")
-	public Set<Playlist> showByKeyword(HttpServletRequest req, HttpServletResponse res, Principal principal, @PathVariable("keyword1") String keyword1, @PathVariable("keyword2") String keyword2) {
-		Set<Playlist> playlists = playlistService.showByKeyword(principal.getName(),keyword1, keyword2);
+	@GetMapping("playlists/search/{keyword1}/{keyword2}/{keyword3}")
+	public Set<Playlist> showByKeyword(HttpServletRequest req, HttpServletResponse res, Principal principal, @PathVariable("keyword1") String keyword1, @PathVariable("keyword2") String keyword2, @PathVariable("keyword3") String keyword3) {
+		Set<Playlist> playlists = playlistService.showByKeyword(principal.getName(),keyword1, keyword2, keyword3);
 		System.out.println(playlists);
 		if(playlists == null) {
 			res.setStatus(404);

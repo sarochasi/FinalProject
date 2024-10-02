@@ -15,4 +15,6 @@ public interface TagService {
 	public Tag update(int tid, Tag tag);
 	
 	public boolean destroy(int tid);
+	
+	public Tag addToPlaylist(int pid, int tid);
 }

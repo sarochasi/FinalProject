@@ -1,0 +1,77 @@
+/* General Layout */
+.tag-manager {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+h2, h3 {
+  text-align: center;
+  font-weight: 300;
+  color: #333;
+}
+
+.form-container, .tag-list-container {
+  margin-bottom: 30px;
+}
+
+/* Form Styling */
+.form {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button.primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.button.small {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.button.danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+/* Tag List Styling */
+.tag-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tag-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.tag-actions {
+  display: flex;
+  gap: 10px;
+}

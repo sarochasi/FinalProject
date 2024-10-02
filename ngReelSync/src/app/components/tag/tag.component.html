@@ -1,0 +1,66 @@
+<div class="tag-manager">
+  <h2>Tag Management</h2>
+
+  <!-- Add Tag Form -->
+  <div class="form-container">
+    <h3>Add a New Tag</h3>
+    <form (ngSubmit)="addTag(newTag)" class="form">
+      <input
+        type="text"
+        placeholder="Enter tag name"
+        [(ngModel)]="newTag.name"
+        name="name"
+        required
+        class="input"
+      />
+      <button type="submit" class="button primary">Add Tag</button>
+    </form>
+  </div>
+
+  <!-- Add Tag to Playlist Form -->
+  <div class="form-container">
+    <h3>Add Tag to Playlist</h3>
+    <form (ngSubmit)="addTagToPlaylist(selectedPlaylistId, selected?.id, selected)" class="form">
+      <select [(ngModel)]="selectedPlaylistId" name="playlist" class="input" required>
+        <option *ngFor="let playlist of playlists" [value]="playlist.id">{{ playlist.name }}</option>
+      </select>
+
+      <select [(ngModel)]="selected" name="tag" class="input" required>
+        <option *ngFor="let tag of tags" [ngValue]="tag">{{ tag.name }}</option>
+      </select>
+
+      <button type="submit" class="button primary">Add to Playlist</button>
+    </form>
+  </div>
+
+  <!-- Tags List -->
+  <div class="tag-list-container">
+    <h3>All Tags</h3>
+    <ul class="tag-list">
+      <li *ngFor="let tag of tags" class="tag-item">
+        <span>{{ tag.name }}</span>
+        <div class="tag-actions">
+          <button (click)="selected = tag" class="button small">Edit</button>
+          <button (click)="deleteTag(tag.id)" class="button small danger">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Edit Tag Form -->
+  <div *ngIf="selected" class="form-container">
+    <h3>Edit Tag</h3>
+    <form (ngSubmit)="updateTag(selected)" class="form">
+      <input
+        type="text"
+        placeholder="Edit tag name"
+        [(ngModel)]="selected.name"
+        name="name"
+        required
+        class="input"
+      />
+      <button type="submit" class="button primary">Update Tag</button>
+      <button type="button" class="button" (click)="selected = null">Cancel</button>
+    </form>
+  </div>
+</div>
