@@ -9,11 +9,13 @@ import { Playlist } from '../../models/playlist';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgbModal, ModalDismissReasons, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TagComponent } from "../tag/tag.component";
+import { Tag } from '../../models/tag';
 
 @Component({
   selector: 'app-playlistdetail',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbModule],
+  imports: [CommonModule, FormsModule, NgbModule, TagComponent],
   templateUrl: './playlistdetail.component.html',
   styleUrl: './playlistdetail.component.css'
 })
@@ -32,6 +34,7 @@ export class PlaylistdetailComponent {
   mediaList: Media[] = [];
   playlist: Playlist | null = null;
   selected: Media | null = null;
+  selectedTag: Tag | null = null;
   safeSrc: SafeResourceUrl = '';
 
   ngOnInit() {

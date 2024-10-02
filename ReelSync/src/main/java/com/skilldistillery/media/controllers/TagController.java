@@ -92,4 +92,23 @@ public class TagController {
 			e.printStackTrace();
 		}
 	}
+	
+	@PostMapping("tags/{tid}/playlist/{pid}")
+	public Tag addTag(HttpServletRequest req, HttpServletResponse res, @PathVariable("tid") int tid, @PathVariable("pid") int pid) {
+		Tag tag = null;
+		try {
+			tag = tagService.addToPlaylist(pid, tid);
+			if (tag != null) {
+				res.setStatus(201);
+				res.setHeader("location", req.getRequestURL().append("/").append(tag.getName()).toString());
+			} else {
+				res.setStatus(401);
+			}
+		} catch (Exception e) {
+			res.setStatus(400);
+			e.printStackTrace();
+		}
+		
+		return tag;
+	}
 }

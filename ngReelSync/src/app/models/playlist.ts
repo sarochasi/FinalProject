@@ -1,4 +1,5 @@
 import { PlaylistComment } from "./playlistcomment"
+import { Tag } from "./tag"
 import { User } from "./user"
 
 export class Playlist {
@@ -14,6 +15,7 @@ export class Playlist {
   favorite: boolean
   playlistComments: PlaylistComment[]
   user: User
+  tags: Tag[]
 
   constructor(
     id: number = 0,
@@ -28,6 +30,7 @@ export class Playlist {
     favorite: boolean = false,
     playlistComments: PlaylistComment[] =[],
     user: User = new User(),
+    tags: Tag[] = [],
   ) {
     this.id = id;
     this.name = name;
@@ -41,5 +44,6 @@ export class Playlist {
     this.favorite = favorite;
     this.playlistComments = playlistComments
     this.user = user
+    this.tags = tags;
   }
 }

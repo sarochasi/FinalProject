@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.media.entities.Media;
 import com.skilldistillery.media.entities.Playlist;
+import com.skilldistillery.media.entities.Tag;
 import com.skilldistillery.media.entities.User;
 import com.skilldistillery.media.repositories.MediaRepository;
 import com.skilldistillery.media.repositories.PlaylistRepository;
@@ -52,8 +53,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	}
 	
 	@Override
-	public Set<Playlist> showByKeyword(String username, String nameKeyword, String descriptionKeyword) {
-		return playlistRepo.findByUser_UsernameAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(username, nameKeyword, descriptionKeyword);
+	public Set<Playlist> showByKeyword(String username, String nameKeyword, String descriptionKeyword, String tagKeyword) {
+		return playlistRepo.findByUser_UsernameAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrTags_NameContainingIgnoreCase(username, nameKeyword, descriptionKeyword, tagKeyword);
 	}
 
 	@Override

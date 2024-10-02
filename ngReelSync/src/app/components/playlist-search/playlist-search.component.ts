@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PlaylistService } from '../../services/playlist.service';
 import { HttpClient } from '@angular/common/http';
+import { Tag } from '../../models/tag';
 
 @Component({
   selector: 'app-playlist-search',
@@ -16,13 +17,14 @@ export class PlaylistSearchComponent {
 
   keyword1 = '';
   keyword2 = '';
+  keyword3 = '';
   playlists: Set<Playlist> | null = null;
   errorMessage: string | null = null;
 
   constructor(private playlistService: PlaylistService) {}
 
   searchPlaylists() {
-    this.playlistService.searchPlaylists(this.keyword1, this.keyword2).subscribe({
+    this.playlistService.searchPlaylists(this.keyword1, this.keyword2, this.keyword3).subscribe({
       next: (data) => {
         this.playlists = data;
         this.errorMessage = null;
