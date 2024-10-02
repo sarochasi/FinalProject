@@ -102,6 +102,7 @@ export class ClubComponent {
         this.loadClub();
         this.loadLoggedInUser();
         this.hasJoinedClub = true;
+        this.hasLeftClub = false;
 
       },
       error: (err) =>{
@@ -152,6 +153,7 @@ export class ClubComponent {
         this.loadClub();
         this.loadLoggedInUser();
         this.hasLeftClub = true;
+        this.hasJoinedClub = false;
 
       },
       error: (err) => {
@@ -273,6 +275,10 @@ export class ClubComponent {
 
     isClubUser(username: string, clubUsers: any[]): boolean {
       return clubUsers.some(member => member.username === username);
+    }
+
+    viewPlaylistDetail(playlistId: number): void {
+      this.router.navigate(['/playlists', playlistId]);
     }
 
 
