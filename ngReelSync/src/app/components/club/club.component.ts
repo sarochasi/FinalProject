@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 import { LoginComponent } from '../login/login.component';
+import { ChangeService } from '../../services/change.service';
 
 @Component({
   selector: 'app-club',
@@ -36,12 +37,16 @@ export class ClubComponent {
   hasJoinedClub: boolean = false;
   hasLeftClub: boolean = false;
 
+  editClub: Club | null =null;
+  joinedClubs: Club[] = [];
+
   constructor(private clubService: ClubService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
     private playlistService: PlaylistService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private changeService: ChangeService
   ){}
 
   isLoggedIn(): boolean {
@@ -64,37 +69,38 @@ export class ClubComponent {
     });
   }
 
-  loadClub() : void {
-    console.log('loadclub() called')
+  loadClub(): void {
+    console.log('loadClub() called');
     this.clubService.index().subscribe({
       next: (clubs) => {
 
-        this.clubs = clubs;
-        console.log("clubs: " + clubs);
-
+        this.clubs = clubs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        console.log("clubs: ", this.clubs);
       },
       error: (err) => {
         console.error(err);
         console.error("Error loading clubs");
       }
     });
-
   }
 
-  addClub(newClub: Club) : void {
+
+  addClub(newClub: Club): void {
     newClub.creatorId = this.user.id;
     this.clubService.create(newClub).subscribe({
-      next: (newClub) => {
+      next: (createdClub) => {
+
+        this.joinClub(createdClub.id);
+
         this.loadClub();
         this.newClub = new Club();
       },
       error: (err) => {
-        console.error(err);
-        console.error("error in subscribe");
+        console.error('Error in addClub(): ', err);
       }
     });
-
   }
+
 
   joinClub(clubId: number): void{
     this.clubService.joinclub(clubId).subscribe({
@@ -102,6 +108,7 @@ export class ClubComponent {
         console.log('Join club: ', club);
         this.loadClub();
         this.loadLoggedInUser();
+        this.updateJoinedClubs();
         this.hasJoinedClub = true;
         this.hasLeftClub = false;
 
@@ -151,15 +158,16 @@ export class ClubComponent {
     this.clubService.leaveClub(club.id).subscribe({
       next: () => {
         console.log('Successfully left the club');
-
+        this.loadClub();
+        this.loadLoggedInUser();
+        this.loadClubMembers(club.id);
+        this.updateJoinedClubs();
         this.hasLeftClub = true;
         this.hasJoinedClub = false;
 
         this.selected = null;
         this.clubPlaylists = [];
-        this.loadClub();
-        this.loadLoggedInUser();
-        this.loadClubMembers(club.id);
+
 
         this.cdr.detectChanges();
       },
@@ -288,6 +296,82 @@ export class ClubComponent {
       this.router.navigate(['/playlists', playlistId]);
     }
 
+
+    updateClub(club: Club, setSelected: boolean = true){
+      console.log(club);
+
+      this.clubService.update(club).subscribe(
+        {
+          next: (updatedClub) => {
+
+            const index = this.clubs.findIndex(c => c.id === updatedClub.id);
+
+            if (index !== -1) {
+              this.clubs[index] = updatedClub;
+            }
+
+            if(setSelected){
+              this.loadClub();
+            this.editClub = null;
+            this.selected = null;
+
+          }
+
+          this.loadClub();
+        },
+          error: (err) => {
+            console.error('TodoListComponnt.update: error on update', err);
+
+          },
+        });
+
+      }
+
+     findClubById(clubId: number) : void {
+      this.clubService.getClubById(clubId).subscribe({
+        next: (club) => {
+          this.selected = club;
+
+
+        },
+        error: (err) => {
+          this.router.navigateByUrl('notFound');
+          console.error(err);
+          console.error("error in subscribe for finding todo by id");
+        }
+      });
+    }
+
+    setEditClub(club: Club) {
+
+      if (club) {
+        this.selected = club;
+        this.editClub = { ...this.selected };
+      }
+    }
+
+    deleteClub(id: number) : void{
+      this.clubService.destroy(id).subscribe({
+        next: () => {
+          this.loadClub();
+        },
+        error: (err) => {
+          console.error(err);
+          console.error("error in subscribe");
+        }
+      });
+    }
+
+    updateJoinedClubs(): void {
+      this.clubService.loadClubs().subscribe({
+        next: (joinedClubs) => {
+          this.joinedClubs = joinedClubs;
+          this.changeService.makeChange();
+          console.log("updating joined clubs: " + joinedClubs)
+        },
+        error: (err) => console.error('Error updating favorite status:', err),
+      })
+    }
 
   }
 

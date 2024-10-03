@@ -1,6 +1,5 @@
 package com.skilldistillery.media.repositories;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +16,6 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
 	Set<Playlist> findByEnabledTrue();
     Set<Playlist> findByPlaylistUsersContainsAndEnabledTrue(User user);
     Set<Playlist> findByPlaylistUsers_UsernameAndEnabledTrue(String username);
+    Set<Playlist> findByPublishedTrue();
+    
 }

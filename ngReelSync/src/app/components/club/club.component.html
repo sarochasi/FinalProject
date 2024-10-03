@@ -40,25 +40,34 @@
         </form>
       </div>
 
-      <!-- Clubs Cards Section -->
-      <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-          <div class="col" *ngFor="let club of clubs">
-            <div class="card shadow-sm" style="border-color: #FF8C61;">
-              <img class="card-img-top" [src]="club.imageUrl" alt="{{ club.name }}" style="width: 100%; height: 225px; object-fit: cover;"  (click)="selectedClub(club)"/>
-              <div class="card-body" style="background-color: #FAA275;">
-                <h5 class="card-title" style="color: #5C374C;" (click)="selectedClub(club)">{{ club.name }}</h5>
-                <p class="card-text" style="color: #985277;">{{ club.description }}</p>
-                <small class="text-body-secondary">Created by: {{ club.user.username }}</small>
-                <br>
-                <small class="text-body-secondary">{{ club.createdAt | date: 'mediumDate' }}</small>
+      <!-- Club cards display section -->
 
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isJoined(club), 'btn-outline-secondary': !isJoined(club)}" (click)="isJoined(club) ? leaveClub(club) : joinClub(club.id)">
-                      {{ isJoined(club) ? 'Joined' : 'Join club' }}
-                    </button>
-                  </div>
+    <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let club of clubs">
+          <div class="card shadow-sm" style="border-color: #FF8C61;">
+            <img class="card-img-top" [src]="club.imageUrl" alt="{{ club.name }}" style="width: 100%; height: 225px; object-fit: cover;"  (click)="selectedClub(club)"/>
+            <div class="card-body" style="background-color: #FAA275;">
+              <h5 class="card-title" style="color: #5C374C;" (click)="selectedClub(club)">{{ club.name }}</h5>
+              <p class="card-text" style="color: #985277;">{{ club.description }}</p>
+              <small class="text-body-secondary">Created by: {{ club.user.username }}</small>
+              <br>
+              <small class="text-body-secondary">Created at: {{ club.createdAt | date: 'mediumDate' }}</small>
+
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isJoined(club), 'btn-outline-secondary': !isJoined(club)}" (click)="isJoined(club) ? leaveClub(club) : joinClub(club.id)">
+                    {{ isJoined(club) ? 'Joined' : 'Join club' }}
+                  </button>
+                  <button type="submit" class="btn btn-sm simple-list-example-scrollspy" style="background-color: #CE6A85; color: white;"
+                  (click)="setEditClub(club)" *ngIf="club.user.username === user.username">
+                    Edit
+                  </button>
+                  <button type="submit" class="btn btn-sm simple-list-example-scrollspy" style="background-color: #c997a4; color: white;"
+                  (click)="deleteClub(club.id)" *ngIf="club.user.username === user.username">
+                    Delete
+                  </button>
+
                 </div>
               </div>
             </div>
@@ -66,9 +75,77 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div *ngIf="selected">
-      <button class="btn btn-outline-danger mt-4" (click)="selected = null">Back</button>
+
+    <!-- Update Club Form -->
+  <form *ngIf="editClub"  #updateForm="ngForm" #updateFormElement>
+    <div class="container mt-4">
+      <div class="card shadow-sm">
+        <div class="card-header" style="background-color: #FF8C61;">
+          <h4 class="mb-0" style="color: #5C374C;">Update Club</h4>
+        </div>
+        <div class="card-body" style="background-color: #FAA275;">
+          <div class="form-group mb-3">
+            <label for="editName" class="form-label" style="color: #5C374C;">Edit Name:</label>
+            <input
+              type="text"
+              id="editName"
+              [(ngModel)]="editClub.name"
+              name="editName"
+              class="form-control"
+              style="border-color: #5C374C; color: #5C374C;"
+              placeholder="Enter updated playlist name"
+              required
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="editDescription" class="form-label" style="color: #5C374C;">Edit Description:</label>
+            <textarea
+              id="editDescription"
+              [(ngModel)]="editClub.description"
+              name="editDescription"
+              class="form-control"
+              style="border-color: #5C374C; color: #5C374C;"
+              placeholder="Enter updated playlist description"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <label for="editImageUrl" class="form-label" style="color: #5C374C;">Edit Image URL:</label>
+            <input
+              type="text"
+              id="editImageUrl"
+              [(ngModel)]="editClub.imageUrl"
+              name="editImageUrl"
+              class="form-control"
+              style="border-color: #5C374C; color: #5C374C;"
+              placeholder="Enter updated image URL"
+              required
+            />
+          </div>
+
+          <div class="d-flex justify-content-between">
+
+            <button type="submit" (click)="updateClub(editClub)" class="btn"
+            style="background-color: #CE6A85; color: white;" >Update Club</button>
+            <button type="button" (click)="selected = null" class="btn btn-secondary"
+            style="background-color: #5C374C; color: white;">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+    <div *ngIf="selected && !editClub">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-danger mt-4 d-flex justify-content-end" (click)="leaveClub(selected)"
+        *ngIf="isClubUser(user.username, selected.clubUsers) || hasJoinedClub">
+          Leave club
+        </button>
+      </div>
+
       <div class="club-detail mb-5">
         <h2 class="text-center" style="color: #5C374C;">{{ selected.name }}</h2>
         <h3 class="text-center" style="color: #c675a3;">{{ selected.description }}</h3>
@@ -88,13 +165,13 @@
 
 
   <!-- Check if the user is a club member -->
-  <div *ngIf="!isClubUser(user.username, selected.clubUsers) && !hasLeftClub && !hasJoinedClub">
+  <div *ngIf="!isClubUser(user.username, selected.clubUsers) && !hasJoinedClub">
     <h3>Join the Club</h3>
     <p>You need to join this club to see the playlists and details.</p>
     <button (click)="joinClub(selected.id)" class="btn btn-primary">Join Club</button>
   </div>
 
-        <div *ngIf="isClubUser(user.username, selected.clubUsers) || hasJoinedClub || hasLeftClub">
+        <div *ngIf="isClubUser(user.username, selected.clubUsers) || hasJoinedClub">
         <!-- Playlist Section -->
         <div class="playlists" >
           <h3 style="color: #5C374C;">Playlists</h3>
@@ -115,7 +192,8 @@
                   <small class="text-body-secondary">Created by: {{ playlist.user.username }}</small>
                   <div class="d-flex justify-content-between align-items-center">
                     <!-- Show Remove Playlist button if the user is the owner -->
-                    <button *ngIf="playlist.user.username === user.username" (click)="removePlaylistFromClub(playlist.id)" class="btn btn-danger btn-sm">
+                    <button *ngIf="playlist.user.username === user.username" (click)="removePlaylistFromClub(playlist.id)"
+                    class="btn btn-danger btn-sm">
                       Remove Playlist
                     </button>
                   </div>

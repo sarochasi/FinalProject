@@ -1,14 +1,12 @@
 package com.skilldistillery.media.services;
 
-import java.util.List;
 import java.util.Set;
 
 import com.skilldistillery.media.entities.Playlist;
-import com.skilldistillery.media.entities.Tag;
 
 public interface PlaylistService {
 	
-	public List<Playlist> showAll(String username);
+	public Set<Playlist> showAll(String username);
 
 	 public Set<Playlist> index(String username);
 
@@ -29,5 +27,7 @@ public interface PlaylistService {
 	 public Set<Playlist> getFavorites(String username);
 
 	 public void removeFromFavorites(String username, int playlistId);
+	 
+	 public Set<Playlist> showCuratorPlaylist(String username);
 	 
 }

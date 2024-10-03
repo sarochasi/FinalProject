@@ -58,6 +58,21 @@
         />
       </div>
 
+      <div class="form-group mb-3">
+        <label for="editPublished" class="form-label" style="color: #5C374C;">Published:</label>
+        <select
+            id="editPublished"
+            [(ngModel)]="newPlaylist.published"
+            name="editPublished"
+            class="form-control"
+            style="border-color: #5C374C; color: #5C374C;"
+            required
+        >
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+        </select>
+    </div>
+
       <div class="text-center">
         <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="addForm.invalid" (click)="addPlaylist(newPlaylist)">
           Create Playlist
@@ -82,7 +97,10 @@
         />
         <div class="card-body" style="background-color: #FAA275;">
           <h5 class="card-title" style="color: #5C374C;">{{ playlist.name }}</h5>
-          <p class="card-text" style="color: #985277;">{{ playlist.description }}</p>
+          <p class="card-text" style="color: #985277;">{{ playlist.description || "No description"}}</p>
+          <p class="card-text" style="color: #5C374C;">
+            <strong>Status:</strong> {{ playlist.published ? 'Published' : 'Not Published' }}
+        </p>
           <small class="text-body-secondary">{{ playlist.createdAt | date: 'mediumDate' }}</small>
 
           <div class="d-flex justify-content-between align-items-center">
@@ -96,9 +114,9 @@
               <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deletePlaylist(playlist.id)">
                 Delete
               </button>
-              <button type="button" class="btn btn-sm" style="background-color: #985277; color: white;" [ngClass]="{'btn btn-sm': isFavorite(playlist),
-              'btn-outline': !isFavorite(playlist)}"
-              (click)="isFavorite(playlist) ? removeFromFavorites(playlist) : addToFavorites(playlist)">
+              <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isFavorite(playlist),
+              'btn-outline-secondary': !isFavorite(playlist)}"
+              (click)="isFavorite(playlist) ? removeFromFavorites(playlist) : addToFavorites(playlist)" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
               {{ isFavorite(playlist) ? 'Favorited' : 'Add to Favorites' }}
               </button>
             </div>
@@ -165,6 +183,21 @@
               required
             />
           </div>
+
+          <div class="form-group mb-3">
+            <label for="editPublished" class="form-label" style="color: #5C374C;">Published:</label>
+            <select
+                id="editPublished"
+                [(ngModel)]="selected.published"
+                name="editPublished"
+                class="form-control"
+                style="border-color: #5C374C; color: #5C374C;"
+                required
+            >
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+            </select>
+        </div>
 
           <div class="d-flex justify-content-between">
             <!-- Add Media Button -->

@@ -1,6 +1,7 @@
 package com.skilldistillery.media.services;
 
 import java.util.List;
+import java.util.Set;
 
 import com.skilldistillery.media.entities.Club;
 import com.skilldistillery.media.entities.Playlist;
@@ -29,4 +30,10 @@ public interface ClubService {
 	Club addPlaylistToClub(int clubId, int pid, String username);
 	
 	Club removePlaylistFromClub(int clubId, int pid, String username);
+	
+	public Set<Club> getClubs(String username);
+	
+	boolean destroy(String username, int cid);
+	
+	
 }

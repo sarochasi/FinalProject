@@ -120,4 +120,40 @@ export class ClubService {
     );
   }
 
+  update(updateClub:Club) : Observable<Club> {
+    return this.http.put<Club>(this.url + '/' + updateClub.id ,updateClub,this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => { return new Error("ClubService.update(): error updating club:"  + err); }
+          );
+        }
+      )
+    );
+  }
+
+  destroy(id: number): Observable<void>{
+    return this.http.delete<void>(this.url + '/' + id,this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => { return new Error("ClubService.delete(): error deleting club:"  + err); }
+          );
+        }
+      )
+    );
+  }
+
+  loadClubs() : Observable<Club[]> {
+    const url = `${this.url}/joined`;
+    return this.http.get<Club[]>(url, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(() => new Error('ClubService.addToFavorites(): error updating joined clubs status: ' + err));
+      })
+    );
+  }
+
 }

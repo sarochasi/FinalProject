@@ -36,6 +36,8 @@ export class PlaylistComponent {
   showMediaForm = false;
   newMedia: Media = new Media();
 
+  curatorPlaylists: Playlist[] = [];
+
   mediaInputs: {
     sourceUrl: string;
     name: string;
@@ -171,7 +173,10 @@ export class PlaylistComponent {
     this.playlistService.index().subscribe({
       next: (playlists) => {
 
-        this.playlists = playlists;
+        // this.playlists = playlists;
+        this.playlists = playlists.sort((a, b) => {
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
         this.updateFavoritePlaylists();
       },
       error: (err) => {
@@ -298,6 +303,22 @@ export class PlaylistComponent {
       },
       error: (err) => console.error('Error updating favorite status:', err),
     })
+  }
+
+  loadCuratorsPlaylists() : void {
+    this.playlistService.showAllCuratorsPlaylists().subscribe({
+      next: (playlists) => {
+        this.curatorPlaylists = playlists.sort((a, b) => {
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
+
+      },
+      error: (err) => {
+        console.error(err);
+        console.error("Error loading playlists");
+      }
+    });
+
   }
 
 }

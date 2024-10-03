@@ -12,6 +12,7 @@ import { PlaylistcommentService } from '../../services/playlistcomment.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { LoginComponent } from "../login/login.component";
+import { ChangeService } from '../../services/change.service';
 
 @Component({
   selector: 'app-home',
@@ -32,12 +33,16 @@ export class HomeComponent {
   commentList: PlaylistComment[] = [];
   showCommentSection = true;
 
+  curatorPlaylists: Playlist[] = [];
+  favoritePlaylists: Playlist[] = [];
+
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
     private mediaService: MediaService,
-    private commentService: PlaylistcommentService
+    private commentService: PlaylistcommentService,
+    private changeService: ChangeService
 
   ) {}
 
@@ -55,6 +60,8 @@ export class HomeComponent {
   ngOnInit(): void {
     this.loadPlaylists();
     this.fetchPlaylists();
+    this.loadCuratorsPlaylists();
+    this.updateFavoritePlaylists();
     this.authService.getLoggedInUser().subscribe({
       next: (loggedInUser) => {
         this.user = loggedInUser;
@@ -69,16 +76,19 @@ export class HomeComponent {
 
   }
 
-  fetchPlaylists(): void {
 
+  fetchPlaylists(): void {
     this.playlistService.showAll().subscribe({
       next: (playlists) => {
+        // Map and sort playlists by createdAt date in descending order
+        this.playlists = playlists
+          .map(playlist => ({
+            ...playlist,
+            showCommentSection: true
+          }))
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-        this.playlists = playlists.map(playlist => ({
-          ...playlist,
-          showCommentSection: true
-        }));
-
+        // Reload comments for each playlist
         this.playlists.forEach(playlist => {
           this.reloadComments(playlist.id);
         });
@@ -90,10 +100,14 @@ export class HomeComponent {
   }
 
 
+
   loadPlaylists() : void {
     this.playlistService.showAll().subscribe({
       next: (playlists) => {
-        this.playlists = playlists;
+        this.playlists = playlists.sort((a, b) => {
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
+        // this.playlists = playlists;
       },
       error: (err) => {
         console.error(err);
@@ -168,6 +182,58 @@ export class HomeComponent {
   toggleCommentSection(): void {
 
     this.showCommentSection = !this.showCommentSection;
+  }
+
+  loadCuratorsPlaylists() : void {
+    this.playlistService.showAllCuratorsPlaylists().subscribe({
+      next: (playlists) => {
+        this.curatorPlaylists = playlists.sort((a, b) => {
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
+
+      },
+      error: (err) => {
+        console.error(err);
+        console.error("Error loading playlists");
+      }
+    });
+
+  }
+
+  addToFavorites(playlist: Playlist): void {
+    this.playlistService.addToFavorites(playlist.id).subscribe({
+      next: (updatedPlaylist) => {
+        playlist.favorite = updatedPlaylist.favorite;
+        this.updateFavoritePlaylists();
+      },
+      error: (err) => console.error('Error updating favorite status:', err),
+    });
+  }
+
+  removeFromFavorites(playlist: Playlist): void {
+    this.playlistService.removeFromFavorites(playlist.id).subscribe({
+      next: (updatedPlaylist) => {
+        playlist.favorite = false;
+        this.updateFavoritePlaylists();
+      },
+      error: (err) => console.error('Error updating favorite status:', err),
+    })
+  }
+
+  updateFavoritePlaylists(): void {
+    //subscribe to GET /api/playlists/favorites
+    // this.favoritePlaylists = this.playlists.filter((playlist) => playlist.favorite);
+    this.playlistService.loadFavorites().subscribe({
+      next: (favorites) => {
+        this.favoritePlaylists = favorites;
+        this.changeService.makeChange();
+      },
+      error: (err) => console.error('Error updating favorite status:', err),
+    })
+  }
+
+  isFavorite(playlist: Playlist): boolean {
+    return playlist && this.favoritePlaylists.some((pl) => {return pl.id === playlist.id})
   }
 
 

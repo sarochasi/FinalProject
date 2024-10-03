@@ -35,7 +35,8 @@ public class PlaylistController {
 	private MediaService mediaService;
 	
 	@GetMapping("playlists/all")
-	public List<Playlist> showAll(Principal principal){
+	public Set<Playlist> showAll(Principal principal){
+		
 		return playlistService.showAll(principal.getName());
 	}
 	
@@ -47,6 +48,18 @@ public class PlaylistController {
 	@GetMapping("playlists/{pid}")
 	public Playlist show(HttpServletRequest req, HttpServletResponse res, @PathVariable("pid") int pid, Principal principal) {
 		Playlist playlist = playlistService.show(principal.getName(), pid);
+		if(playlist == null) {
+			res.setStatus(404);
+		}
+		return playlist;
+	}
+	
+	@GetMapping("playlists/curator")
+	public Set<Playlist> showCuratorPlaylist(HttpServletRequest req, HttpServletResponse res, 
+		 Principal principal) {
+		
+		Set<Playlist> playlist = playlistService.showCuratorPlaylist(principal.getName());
+		System.out.println(playlist);
 		if(playlist == null) {
 			res.setStatus(404);
 		}

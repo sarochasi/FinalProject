@@ -22,5 +22,5 @@ export const routes: Routes = [
   {path: 'clubs', component: ClubComponent},
 
 
-  { path: '', redirectTo: '/playlists', pathMatch: 'full' }
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

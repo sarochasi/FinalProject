@@ -21,7 +21,7 @@ public class AuthServiceImpl implements AuthService {
 		//encode pw, set enabled, etc
 		user.setPassword(encoder.encode(user.getPassword()));
 		user.setEnabled(true);
-		user.setRole("standard");
+		
 		userRepo.saveAndFlush(user);
 		return user;
 	}
@@ -30,5 +30,24 @@ public class AuthServiceImpl implements AuthService {
 	public User getUserByUsername(String username) {
 		return userRepo.findByUsername(username);
 	}
+
+	@Override
+	public User update(String username, User user) {
+		User updatedUser = userRepo.findByUsername(username);
+		if(updatedUser != null) {
+			updatedUser.setUsername(user.getUsername());
+			updatedUser.setPassword(user.getPassword());
+			updatedUser.setEnabled(user.getEnabled());
+			updatedUser.setRole(user.getRole());
+			updatedUser.setImageUrl(user.getImageUrl());
+			updatedUser.setBiography(user.getBiography());
+			userRepo.saveAndFlush(updatedUser);
+		}
+		return updatedUser;
+	}
+
+	
+	
+	
 
 }
