@@ -39,7 +39,12 @@
   <div *ngIf="isLoggedIn()">
     <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
     <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
+      <h2 class="text-center" style="font-family: 'Arial', sans-serif; font-weight: bold; color: #CE6A85;">
+        Community Playlists
+      </h2>
+<hr>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
         <div class="col" *ngFor="let playlist of playlists">
           <div class="card shadow-sm" style="border-color: #FF8C61;">
             <img
