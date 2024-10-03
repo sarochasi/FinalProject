@@ -59,7 +59,7 @@
               <p class="card-text" style="color: #985277;">{{ playlist.description }}</p>
               <small class="text-body-secondary">Created by: {{ playlist.user.username}}</small>
               <br>
-              <small class="text-body-secondary">{{ playlist.createdAt | date: 'mediumDate' }}</small>
+              <small class="text-body-secondary">Created at: {{ playlist.createdAt | date: 'mediumDate' }}</small>
 
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
