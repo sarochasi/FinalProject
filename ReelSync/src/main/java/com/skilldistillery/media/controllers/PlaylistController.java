@@ -35,7 +35,8 @@ public class PlaylistController {
 	private MediaService mediaService;
 	
 	@GetMapping("playlists/all")
-	public List<Playlist> showAll(Principal principal){
+	public Set<Playlist> showAll(Principal principal){
+		
 		return playlistService.showAll(principal.getName());
 	}
 	

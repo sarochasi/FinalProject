@@ -1,6 +1,5 @@
 package com.skilldistillery.media.services;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.media.entities.Media;
 import com.skilldistillery.media.entities.Playlist;
-import com.skilldistillery.media.entities.Tag;
 import com.skilldistillery.media.entities.User;
 import com.skilldistillery.media.repositories.MediaRepository;
 import com.skilldistillery.media.repositories.PlaylistRepository;
@@ -28,11 +26,11 @@ public class PlaylistServiceImpl implements PlaylistService {
 	private MediaRepository mediaRepo;
 	
 	@Override
-	public List<Playlist> showAll(String username){
+	public Set<Playlist> showAll(String username){
 		User user = userRepo.findByUsername(username);
 		
 		if(user != null) {
-			return playlistRepo.findAll();
+			return playlistRepo.findByPublishedTrue();
 		}
 		return null;
 	}

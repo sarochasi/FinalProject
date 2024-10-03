@@ -8,7 +8,7 @@ import com.skilldistillery.media.entities.Tag;
 
 public interface PlaylistService {
 	
-	public List<Playlist> showAll(String username);
+	public Set<Playlist> showAll(String username);
 
 	 public Set<Playlist> index(String username);
 
