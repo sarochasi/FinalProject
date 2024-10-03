@@ -6,28 +6,28 @@
     <form (ngSubmit)="searchPlaylists()">
       <!-- Keyword 1 Input -->
       <div class="form-group mb-3">
-        <label for="keyword1" class="form-label" style="color: #5C374C;">Keyword 1:</label>
+        <label for="keyword1" class="form-label" style="color: #5C374C;">Name:</label>
         <input
           id="keyword1"
           [(ngModel)]="keyword1"
           name="keyword1"
           class="form-control"
           style="border-color: #5C374C; color: #5C374C;"
-          placeholder="Enter first keyword"
+          placeholder="Enter name keyword"
           required
         />
       </div>
 
       <!-- Keyword 2 Input -->
       <div class="form-group mb-4">
-        <label for="keyword2" class="form-label" style="color: #5C374C;">Keyword 2:</label>
+        <label for="keyword2" class="form-label" style="color: #5C374C;">Description:</label>
         <input
           id="keyword2"
           [(ngModel)]="keyword2"
           name="keyword2"
           class="form-control"
           style="border-color: #5C374C; color: #5C374C;"
-          placeholder="Enter second keyword"
+          placeholder="Enter description keyword"
           required
         />
       </div>
@@ -40,7 +40,7 @@
           name="tag"
           class="form-control"
           style="border-color: #5C374C; color: #5C374C;"
-          placeholder="Enter tag"
+          placeholder="Enter tag keyword"
         />
       </div>
 
