@@ -8,13 +8,15 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgbModal, ModalDismissReasons, NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
+import { LoginComponent } from '../login/login.component';
+import { AuthService } from '../../services/auth.service';
 
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-media',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbModule],
+  imports: [CommonModule, FormsModule, NgbModule, LoginComponent],
   templateUrl: './media.component.html',
   styleUrl: './media.component.css'
 })
@@ -48,6 +50,10 @@ export class MediaComponent {
 		}
 	}
 
+  isLoggedIn(): boolean {
+    return this.authService.checkLogin();
+  }
+
   submitAddToPlaylist(form: NgForm, playlistModal: TemplateRef<any>): void {
     // console.log(form.value.playlist);
     if(this.modalRef) {
@@ -71,7 +77,8 @@ export class MediaComponent {
     private mediaService: MediaService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private authService:AuthService,
   ){}
 
   ngOnInit(): void{
