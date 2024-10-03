@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 import { LoginComponent } from '../login/login.component';
+import { ChangeService } from '../../services/change.service';
 
 @Component({
   selector: 'app-club',
@@ -37,13 +38,15 @@ export class ClubComponent {
   hasLeftClub: boolean = false;
 
   editClub: Club | null =null;
+  joinedClubs: Club[] = [];
 
   constructor(private clubService: ClubService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
     private playlistService: PlaylistService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private changeService: ChangeService
   ){}
 
   isLoggedIn(): boolean {
@@ -106,6 +109,7 @@ export class ClubComponent {
         console.log('Join club: ', club);
         this.loadClub();
         this.loadLoggedInUser();
+        this.updateJoinedClubs();
         this.hasJoinedClub = true;
         this.hasLeftClub = false;
 
@@ -155,15 +159,16 @@ export class ClubComponent {
     this.clubService.leaveClub(club.id).subscribe({
       next: () => {
         console.log('Successfully left the club');
-
+        this.loadClub();
+        this.loadLoggedInUser();
+        this.loadClubMembers(club.id);
+        this.updateJoinedClubs();
         this.hasLeftClub = true;
         this.hasJoinedClub = false;
 
         this.selected = null;
         this.clubPlaylists = [];
-        this.loadClub();
-        this.loadLoggedInUser();
-        this.loadClubMembers(club.id);
+
 
         this.cdr.detectChanges();
       },
@@ -356,6 +361,17 @@ export class ClubComponent {
           console.error("error in subscribe");
         }
       });
+    }
+
+    updateJoinedClubs(): void {
+      this.clubService.loadClubs().subscribe({
+        next: (joinedClubs) => {
+          this.joinedClubs = joinedClubs;
+          this.changeService.makeChange();
+          console.log("updating joined clubs: " + joinedClubs)
+        },
+        error: (err) => console.error('Error updating favorite status:', err),
+      })
     }
 
   }

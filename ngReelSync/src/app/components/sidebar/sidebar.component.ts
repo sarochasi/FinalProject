@@ -39,6 +39,7 @@ export class SidebarComponent {
       effect(() => {
         console.log(changeService.changeMade());
         this.updateFavoritePlaylists();
+        this.updateJoinedClubs();
       })
     }
 
@@ -120,11 +121,13 @@ export class SidebarComponent {
     }
 
     updateJoinedClubs(): void {
+
       this.clubService.loadClubs().subscribe({
-        next: (joinedClubs) => {
-          this.joinedClubs = joinedClubs;
+        next: (joined) => {
+          this.joinedClubs = joined;
+          console.log("Updating joinclug on the side bar");
         },
-        error: (err) => console.error('Error updating favorite status:', err),
+        error: (err) => console.error('Error updating join status:', err),
       })
     }
 
