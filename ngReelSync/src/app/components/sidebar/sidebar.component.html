@@ -1,6 +1,6 @@
 <main class="d-flex" style="margin-top: 50px;">
   <!-- Sidebar -->
-  <div class="d-flex flex-column flex-shrink-0 p-3 custom-sidebar" style="width: 350px; position: fixed; height: 100vh;">
+  <div class="d-flex flex-column flex-shrink-0 p-3 custom-sidebar" style="width: 350px; position: fixed; height: 100vh; overflow-y: auto;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
       <svg class="bi pe-none me-2" width="40" height="32">
         <use xlink:href="#bootstrap"></use>
@@ -17,67 +17,91 @@
     </div>
 
     <div *ngIf="isLoggedIn()">
-    <!-- Create New Playlist Section -->
-    <div class="d-flex flex-column justify-content-between" >
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="#" class="nav-link active" aria-current="page" [routerLink]="['/playlists']">
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#playlist"></use>
-            </svg>
-            Create more playlist
-          </a>
-        </li>
-      </ul>
+      <!-- Create New Playlist Section -->
+      <div class="d-flex flex-column justify-content-between" style="flex-grow: 1;">
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page" [routerLink]="['/playlists']">
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#playlist"></use>
+              </svg>
+              Create more playlist
+            </a>
+          </li>
+        </ul>
 
-      <!-- Playlists Table -->
-
-      <div class="table-responsive" style="flex-grow: 1;" >
-        <table class="table table-hover table-striped custom-table mt-3 custom-table">
-          <thead>
-            <tr class="table-header">
-              <th scope="col">Name</th>
-              <th scope="col">Description</th>
-              <th scope="col">Created At</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let playlist of playlists" (click)="viewPlaylistDetail(playlist.id)">
-              <td>{{playlist.name}}</td>
-              <td>{{playlist.description}}</td>
-              <td>{{playlist.createdAt | date:'medium'}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-
-    <hr>
-
-<!-- Your Favorite Playlist Section -->
-<div class="favorite-playlist-section mt-4">
-  <h5 class="text-center mb-3">Your Favorite Playlists</h5>
-
-  <div class="row">
-    <div class="col-12 mb-3" *ngFor="let favorite of favoritePlaylists">
-      <div class="card favorite-playlist-card shadow-sm" (click)="viewPlaylistDetail(favorite.id)">
-        <div class="card-body">
-          <div class="d-flex align-items-center">
-            <svg class="bi me-3 text-primary" width="24" height="24">
-              <use xlink:href="#music-note"></use>
-            </svg>
-            <h6 class="card-title mb-0">{{ favorite.name }}</h6>
-          </div>
-          <p class="card-text mt-2 text-muted">{{ favorite.description }}</p>
-          <small class="text-secondary">Created on {{ favorite.createdAt | date:'medium' }}</small>
+        <!-- Playlists Table -->
+        <div class="table-responsive" style="flex-grow: 1;">
+          <table class="table table-hover table-striped custom-table mt-3 custom-table">
+            <thead>
+              <tr class="table-header">
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let playlist of playlists" (click)="viewPlaylistDetail(playlist.id)">
+                <td>{{ playlist.name }}</td>
+                <td>{{ playlist.description }}</td>
+                <td>{{ playlist.createdAt | date: 'medium' }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
+        <hr>
+
+        <!-- Your Favorite Playlist Section -->
+        <div class="favorite-playlist-section mt-4">
+          <h5 class="text-center mb-3">Your Favorite Playlists</h5>
+
+          <div class="row">
+            <div class="col-12 mb-3" *ngFor="let favorite of favoritePlaylists">
+              <div class="card favorite-playlist-card shadow-sm" (click)="viewPlaylistDetail(favorite.id)">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <svg class="bi me-3 text-primary" width="24" height="24">
+                      <use xlink:href="#music-note"></use>
+                    </svg>
+                    <h6 class="card-title mb-0">{{ favorite.name }}</h6>
+                  </div>
+                  <p class="card-text mt-2 text-muted">{{ favorite.description }}</p>
+                  <small class="text-secondary">Created on {{ favorite.createdAt | date: 'medium' }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Your clubs Section -->
+        <div class="favorite-playlist-section mt-4">
+          <h5 class="text-center mb-3">Your Clubs</h5>
+
+          <div class="row">
+            <div class="col-12 mb-3" *ngFor="let club of joinedClubs">
+              <div class="card favorite-playlist-card shadow-sm" (click)="viewClubDetail(club.id)">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <svg class="bi me-3 text-primary" width="24" height="24">
+                      <use xlink:href="#music-note"></use>
+                    </svg>
+                    <h6 class="card-title mb-0">{{ club.name }}</h6>
+                  </div>
+                  <p class="card-text mt-2 text-muted">{{ club.description }}</p>
+                  <small class="text-secondary">Created on {{ club.createdAt | date: 'medium' }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <!-- Logout Button -->
+        <app-logout></app-logout>
       </div>
     </div>
-  </div>
-  </div>
-
-    <hr>
-  </div>
-  </div>
   </div>
 </main>

@@ -2,6 +2,7 @@ package com.skilldistillery.media.controllers;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -168,6 +169,12 @@ public class ClubController {
 			e.printStackTrace();
 			res.setStatus(400);
 		}
+	}
+	
+	@GetMapping("clubs/joined")
+	public Set<Club> getClubs(HttpServletRequest req, HttpServletResponse res, Principal principal) {
+		Set<Club> clubsJoined = clubService.getClubs(principal.getName());
+		return clubsJoined;
 	}
 	
 

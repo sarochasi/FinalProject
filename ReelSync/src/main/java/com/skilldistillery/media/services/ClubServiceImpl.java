@@ -2,6 +2,7 @@ package com.skilldistillery.media.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -171,6 +172,12 @@ public class ClubServiceImpl implements ClubService{
 		
 
 		
+	}
+
+	@Override
+	public Set<Club> getClubs(String username) {
+		Set<Club> clubs = clubRepo.findByClubUsers_Username(username);
+		return clubs;
 	}
 
 

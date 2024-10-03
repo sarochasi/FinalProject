@@ -11,6 +11,8 @@ import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../models/playlist';
 import { User } from '../../models/user';
 import { ChangeService } from '../../services/change.service';
+import { Club } from '../../models/club';
+import { ClubService } from '../../services/club.service';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -25,12 +27,15 @@ export class SidebarComponent {
   favoritePlaylists: Playlist[] = [];
   user: User = new User();
   selected: Playlist | null = null;
+  joinedClubs: Club[] = [];
 
   constructor(private playlistService: PlaylistService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
-    private changeService: ChangeService){
+    private changeService: ChangeService,
+    private clubService: ClubService
+  ){
       effect(() => {
         console.log(changeService.changeMade());
         this.updateFavoritePlaylists();
@@ -44,6 +49,7 @@ export class SidebarComponent {
     ngOnInit(): void {
       this.loadPlaylists();
       this.updateFavoritePlaylists();
+      this.updateJoinedClubs();
       this.authService.getLoggedInUser().subscribe({
         next: (loggedInUser) => {
           this.user = loggedInUser;
@@ -101,8 +107,6 @@ export class SidebarComponent {
     }
 
     updateFavoritePlaylists(): void {
-      //subscribe to GET /api/playlists/favorites
-      // this.favoritePlaylists = this.playlists.filter((playlist) => playlist.favorite);
       this.playlistService.loadFavorites().subscribe({
         next: (favorites) => {
           this.favoritePlaylists = favorites;
@@ -114,5 +118,20 @@ export class SidebarComponent {
     viewPlaylistDetail(playlistId: number): void {
       this.router.navigate(['/playlists', playlistId]);
     }
+
+    updateJoinedClubs(): void {
+      this.clubService.loadClubs().subscribe({
+        next: (joinedClubs) => {
+          this.joinedClubs = joinedClubs;
+        },
+        error: (err) => console.error('Error updating favorite status:', err),
+      })
+    }
+
+    viewClubDetail(cid: number): void {
+      this.router.navigate(['/clubs']);
+    }
+
+
 
 }

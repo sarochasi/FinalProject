@@ -146,4 +146,14 @@ export class ClubService {
     );
   }
 
+  loadClubs() : Observable<Club[]> {
+    const url = `${this.url}/joined`;
+    return this.http.get<Club[]>(url, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(() => new Error('ClubService.addToFavorites(): error updating joined clubs status: ' + err));
+      })
+    );
+  }
+
 }
