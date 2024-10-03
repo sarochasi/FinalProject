@@ -17,18 +17,18 @@
     </div>
 
     <div *ngIf="isLoggedIn()">
-      <!-- Create New Playlist Section -->
-      <div class="d-flex flex-column justify-content-between" style="flex-grow: 1;">
-        <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page" [routerLink]="['/playlists']">
-              <svg class="bi pe-none me-2" width="16" height="16">
-                <use xlink:href="#playlist"></use>
-              </svg>
-              Create more playlist
-            </a>
-          </li>
-        </ul>
+    <!-- Create New Playlist Section -->
+    <div class="d-flex flex-column justify-content-between" >
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" aria-current="page" [routerLink]="['/playlists']">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#playlist"></use>
+            </svg>
+            Create New Playlist
+          </a>
+        </li>
+      </ul>
 
         <!-- Playlists Table -->
         <div class="table-responsive" style="flex-grow: 1;">
