@@ -29,4 +29,10 @@ public interface ClubService {
 	Club addPlaylistToClub(int clubId, int pid, String username);
 	
 	Club removePlaylistFromClub(int clubId, int pid, String username);
+	
+	
+	
+	boolean destroy(String username, int cid);
+	
+	
 }

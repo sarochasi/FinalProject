@@ -157,6 +157,23 @@ public class ClubServiceImpl implements ClubService{
 		}
 		return null;
 	}
+
+	@Override
+	public boolean destroy(String username, int tid) {
+
+		boolean deleted = false;
+		Club toBeDeleted = clubRepo.findByIdAndUser_Username(tid, username);
+		if(toBeDeleted != null) {
+			clubRepo.delete(toBeDeleted);
+			deleted = true;
+		}
+		return deleted;
+		
+
+		
+	}
+
+
 	
 	
 

@@ -157,6 +157,19 @@ public class ClubController {
 		
 	}
 	
+	
+	@DeleteMapping("clubs/{clubId}")
+	public void destroy(HttpServletRequest req, HttpServletResponse res, 
+			@PathVariable("clubId") int cid, Principal principal) {
+		try {
+			clubService.destroy(principal.getName(), cid);
+			res.setStatus(204);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+		}
+	}
+	
 
 
 }

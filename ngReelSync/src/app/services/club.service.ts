@@ -120,4 +120,17 @@ export class ClubService {
     );
   }
 
+  update(updateClub:Club) : Observable<Club> {
+    return this.http.put<Club>(this.url + '/' + updateClub.id ,updateClub,this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => { return new Error("ClubService.update(): error updating club:"  + err); }
+          );
+        }
+      )
+    );
+  }
+
 }

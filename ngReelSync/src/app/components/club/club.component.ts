@@ -36,6 +36,8 @@ export class ClubComponent {
   hasJoinedClub: boolean = false;
   hasLeftClub: boolean = false;
 
+  editClub: Club | null =null;
+
   constructor(private clubService: ClubService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -288,6 +290,59 @@ export class ClubComponent {
       this.router.navigate(['/playlists', playlistId]);
     }
 
+
+    updateClub(club: Club, setSelected: boolean = true){
+      console.log(club);
+
+      this.clubService.update(club).subscribe(
+        {
+          next: (updatedClub) => {
+
+            const index = this.clubs.findIndex(c => c.id === updatedClub.id);
+
+            if (index !== -1) {
+              this.clubs[index] = updatedClub;
+            }
+
+            if(setSelected){
+              this.loadClub();
+            this.editClub = null;
+            this.selected = null;
+
+          }
+
+          this.loadClub();
+        },
+          error: (err) => {
+            console.error('TodoListComponnt.update: error on update', err);
+
+          },
+        });
+
+      }
+
+     findClubById(clubId: number) : void {
+      this.clubService.getClubById(clubId).subscribe({
+        next: (club) => {
+          this.selected = club;
+
+
+        },
+        error: (err) => {
+          this.router.navigateByUrl('notFound');
+          console.error(err);
+          console.error("error in subscribe for finding todo by id");
+        }
+      });
+    }
+
+    setEditClub(club: Club) {
+
+      if (club) {
+        this.selected = club;
+        this.editClub = { ...this.selected };
+      }
+    }
 
   }
 
