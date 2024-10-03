@@ -1,21 +1,21 @@
 body {
-  background-color: #f8f9fa; /* Light background for contrast */
-  font-family: 'Arial', sans-serif; /* Custom font */
+  background-color: #f8f9fa;
+  font-family: 'Arial', sans-serif;
 }
 
 .container {
-  background-color: #ffffff; /* White background for content area */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  padding: 30px; /* Inner spacing */
-  margin-top: 50px; /* Space from the top */
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-top: 50px;
 }
 
 h1 {
-  font-weight: bold; /* Make the main heading bold */
+  font-weight: bold;
 }
 
 h2 {
-  margin-top: 20px; /* Space above features section */
-  font-weight: bold; /* Make the features heading bold */
+  margin-top: 20px;
+  font-weight: bold;
 }
