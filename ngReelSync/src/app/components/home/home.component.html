@@ -1,5 +1,43 @@
+
+<div *ngIf="!isLoggedIn()">
 <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
+
+
+    <div class="container text-center mt-5">
+      <h1 class="display-4 text-primary">Welcome to ReelSync!</h1>
+      <p class="lead mt-3 text-secondary">
+        Dive into a vibrant community of music lovers and content creators where you can effortlessly create personalized playlists and curate your favorite media. Whether you’re looking to add the latest hits to your collection or explore a diverse range of community playlists, ReelSync offers an intuitive platform to share and discover. Join the club and connect with fellow enthusiasts, making your musical journey more enjoyable and collaborative than ever before!
+      </p>
+
+      <div class="features mt-5">
+        <h2 class="text-success">Features</h2>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-light border-0">
+            <span class="badge bg-info text-dark">🎵</span> Create Playlists
+          </li>
+          <li class="list-group-item bg-light border-0">
+            <span class="badge bg-info text-dark">📥</span> Add Media to Playlist
+          </li>
+          <li class="list-group-item bg-light border-0">
+            <span class="badge bg-info text-dark">🌍</span> Explore Community Playlists
+          </li>
+          <li class="list-group-item bg-light border-0">
+            <span class="badge bg-info text-dark">🤝</span> Join the Club
+          </li>
+        </ul>
+      </div>
+
+
+
+</div>
+</main>
+<app-login></app-login>
+  </div>
+
+
+
   <div *ngIf="isLoggedIn()">
+    <main class="content-area flex-grow-1 p-3" style="margin-left: 350px; margin-top: 20px">
     <div class="album py-5 container-fluid" style="background-color: #F5F5F5;">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         <div class="col" *ngFor="let playlist of playlists">
@@ -70,5 +108,6 @@
         </div>
       </div>
     </div>
-  </div>
+
 </main>
+</div>

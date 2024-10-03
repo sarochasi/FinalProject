@@ -1,6 +1,12 @@
 
+<div *ngIf="!isLoggedIn()">
+  <app-login></app-login>
+  </div>
+
 <main class="content-area flex-grow-1 p-3" style="margin-left: 350px;">
-  <div>
+
+  <!-- Add Playlist Form Section -->
+  <div *ngIf="isLoggedIn()">
     <!-- Add Media Form -->
     <form (ngSubmit)="addMedia(newMedia)" #addForm="ngForm">
       <div class="form-group">
@@ -17,7 +23,7 @@
       </div>
       <button type="submit" class="btn" style="background-color: #CE6A85; color: white;">Add Media</button>
     </form>
-  </div>
+
 <hr>
   <div class="card-body" style="background-color: #FAA275;">
     <h3 class="text-center" style="color: #5C374C;">Media List</h3>
@@ -95,5 +101,6 @@
 
 <div *ngIf="selected">
 
+</div>
 </div>
 </main>

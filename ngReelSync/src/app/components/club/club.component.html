@@ -45,7 +45,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
           <div class="col" *ngFor="let club of clubs">
             <div class="card shadow-sm" style="border-color: #FF8C61;">
-              <img class="card-img-top" [src]="club.imageUrl" alt="{{ club.name }}" style="width: 100%; height: 225px; object-fit: cover;" />
+              <img class="card-img-top" [src]="club.imageUrl" alt="{{ club.name }}" style="width: 100%; height: 225px; object-fit: cover;"  (click)="selectedClub(club)"/>
               <div class="card-body" style="background-color: #FAA275;">
                 <h5 class="card-title" style="color: #5C374C;" (click)="selectedClub(club)">{{ club.name }}</h5>
                 <p class="card-text" style="color: #985277;">{{ club.description }}</p>
@@ -88,7 +88,7 @@
 
 
   <!-- Check if the user is a club member -->
-  <div *ngIf="!isClubUser(user.username, selected.clubUsers) && !hasJoinedClub && !hasLeftClub">
+  <div *ngIf="!isClubUser(user.username, selected.clubUsers) && !hasLeftClub && !hasJoinedClub">
     <h3>Join the Club</h3>
     <p>You need to join this club to see the playlists and details.</p>
     <button (click)="joinClub(selected.id)" class="btn btn-primary">Join Club</button>
@@ -106,8 +106,10 @@
                   [src]="playlist.imageUrl"
                   alt="{{ playlist.name }}"
                   style="height: 200px; object-fit: cover;"
+                  (click)="viewPlaylistDetail(playlist.id)"
                 />
                 <div class="card-body" style="background-color: #FAA275;">
+
                   <h5 class="card-title" style="color: #5C374C;">{{ playlist.name }}</h5>
                   <p class="card-text" style="color: #985277;">{{ playlist.description }}</p>
                   <small class="text-body-secondary">Created by: {{ playlist.user.username }}</small>

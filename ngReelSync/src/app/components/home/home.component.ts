@@ -11,11 +11,12 @@ import { CommonModule } from '@angular/common';
 import { PlaylistcommentService } from '../../services/playlistcomment.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { LoginComponent } from "../login/login.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoginComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

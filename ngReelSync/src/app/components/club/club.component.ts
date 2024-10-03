@@ -1,7 +1,7 @@
 import { PlaylistService } from './../../services/playlist.service';
 import { Club } from './../../models/club';
 import { CommonModule } from '@angular/common';
-import { Component, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Playlist } from '../../models/playlist';
 import { User } from '../../models/user';
@@ -40,7 +40,8 @@ export class ClubComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService:AuthService,
-    private playlistService: PlaylistService
+    private playlistService: PlaylistService,
+    private cdr: ChangeDetectorRef
   ){}
 
   isLoggedIn(): boolean {
@@ -102,6 +103,7 @@ export class ClubComponent {
         this.loadClub();
         this.loadLoggedInUser();
         this.hasJoinedClub = true;
+        this.hasLeftClub = false;
 
       },
       error: (err) =>{
@@ -149,10 +151,17 @@ export class ClubComponent {
     this.clubService.leaveClub(club.id).subscribe({
       next: () => {
         console.log('Successfully left the club');
+
+        this.hasLeftClub = true;
+        this.hasJoinedClub = false;
+
+        this.selected = null;
+        this.clubPlaylists = [];
         this.loadClub();
         this.loadLoggedInUser();
-        this.hasLeftClub = true;
+        this.loadClubMembers(club.id);
 
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error leaving the club: ', err);
@@ -273,6 +282,10 @@ export class ClubComponent {
 
     isClubUser(username: string, clubUsers: any[]): boolean {
       return clubUsers.some(member => member.username === username);
+    }
+
+    viewPlaylistDetail(playlistId: number): void {
+      this.router.navigate(['/playlists', playlistId]);
     }
 
 

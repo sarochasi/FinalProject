@@ -111,4 +111,8 @@ export class SidebarComponent {
       })
     }
 
+    viewPlaylistDetail(playlistId: number): void {
+      this.router.navigate(['/playlists', playlistId]);
+    }
+
 }
