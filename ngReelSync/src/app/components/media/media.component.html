@@ -5,28 +5,59 @@
 
 <main class="content-area flex-grow-1 p-3" style="margin-left: 350px;">
 
-  <!-- Add Playlist Form Section -->
   <div *ngIf="isLoggedIn()">
     <!-- Add Media Form -->
     <form (ngSubmit)="addMedia(newMedia)" #addForm="ngForm">
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="name" [(ngModel)]="newMedia.name" name="name" class="form-control" required />
+      <div class="form-group mb-3">
+        <label for="name" class="form-label" style="color: #5C374C;">Name:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="newMedia.name"
+          name="name"
+          class="form-control"
+          style="border-color: #5C374C; color: #5C374C;"
+          placeholder="Enter media name"
+          required
+        />
       </div>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <input type="text" id="description" [(ngModel)]="newMedia.description" name="description" class="form-control" required />
+      <div class="form-group mb-4">
+        <label for="description" class="form-label" style="color: #5C374C;">Description:</label>
+        <input
+          type="text"
+          id="description"
+          [(ngModel)]="newMedia.description"
+          name="description"
+          class="form-control"
+          style="border-color: #5C374C; color: #5C374C;"
+          placeholder="Enter media description"
+          required
+        />
       </div>
-      <div class="form-group">
-        <label for="imageUrl">Source URL:</label>
-        <input type="text" id="imageUrl" [(ngModel)]="newMedia.sourceUrl" name="imageUrl" class="form-control" required />
+      <div class="form-group mb-4">
+        <label for="imageUrl" class="form-label" style="color: #5C374C;">Source URL:</label>
+        <input
+          type="text"
+          id="imageUrl"
+          [(ngModel)]="newMedia.sourceUrl"
+          name="imageUrl"
+          class="form-control"
+          style="border-color: #5C374C; color: #5C374C;"
+          placeholder="Enter media URL"
+          required
+        />
       </div>
-      <button type="submit" class="btn" style="background-color: #CE6A85; color: white;">Add Media</button>
+      <div class="text-center">
+        <button type="submit" class="btn" style="background-color: #CE6A85; color: white;">
+          Add Media
+        </button>
+      </div>
     </form>
+
 
 <hr>
   <div class="card-body" style="background-color: #FAA275;">
-    <h3 class="text-center" style="color: #5C374C;">Media List</h3>
+    <h3 class="text-center" style="color: #5C374C;">Saved Media</h3>
     <table class="table table-hover" style="background-color: #fff; border-radius: 5px;">
       <thead class="thead-dark" style="background-color: #FF8C61; color: white;">
         <tr>
@@ -48,7 +79,7 @@
           <td>
             <button type="button" class="btn btn-sm" style="background-color: #CE6A85; color: white;" (click)="findMediaById(media.id)">Edit</button>
             <button type="button" class="btn btn-sm" style="background-color: #FF8C61; color: white;" (click)="deleteMedia(media.id)">Delete</button>
-            <button type="button" class="btn btn-sm btn-secondary" (click)="open(playlistModal, media)">Add to Playlist</button>
+            <button type="button" class="btn btn-sm" style="background-color: #985277; color: white;" (click)="open(playlistModal, media)">Add to Playlist</button>
           </td>
         </tr>
       </tbody>
