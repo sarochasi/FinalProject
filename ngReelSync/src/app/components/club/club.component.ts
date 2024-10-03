@@ -83,20 +83,22 @@ export class ClubComponent {
 
   }
 
-  addClub(newClub: Club) : void {
+  addClub(newClub: Club): void {
     newClub.creatorId = this.user.id;
     this.clubService.create(newClub).subscribe({
-      next: (newClub) => {
+      next: (createdClub) => {
+
+        this.joinClub(createdClub.id);
+
         this.loadClub();
         this.newClub = new Club();
       },
       error: (err) => {
-        console.error(err);
-        console.error("error in subscribe");
+        console.error('Error in addClub(): ', err);
       }
     });
-
   }
+
 
   joinClub(clubId: number): void{
     this.clubService.joinclub(clubId).subscribe({
@@ -342,6 +344,18 @@ export class ClubComponent {
         this.selected = club;
         this.editClub = { ...this.selected };
       }
+    }
+
+    deleteClub(id: number) : void{
+      this.clubService.destroy(id).subscribe({
+        next: () => {
+          this.loadClub();
+        },
+        error: (err) => {
+          console.error(err);
+          console.error("error in subscribe");
+        }
+      });
     }
 
   }

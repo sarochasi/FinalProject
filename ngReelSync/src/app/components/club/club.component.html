@@ -56,13 +56,18 @@
 
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
+                  <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isJoined(club), 'btn-outline-secondary': !isJoined(club)}" (click)="isJoined(club) ? leaveClub(club) : joinClub(club.id)">
+                    {{ isJoined(club) ? 'Joined' : 'Join club' }}
+                  </button>
                   <button type="submit" class="btn btn-sm simple-list-example-scrollspy" style="background-color: #CE6A85; color: white;"
                   (click)="setEditClub(club)" *ngIf="club.user.username === user.username">
                     Edit
                   </button>
-                  <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': isJoined(club), 'btn-outline-secondary': !isJoined(club)}" (click)="isJoined(club) ? leaveClub(club) : joinClub(club.id)">
-                    {{ isJoined(club) ? 'Joined' : 'Join club' }}
+                  <button type="submit" class="btn btn-sm simple-list-example-scrollspy" style="background-color: #c997a4; color: white;"
+                  (click)="deleteClub(club.id)" *ngIf="club.user.username === user.username">
+                    Delete
                   </button>
+
                 </div>
               </div>
             </div>

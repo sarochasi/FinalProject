@@ -133,4 +133,17 @@ export class ClubService {
     );
   }
 
+  destroy(id: number): Observable<void>{
+    return this.http.delete<void>(this.url + '/' + id,this.getHttpOptions()).pipe(
+      catchError(
+        (err: any) => {
+          console.log(err);
+          return throwError(
+            () => { return new Error("ClubService.delete(): error deleting club:"  + err); }
+          );
+        }
+      )
+    );
+  }
+
 }
