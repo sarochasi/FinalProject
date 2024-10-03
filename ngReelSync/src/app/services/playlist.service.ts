@@ -149,7 +149,7 @@ export class PlaylistService {
         (err: any) => {
           console.log(err);
           return throwError(
-            () => {return new Error("TodoService.searchPlaylists(): error searching playlist " + err); }
+            () => {return new Error("Please submit all field forms"); }
           );
         }
       )

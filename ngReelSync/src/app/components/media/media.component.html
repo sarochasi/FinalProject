@@ -58,9 +58,9 @@
   <div class="modal-body">
     <form #choosePlaylistForm="ngForm">
       <div class="mb-3">
-        <label for="dateOfBirth">Please select a playlist:</label>
+        <label for="playlistSelect">Please select a playlist:</label>
         <div class="input-group">
-          <select name="playlist" ngModel>
+          <select name="playlist" id="playlistSelect" ngModel class="form-select">
             <option *ngFor="let playlist of playlists" value="{{playlist.id}}">{{playlist.name}}</option>
           </select>
         </div>
