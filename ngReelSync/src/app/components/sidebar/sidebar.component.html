@@ -13,6 +13,7 @@
     <div *ngIf="!isLoggedIn()">
       <p class="please">Please Log in to see your Playlists</p>
       <a class="nav-link" [routerLink]="['/login']">Log in</a>
+      <a class="nav-link" [routerLink]="['/register']">Register</a>
     </div>
 
     <div *ngIf="isLoggedIn()">
