@@ -54,6 +54,18 @@ public class PlaylistController {
 		return playlist;
 	}
 	
+	@GetMapping("playlists/curator")
+	public Set<Playlist> showCuratorPlaylist(HttpServletRequest req, HttpServletResponse res, 
+		 Principal principal) {
+		
+		Set<Playlist> playlist = playlistService.showCuratorPlaylist(principal.getName());
+		System.out.println(playlist);
+		if(playlist == null) {
+			res.setStatus(404);
+		}
+		return playlist;
+	}
+	
 	@GetMapping("playlists/search/{keyword1}/{keyword2}/{keyword3}")
 	public Set<Playlist> showByKeyword(HttpServletRequest req, HttpServletResponse res, Principal principal, @PathVariable("keyword1") String keyword1, @PathVariable("keyword2") String keyword2, @PathVariable("keyword3") String keyword3) {
 		Set<Playlist> playlists = playlistService.showByKeyword(principal.getName(),keyword1, keyword2, keyword3);

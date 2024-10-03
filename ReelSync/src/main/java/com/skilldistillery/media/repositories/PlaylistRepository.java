@@ -17,4 +17,5 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
     Set<Playlist> findByPlaylistUsersContainsAndEnabledTrue(User user);
     Set<Playlist> findByPlaylistUsers_UsernameAndEnabledTrue(String username);
     Set<Playlist> findByPublishedTrue();
+    
 }

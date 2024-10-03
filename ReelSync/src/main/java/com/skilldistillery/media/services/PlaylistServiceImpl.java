@@ -1,5 +1,6 @@
 package com.skilldistillery.media.services;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -141,5 +142,17 @@ public class PlaylistServiceImpl implements PlaylistService {
 		Set<Playlist> favorites = playlistRepo.findByPlaylistUsers_UsernameAndEnabledTrue(username);
 		return favorites;
 		
+	}
+
+	@Override
+	public Set<Playlist> showCuratorPlaylist(String username) {
+		Set<User> curators = userRepo.findByRole("curator");
+		
+		Set<Playlist> curatorPlaylists = new HashSet<>();
+	    for (User curator : curators) {
+	        curatorPlaylists.addAll(playlistRepo.findByUser_Username(curator.getUsername()));
+	    }
+	    
+	    return curatorPlaylists;
 	}
 }

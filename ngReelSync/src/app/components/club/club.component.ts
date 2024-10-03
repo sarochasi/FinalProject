@@ -69,22 +69,21 @@ export class ClubComponent {
     });
   }
 
-  loadClub() : void {
-    console.log('loadclub() called')
+  loadClub(): void {
+    console.log('loadClub() called');
     this.clubService.index().subscribe({
       next: (clubs) => {
 
-        this.clubs = clubs;
-        console.log("clubs: " + clubs);
-
+        this.clubs = clubs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        console.log("clubs: ", this.clubs);
       },
       error: (err) => {
         console.error(err);
         console.error("Error loading clubs");
       }
     });
-
   }
+
 
   addClub(newClub: Club): void {
     newClub.creatorId = this.user.id;

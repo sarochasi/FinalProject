@@ -38,6 +38,7 @@ export class SidebarComponent {
   ){
       effect(() => {
         console.log(changeService.changeMade());
+        this.loadPlaylists();
         this.updateFavoritePlaylists();
         this.updateJoinedClubs();
       })

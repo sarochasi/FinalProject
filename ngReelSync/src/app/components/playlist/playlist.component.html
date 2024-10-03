@@ -58,6 +58,21 @@
         />
       </div>
 
+      <div class="form-group mb-3">
+        <label for="editPublished" class="form-label" style="color: #5C374C;">Published:</label>
+        <select
+            id="editPublished"
+            [(ngModel)]="newPlaylist.published"
+            name="editPublished"
+            class="form-control"
+            style="border-color: #5C374C; color: #5C374C;"
+            required
+        >
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+        </select>
+    </div>
+
       <div class="text-center">
         <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="addForm.invalid" (click)="addPlaylist(newPlaylist)">
           Create Playlist
@@ -179,8 +194,8 @@
                 style="border-color: #5C374C; color: #5C374C;"
                 required
             >
-                <option [ngValue]="true">True</option>
-                <option [ngValue]="false">False</option>
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
             </select>
         </div>
 
