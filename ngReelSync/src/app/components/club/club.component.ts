@@ -167,8 +167,6 @@ export class ClubComponent {
 
         this.selected = null;
         this.clubPlaylists = [];
-
-
         this.cdr.detectChanges();
       },
       error: (err) => {
