@@ -294,8 +294,6 @@ export class PlaylistComponent {
   }
 
   updateFavoritePlaylists(): void {
-    //subscribe to GET /api/playlists/favorites
-    // this.favoritePlaylists = this.playlists.filter((playlist) => playlist.favorite);
     this.playlistService.loadFavorites().subscribe({
       next: (favorites) => {
         this.favoritePlaylists = favorites;
