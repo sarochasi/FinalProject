@@ -5,10 +5,12 @@
   <p class="text-center text-muted">Created At: {{ playlist?.createdAt | date: 'mediumDate' }}</p>
 
   <div class="card-body" style="background-color: #FAA275;">
+    <div *ngIf="!selected">
     <h3 class="text-center" style="color: #5C374C;">Media List</h3>
-
     <!-- Media List Table -->
-    <table class="table table-hover" style="background-color: #fff; border-radius: 5px;">
+    <table class="table table-hover" style="background-color: #fff; border-radius: 5px;" >
+
+
       <thead class="thead-dark" style="background-color: #FF8C61; color: white;">
         <tr>
           <th></th>
@@ -44,6 +46,29 @@
         </tr>
       </tbody>
     </table>
+    </div>
+
+
+    <div>
+      <!-- Update Media Form -->
+      <form *ngIf="selected" #updateForm="ngForm">
+        <h3 class="text-center" style="color: #5C374C;">Update Media</h3>
+        <div class="form-group">
+          <label for="editName">Edit Name:</label>
+          <input type="text" id="editName" [(ngModel)]="selected.name" name="editName" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="editDescription">Edit Description:</label>
+          <input type="text" id="editDescription" [(ngModel)]="selected.description" name="editDescription" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="editImageUrl">Edit Source URL:</label>
+          <input type="text" id="editImageUrl" [(ngModel)]="selected.sourceUrl" name="editImageUrl" class="form-control" required />
+        </div>
+        <button type="submit" (click)="updateMedia(selected)" class="btn" style="background-color: #CE6A85; color: white;">Update Media</button>
+        <button type="button" (click)="selected = null" class="btn btn-secondary">Cancel</button>
+      </form>
+    </div>
 
     <!-- Tag List Display -->
     <div class="tag-list-container mt-4" style="background-color: #FFE3E0; padding: 15px; border-radius: 5px;">

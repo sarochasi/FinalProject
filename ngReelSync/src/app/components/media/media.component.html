@@ -56,7 +56,7 @@
 
 
 <hr>
-  <div class="card-body" style="background-color: #FAA275;">
+  <div class="card-body" style="background-color: #FAA275;" *ngIf="!selected">
     <h3 class="text-center" style="color: #5C374C;">Saved Media</h3>
     <table class="table table-hover" style="background-color: #fff; border-radius: 5px;">
       <thead class="thead-dark" style="background-color: #FF8C61; color: white;">
@@ -112,7 +112,7 @@
 
 <div>
   <!-- Update Media Form -->
-  <form *ngIf="selected" (ngSubmit)="updateMedia(selected)" #updateForm="ngForm">
+  <form *ngIf="selected" #updateForm="ngForm">
     <div class="form-group">
       <label for="editName">Edit Name:</label>
       <input type="text" id="editName" [(ngModel)]="selected.name" name="editName" class="form-control" required />
@@ -125,13 +125,10 @@
       <label for="editImageUrl">Edit Source URL:</label>
       <input type="text" id="editImageUrl" [(ngModel)]="selected.sourceUrl" name="editImageUrl" class="form-control" required />
     </div>
-    <button type="submit" class="btn" style="background-color: #CE6A85; color: white;">Update Media</button>
+    <button type="submit" (click)="updateMedia(selected)" class="btn" style="background-color: #CE6A85; color: white;">Update Media</button>
     <button type="button" (click)="selected = null" class="btn btn-secondary">Cancel</button>
   </form>
 </div>
 
-<div *ngIf="selected">
-
-</div>
 </div>
 </main>
