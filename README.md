@@ -1,12 +1,12 @@
 # Final Project
 
 ## Project Overview
-This full-stack Java project is the culmination of our learning, integrating everything we've studied into one cohesive application. The project is designed to provide authenticated and non-authenticated views, offer full C.R.U.D. (Create, Read, Update, Delete) functionality, and include a multi-level privilege system for managing user-generated data. The front-end uses Angular or Vanilla JS, while the back-end is a Java-based RESTful API connected to a MySQL database.
+This full-stack Java project is the culmination of our learning, integrating everything we've studied into one cohesive application. The project is designed to provide authenticated and non-authenticated views, offer full C.R.U.D. (Create, Read, Update, Delete) functionality, and include a multi-level privilege system for managing user-generated data. The front-end uses Angular, while the back-end is a Java-based RESTful API connected to a MySQL database.
 
 This project is a collaborative effort where group members contributed to various aspects of the application, including database design, backend logic, security, and front-end development. It showcases a wide range of skills, from database schema design to front-end state management.
 
 ## Technologies Used
-- **Frontend**: Angular or Vanilla JavaScript (select based on the project direction)
+- **Frontend**: Angular JavaScript
 - **Backend**: Java, Spring Boot (RESTful API)
 - **Database**: MySQL
 - **ORM**: JPA (Java Persistence API)
