@@ -155,7 +155,6 @@ CREATE TABLE IF NOT EXISTS `media_comment` (
   `content` TEXT NULL,
   `created_at` DATETIME NULL,
   `in_reply_to_id` INT NULL,
-  `enabled` TINYINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_comment_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_comment_media1_idx` (`media_id` ASC) VISIBLE,
@@ -452,6 +451,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `image_url`, `biography`, `created_at`, `updated_at`) VALUES (1, 'test', '$2a$10$nShOi5/f0bKNvHB8x0u3qOpeivazbuN0NE4TO0LGvQiTMafaBxLJS', 1, 'standard', NULL, NULL, NULL, NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `image_url`, `biography`, `created_at`, `updated_at`) VALUES (2, 'curator', 'curator', 1, 'curator', NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -461,8 +461,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (1, 1, 'https://www.youtube.com/embed/dQw4w9WgXcQ?si=SYnGpwzgCj2eGx0o', 'Test', NULL, NULL, 'test', 1);
-INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (2, 1, 'https://www.youtube.com/embed/jfKfPfyJRdk?si=9GPVb1dI2KmJI6da', 'Test2', NULL, NULL, 'test2', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (1, 1, 'https://www.youtube.com/embed/jfKfPfyJRdk?si=9GPVb1dI2KmJI6da', 'Study Sesh Lofi', NULL, NULL, 'Chill hiphop beats to study/relax to', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (2, 1, 'https://www.youtube.com/embed/dMH0bHeiRNg?si=OeG2qppa0tpWYiFd', 'Evolution of Dance', NULL, NULL, 'A progression through history and its iconic boogies', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (3, 1, 'https://www.youtube.com/embed/jNQXAC9IVRw?si=u605GG9raqU-VhL1', 'My Day at the Zoo', NULL, NULL, 'First published YouTube video', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (4, 1, 'https://www.youtube.com/embed/Sagg08DrO5U?si=pkTbiyrAEooo-MoW', 'Gandalf Saxophone', NULL, NULL, 'Perfect for idle background music', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (5, 2, 'https://www.youtube.com/embed/IYnsfV5N2n8?si=cbJsovPWFHId4srF', 'asdf Movie', NULL, NULL, 'Short compilation of animated skits', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (6, 2, 'https://www.youtube.com/embed/jJOwdrTA8Gw?si=iYxz93J6cqDcq6CJ', 'Llamas With Hats', NULL, NULL, 'Just two llamas wearing hats, nothing to see here', 1);
+INSERT INTO `media` (`id`, `user_id`, `source_url`, `name`, `created_at`, `updated_at`, `description`, `enabled`) VALUES (7, 2, 'https://www.youtube.com/embed/nwP3TeK-fPs?si=20iq-o2qH-RIcR_g', 'Iconic Vine Compilation', NULL, NULL, 'The classics', 1);
 
 COMMIT;
 
@@ -472,8 +477,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (1, 'My Playlist', 1, 'Road trip jams', NULL, NULL, 'https://previews.123rf.com/images/macsim/macsim1202/macsim120200073/12369837-portrait-of-a-male-teenager-listening-to-music.jpg', 1, 1);
-INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (2, 'A Second Playlist', 1, 'Chill Vibes', NULL, NULL, 'https://lofigirl.com/wp-content/uploads/2023/02/DAY_UPDATE_ILLU.jpg', 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (1, 'My Playlist', 1, 'Road trip jams', NULL, NULL, 'https://m.media-amazon.com/images/I/31VPRQhPUML._AC_UF1000,1000_QL80_.jpg', 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (2, 'Rock n Roll', 1, 'Greatest hits', NULL, NULL, 'https://www.horizonsmusic.co.uk/cdn/shop/articles/image1_1_580x.jpg?v=1621417630', 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (3, 'Rainy Day', 1, 'The type of playlist to look out a train window to', NULL, NULL, 'https://www.thoughtco.com/thmb/beiCvc1QcvpjjJPXI6g0wG18MxI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/drops-of-rain-on-glass-838815210-5a823cc0a18d9e0036e325e2.jpg', 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (4, 'Good Vibes Only', 1, 'On top of the world', NULL, NULL, 'https://meanderingwild.com/wp-content/uploads/2023/04/sunflower-personality.jpeg', 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (5, 'Top Hits 2024', 2, 'Top of the charts this year', NULL, NULL, 'https://cdn.prod.website-files.com/655e0fa544c67c1ee5ce01c7/655e0fa544c67c1ee5ce08ec_lANgHiIQ0KiQ3H4vuCAT.jpeg', 1, 1);
+INSERT INTO `playlist` (`id`, `name`, `user_id`, `description`, `created_at`, `updated_at`, `image_url`, `enabled`, `published`) VALUES (6, 'Dance Party', 2, 'Get hype!', NULL, NULL, 'https://www.provos.org/p/what-is-edm/edm_music.jpg', 1, 1);
 
 COMMIT;
 
@@ -484,6 +493,10 @@ COMMIT;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `tag` (`id`, `name`) VALUES (1, 'Chill');
+INSERT INTO `tag` (`id`, `name`) VALUES (2, 'Upbeat');
+INSERT INTO `tag` (`id`, `name`) VALUES (3, 'Action');
+INSERT INTO `tag` (`id`, `name`) VALUES (4, 'Mystery');
+INSERT INTO `tag` (`id`, `name`) VALUES (5, 'Romance');
 
 COMMIT;
 
@@ -494,6 +507,10 @@ COMMIT;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `tag_has_playlist` (`tag_id`, `playlist_id`) VALUES (1, 1);
+INSERT INTO `tag_has_playlist` (`tag_id`, `playlist_id`) VALUES (2, 1);
+INSERT INTO `tag_has_playlist` (`tag_id`, `playlist_id`) VALUES (3, 1);
+INSERT INTO `tag_has_playlist` (`tag_id`, `playlist_id`) VALUES (4, 2);
+INSERT INTO `tag_has_playlist` (`tag_id`, `playlist_id`) VALUES (5, 2);
 
 COMMIT;
 
@@ -513,7 +530,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `media_comment` (`id`, `user_id`, `media_id`, `content`, `created_at`, `in_reply_to_id`, `enabled`) VALUES (1, 1, 1, 'Not again!', NULL, 1, 1);
+INSERT INTO `media_comment` (`id`, `user_id`, `media_id`, `content`, `created_at`, `in_reply_to_id`) VALUES (1, 1, 1, 'Not again!', NULL, 1);
 
 COMMIT;
 
@@ -555,7 +572,11 @@ START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (1, 1);
 INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (2, 1);
-INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (2, 2);
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (3, 1);
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (4, 1);
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (5, 2);
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (6, 2);
+INSERT INTO `media_has_playlist` (`media_id`, `playlist_id`) VALUES (7, 2);
 
 COMMIT;
 
@@ -576,6 +597,8 @@ COMMIT;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `favorite_playlist` (`user_id`, `playlist_id`) VALUES (1, 1);
+INSERT INTO `favorite_playlist` (`user_id`, `playlist_id`) VALUES (1, 3);
+INSERT INTO `favorite_playlist` (`user_id`, `playlist_id`) VALUES (2, 4);
 
 COMMIT;
 
@@ -585,7 +608,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mediadb`;
-INSERT INTO `playlist_comment` (`id`, `user_id`, `content`, `created_at`, `in_reply_to_id`, `playlist_id`, `enabled`) VALUES (1, 1, 'Rock on man!', NULL, 1, 1, 1);
+INSERT INTO `playlist_comment` (`id`, `user_id`, `content`, `created_at`, `in_reply_to_id`, `playlist_id`, `enabled`) VALUES (1, 1, 'Rock on man!', NULL, 1, 1, NULL);
+INSERT INTO `playlist_comment` (`id`, `user_id`, `content`, `created_at`, `in_reply_to_id`, `playlist_id`, `enabled`) VALUES (2, 1, 'Great picks, gotta save for later', NULL, 2, 1, NULL);
+INSERT INTO `playlist_comment` (`id`, `user_id`, `content`, `created_at`, `in_reply_to_id`, `playlist_id`, `enabled`) VALUES (3, 2, 'Someone should make you a curator!', NULL, 3, 2, NULL);
 
 COMMIT;
 
