@@ -451,7 +451,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 START TRANSACTION;
 USE `mediadb`;
 INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `image_url`, `biography`, `created_at`, `updated_at`) VALUES (1, 'test', '$2a$10$nShOi5/f0bKNvHB8x0u3qOpeivazbuN0NE4TO0LGvQiTMafaBxLJS', 1, 'standard', NULL, NULL, NULL, NULL);
-INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `image_url`, `biography`, `created_at`, `updated_at`) VALUES (2, 'curator', 'curator', 1, 'curator', NULL, NULL, NULL, NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `image_url`, `biography`, `created_at`, `updated_at`) VALUES (2, 'curator', '$2a$10$nShOi5/f0bKNvHB8x0u3qOpeivazbuN0NE4TO0LGvQiTMafaBxLJS', 1, 'curator', NULL, NULL, NULL, NULL);
 
 COMMIT;
 
